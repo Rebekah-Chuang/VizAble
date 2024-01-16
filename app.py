@@ -2,7 +2,7 @@ from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 # import htmltools as html
 from shiny.types import FileInfo
 import pandas as pd
-from great_tables import GT
+import great_tables as gt
 import great_tables.shiny as gts
 
 
@@ -53,12 +53,16 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         file: list[FileInfo] | None = input.file1()
         if file is None:
-            return GT(pd.DataFrame())
+            return gt.GT(pd.DataFrame())
         
         data_frame = pd.read_csv(file[0]["datapath"],
                                  sep = sep,
                                  quotechar = quotechar,
                                  header = 0)
-        return GT(data_frame)
+        return (
+            gt.GT(data = data_frame)
+            .tab_header(title = f"{file[0]['name']}",
+                        subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)")
+        )
 
 app = App(app_ui, server)
