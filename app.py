@@ -1,33 +1,40 @@
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
+# import htmltools as html
 from shiny.types import FileInfo
 import pandas as pd
 from great_tables import GT
+import great_tables.shiny as gts
 
 
 app_ui = ui.page_fluid(
+    ui.panel_title("Upload CSV File"),
     ui.input_file(id = "file1",
-                  label = "Choose CSV File",
+                  label = "",
                   accept = [".csv", ".tsv", ".txt"],
                   multiple = False),
-    ui.input_radio_buttons(id = "sep",
-                           label = "Separator",
-                           choices = ["Comma(,)", "Semicolon(;)", "Tab(\\t)"]),
 
-    ui.input_radio_buttons(id = "quotechar",
-                           label = "Quote Character",
-                           choices= ["Double Quote(\")", "Single Quote(\')"]),
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_radio_buttons(id = "sep",
+                                   label = ui.strong("Separator"),
+                                   choices = ["Comma(,)", "Semicolon(;)", "Tab(\\t)"]),
+            ui.tags.hr(),
+            ui.input_radio_buttons(id = "quotechar",
+                                   label = ui.strong("Quote Character"),
+                                   choices= ["Double Quote(\")", "Single Quote(\')"])
+        ),
 
-    ui.output_table("output_dataframe")
+        ui.panel_main(
+            gts.output_gt("output_dataframe")
+        )
     )
+)
 
 def server(input: Inputs, output: Outputs, session: Session):
     @output
-    @render.table
-
-    # TODO: not able to render great table in shiny?
+    @gts.render_gt
 
     def output_dataframe():
-
         # Seperator
         seperator = str(input.sep())
         if seperator == "Comma(,)":
@@ -46,10 +53,12 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         file: list[FileInfo] | None = input.file1()
         if file is None:
-            return pd.DataFrame()
-        return pd.read_csv(file[0]["datapath"],
-                           sep = sep,
-                           quotechar = quotechar)
-        # return GT(pd.read_csv(file[0]["datapath"]))
+            return GT(pd.DataFrame())
+        
+        data_frame = pd.read_csv(file[0]["datapath"],
+                                 sep = sep,
+                                 quotechar = quotechar,
+                                 header = 0)
+        return GT(data_frame)
 
 app = App(app_ui, server)
