@@ -62,7 +62,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         return (
             gt.GT(data = data_frame)
             .tab_header(title = f"{file[0]['name']}",
-                        subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)")
+                        subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)"
+            )
         )
 
 app = App(app_ui, server)
