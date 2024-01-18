@@ -1,18 +1,20 @@
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 from shiny.types import FileInfo
-import htmltools
+from htmltools import css
+# import htmltools
 import shinyswatch
 import pandas as pd
 import great_tables as gt
 import great_tables.shiny as gts
 
-
-app_ui = ui.page_fluid(
-    # thwmw for the app
+app_ui = ui.page_fixed(
+    # theme for the app
     shinyswatch.theme.superhero(),
-
-    ui.panel_title("Upload a CSV file",
+    ui.tags.br(),
+    ui.tags.br(),
+    ui.panel_title(ui.tags.h1("Upload a CSV file"),
                    window_title= "Accessible Data Visualization"),
+    ui.tags.br(),
     ui.input_file(id = "file1",
                   label = "",
                   accept = [".csv", ".tsv", ".txt"],
@@ -72,14 +74,13 @@ def server(input: Inputs, output: Outputs, session: Session):
         return render.DataGrid(data_frame,
                                filters = True)
     
-        """ THIS PART IS FOR GREAT TABLES
-        return (
-            gt.GT(data = data_frame,
-                  rowname_col="index")
-            .tab_header(title = f"{file[0]['name']}",
-                        subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)")
-            .tab_stubhead(label=gt.md("Index"))
-        )
-        """
+        # THIS PART IS FOR GREAT TABLES
+        # return (
+        #     gt.GT(data = data_frame,
+        #           rowname_col="index")
+        #     .tab_header(title = f"{file[0]['name']}",
+        #                 subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)")
+        #     .tab_stubhead(label=gt.md("Index"))
+        # )
 
 app = App(app_ui, server)
