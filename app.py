@@ -6,81 +6,119 @@ import shinyswatch
 import pandas as pd
 import great_tables as gt
 import great_tables.shiny as gts
+import openpyxl, xlrd
+import functions
+
 
 app_ui = ui.page_fixed(
     # theme for the app
     shinyswatch.theme.superhero(),
     ui.tags.br(),
     ui.tags.br(),
-    ui.panel_title(ui.tags.h1("Upload a CSV file"),
+    ui.panel_title(ui.tags.h1("Upload a File"),
                    window_title= "Accessible Data Visualization"),
+
     ui.tags.br(),
-    ui.input_file(id = "file1",
-                  label = "",
-                  accept = [".csv", ".tsv", ".txt"],
-                  multiple = False),
 
+    ui.card(
     ui.layout_sidebar(
-        ui.panel_sidebar(
-            ui.input_radio_buttons(id = "sep",
-                                   label = ui.strong("Separator"),
-                                   choices = ["Comma(,)", "Semicolon(;)", "Tab(\\t)"]),
-            ui.tags.hr(),
-            ui.input_radio_buttons(id = "quotechar",
-                                   label = ui.strong("Quote Character"),
-                                   choices= ["Double Quote(\")", "Single Quote(\')"])
-        ),
+        
+        ui.sidebar(
+            ui.input_selectize(id = "file_format",
+                               label = ui.strong("File Format"),
+                               choices = [".csv", ".tsv", ".xlsx"],
+                               width = "100%"),
 
-        ui.panel_main(
-            # gts.output_gt("output_dataframe")
-            ui.output_data_frame("output_dataframe")
-        )
+            # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
+            # and only allowed to upload .csv file 
+            ui.panel_conditional("input.file_format == '.csv'",
+                                 functions.sep_input_radio_buttons(),
+                                 ui.tags.hr(),
+                                 functions.quotechar_input_radio_buttons(),
+                                 ui.tags.hr(),
+                                 functions.input_file(".csv")
+            ),
+
+            # Add condition: if user selects ".tsv" on file_format, they need to select quote character
+            # and only allowed to upload .tsv file 
+            ui.panel_conditional("input.file_format == '.tsv'",
+                                 ui.tags.hr(),
+                                 functions.input_file(".tsv")
+            ),
+
+            # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
+            ui.panel_conditional("input.file_format == '.xlsx'",
+                                 ui.input_text(id = "sheet_name",
+                                               label = ui.strong("Sheet Name"),
+                                               placeholder = "Type in sheet name...",),
+                                 ui.tags.hr(),
+                                 functions.input_file(".xlsx")
+            ),  
+        ),            
+
+        ui.output_data_frame("output_dataframe"),
+
+        open = "always",  
+    ),
+
+    height = "70vh",
     )
 )
 
 def server(input: Inputs, output: Outputs, session: Session):
-
+    
     @output
     @render.data_frame
-    # @gts.render_gt
 
     def output_dataframe():
         # Seperator
         seperator = str(input.sep())
-        if seperator == "Comma(,)":
+        if seperator == "Comma( , )":
             sep = ","
-        elif seperator == "Semicolon(;)":
+        elif seperator == "Semicolon( ; )":
             sep = ";"
         else:
             sep = "\t"
 
         # Quote Character
         qc = str(input.quotechar())
-        if qc == "Double Quote(\")":
+        if qc == "Double Quote( \" )":
             quotechar = "\""
         else:
             quotechar = "\'"
 
-        file: list[FileInfo] | None = input.file1()
+
+        file_id = functions.get_file_id(input.file_format())
+        file_input = getattr(input, file_id)
+
+        file: list[FileInfo] | None = file_input()
         if file is None:
-            # return gt.GT(pd.DataFrame())
             return render.DataGrid(pd.DataFrame())
         
-        data_frame = pd.read_csv(file[0]["datapath"],
-                                 sep = sep,
-                                 quotechar = quotechar,
-                                 header = 0).reset_index()
-        
+        if file_id == "csv_file":
+            data_frame = pd.read_csv(file[0]["datapath"],
+                                        sep = sep,
+                                        quotechar = quotechar,
+                                        header = 0)\
+                                    .reset_index()\
+                                    .fillna("N/A")
+        elif file_id == "tsv_file":
+            data_frame = pd.read_table(file[0]["datapath"],
+                                        sep = "\t",
+                                        quotechar = quotechar,
+                                        header = 0)\
+                                    .reset_index()\
+                                    .fillna("N/A")
+            
+        else:
+            data_frame = pd.read_excel(file[0]["datapath"],
+                                    sheet_name = input.sheet_name(),
+                                    header = 0,
+                                    engine = 'openpyxl')\
+                                    .reset_index()\
+                                    .fillna("N/A")
+            
         return render.DataGrid(data_frame,
-                               filters = True)
-    
-        # THIS PART IS FOR GREAT TABLES
-        # return (
-        #     gt.GT(data = data_frame,
-        #           rowname_col="index")
-        #     .tab_header(title = f"{file[0]['name']}",
-        #                 subtitle = f"{data_frame.shape[1]} column(s) | {data_frame.shape[0]} row(s)")
-        #     .tab_stubhead(label=gt.md("Index"))
-        # )
+                                filters = True)
 
 app = App(app_ui, server)

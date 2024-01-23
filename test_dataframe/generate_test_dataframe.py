@@ -15,17 +15,17 @@ df.to_csv("test_dataframe/csv_tab_no_quote.csv",
                sep = "\t",
                quoting = 0)
 
+# Create a new dataframe that is seperated by comma + double quote
+df.to_csv("test_dataframe/csv_comma_double_quote.csv",
+               index = False,
+               sep = ",",
+               quotechar = "\"",
+               quoting = 1)
+
 # Create a new dataframe that is seperated by semicolon + double quote
 df.to_csv("test_dataframe/csv_semi_double_quote.csv",
                index = False,
                sep = ";",
-               quotechar = "\"",
-               quoting = 1)
-
-# Create a new dataframe that is seperated by tab + double quote
-df.to_csv("test_dataframe/csv_tab_double_quote.csv",
-               index = False,
-               sep = "\t",
                quotechar = "\"",
                quoting = 1)
 
@@ -40,12 +40,5 @@ df.to_csv("test_dataframe/csv_comma_single_quote.csv",
 df.to_csv("test_dataframe/csv_semi_single_quote.csv",
                index = False,
                sep = ";",
-               quotechar = "\'",
-               quoting = 1)
-
-# Create a new dataframe that is seperated by tab + single quote
-df.to_csv("test_dataframe/csv_tab_single_quote.csv",
-               index = False,
-               sep = "\t",
                quotechar = "\'",
                quoting = 1)
