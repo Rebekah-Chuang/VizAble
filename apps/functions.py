@@ -1,4 +1,4 @@
-from apps import ui, render, App, Inputs, Outputs, Session, reactive
+from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 
 def sep_input_radio_buttons():
     """
