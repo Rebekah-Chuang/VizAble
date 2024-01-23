@@ -1,3 +1,4 @@
+# pip freeze > requirements.txt
 anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1702909220329/work
 appdirs @ file:///home/conda/feedstock_root/build_artifacts/appdirs_1603108395799/work
 appnope @ file:///home/conda/feedstock_root/build_artifacts/appnope_1649077682618/work
@@ -9,6 +10,7 @@ comm @ file:///home/conda/feedstock_root/build_artifacts/comm_1704278392174/work
 commonmark==0.9.1
 debugpy @ file:///Users/runner/miniforge3/conda-bld/debugpy_1695534617894/work
 decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_1641555617451/work
+et-xmlfile==1.1.0
 exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1704921103267/work
 executing @ file:///home/conda/feedstock_root/build_artifacts/executing_1698579936712/work
 great-tables==0.1.5
@@ -30,6 +32,7 @@ mdit-py-plugins @ file:///home/conda/feedstock_root/build_artifacts/mdit-py-plug
 mdurl @ file:///home/conda/feedstock_root/build_artifacts/mdurl_1704317613764/work
 nest_asyncio @ file:///home/conda/feedstock_root/build_artifacts/nest-asyncio_1705352640985/work
 numpy==1.26.3
+openpyxl==3.1.2
 packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1696202382185/work
 pandas==2.1.4
 parso @ file:///home/conda/feedstock_root/build_artifacts/parso_1638334955874/work
@@ -64,4 +67,5 @@ wcwidth @ file:///home/conda/feedstock_root/build_artifacts/wcwidth_170473120541
 webcolors==1.13
 websockets @ file:///Users/runner/miniforge3/conda-bld/websockets_1697914710084/work
 wheel==0.42.0
+xlrd==2.0.1
 zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1695255097490/work
