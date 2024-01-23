@@ -1,11 +1,8 @@
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 from shiny.types import FileInfo
 from htmltools import css
-# import htmltools
 import shinyswatch
 import pandas as pd
-import great_tables as gt
-import great_tables.shiny as gts
 import openpyxl, xlrd
 import functions
 
