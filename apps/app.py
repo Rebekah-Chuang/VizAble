@@ -22,7 +22,7 @@ app_ui = ui.page_navbar(
     ),
 
     # Step1: Upload a File
-    ui.nav(
+    ui.nav_panel(
         "Step 1",
         ui.panel_title(ui.tags.h2("Upload a File")),
                     # window_title= "Accessible Data Visualization"),
@@ -57,8 +57,8 @@ app_ui = ui.page_navbar(
                 # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
                 ui.panel_conditional("input.file_format == '.xlsx'",
                                     ui.input_text(id = "sheet_name",
-                                                label = ui.strong("Sheet Name"),
-                                                placeholder = "Type in sheet name...",),
+                                                  label = ui.strong("Sheet Name"),
+                                                  placeholder = "Type in sheet name...",),
                                     ui.tags.hr(),
                                     functions.input_file(".xlsx")
                 ),  
@@ -74,19 +74,35 @@ app_ui = ui.page_navbar(
     ),
 
     # Step2: Select Plot Types
-    ui.nav(
+    ui.nav_panel(
         "Step 2",
         ui.panel_title(ui.tags.h2("Select Plot Types")),
-    ),
 
+        ui.tags.br(),
+
+        ui.card(
+            ui.layout_sidebar(
+                ui.sidebar(
+                    ui.input_selectize(id = "plot_types",
+                                       label = ui.strong("Plot Types"),
+                                       choices = ["Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"],
+                                       selected = None,
+                                       multiple = False
+                    ),
+                ),
+            ),
+        
+        height = "80vh",
+        )
+    ),
     # Step3: Select Columns
-    ui.nav(
+    ui.nav_panel(
         "Step 3",
         ui.panel_title(ui.tags.h2("Select Columns")),
     ),
 
     # Step4: Generate Plots
-    ui.nav(
+    ui.nav_panel(
         "Step 4",
         ui.panel_title(ui.tags.h2("Generate Plots")),
     ),
