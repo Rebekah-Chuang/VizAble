@@ -7,60 +7,92 @@ import openpyxl, xlrd
 import functions
 
 
-app_ui = ui.page_fixed(
+app_ui = ui.page_navbar(
     # theme for the app
     shinyswatch.theme.superhero(),
-    ui.tags.br(),
-    ui.tags.br(),
-    ui.panel_title(ui.tags.h1("Upload a File"),
-                   window_title= "Accessible Data Visualization"),
+    ui.nav(
+        "Instructions",
+        ui.markdown(
+            """
+            This is an app for **Accessible Data Visualization**.
 
-    ui.tags.br(),
-
-    ui.card(
-    ui.layout_sidebar(
-        
-        ui.sidebar(
-            ui.input_selectize(id = "file_format",
-                               label = ui.strong("File Format"),
-                               choices = [".csv", ".tsv", ".xlsx"],
-                               width = "100%"),
-
-            # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
-            # and only allowed to upload .csv file 
-            ui.panel_conditional("input.file_format == '.csv'",
-                                 functions.sep_input_radio_buttons(),
-                                 ui.tags.hr(),
-                                 functions.quotechar_input_radio_buttons(),
-                                 ui.tags.hr(),
-                                 functions.input_file(".csv")
-            ),
-
-            # Add condition: if user selects ".tsv" on file_format, they need to select quote character
-            # and only allowed to upload .tsv file 
-            ui.panel_conditional("input.file_format == '.tsv'",
-                                 ui.tags.hr(),
-                                 functions.input_file(".tsv")
-            ),
-
-            # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
-            ui.panel_conditional("input.file_format == '.xlsx'",
-                                 ui.input_text(id = "sheet_name",
-                                               label = ui.strong("Sheet Name"),
-                                               placeholder = "Type in sheet name...",),
-                                 ui.tags.hr(),
-                                 functions.input_file(".xlsx")
-            ),  
-        ),            
-
-        ui.output_data_frame("output_dataframe"),
-
-        open = "always",  
+            Instructions to be added...
+            """
+        )
     ),
 
-    height = "70vh",
-    )
+    # Step1: Upload a File
+    ui.nav(
+        "Step 1",
+        ui.panel_title(ui.tags.h2("Upload a File")),
+                    # window_title= "Accessible Data Visualization"),
+        ui.tags.br(),
+
+        ui.card(
+        ui.layout_sidebar(
+            
+            ui.sidebar(
+                ui.input_selectize(id = "file_format",
+                                label = ui.strong("File Format"),
+                                choices = [".csv", ".tsv", ".xlsx"],
+                                width = "100%"),
+
+                # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
+                # and only allowed to upload .csv file 
+                ui.panel_conditional("input.file_format == '.csv'",
+                                    functions.sep_input_radio_buttons(),
+                                    ui.tags.hr(),
+                                    functions.quotechar_input_radio_buttons(),
+                                    ui.tags.hr(),
+                                    functions.input_file(".csv")
+                ),
+
+                # Add condition: if user selects ".tsv" on file_format, they need to select quote character
+                # and only allowed to upload .tsv file 
+                ui.panel_conditional("input.file_format == '.tsv'",
+                                    ui.tags.hr(),
+                                    functions.input_file(".tsv")
+                ),
+
+                # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
+                ui.panel_conditional("input.file_format == '.xlsx'",
+                                    ui.input_text(id = "sheet_name",
+                                                label = ui.strong("Sheet Name"),
+                                                placeholder = "Type in sheet name...",),
+                                    ui.tags.hr(),
+                                    functions.input_file(".xlsx")
+                ),  
+            ),            
+
+            ui.output_data_frame("output_dataframe"),
+
+            open = "always",  
+        ),
+
+        height = "80vh",
+        )    
+    ),
+
+    # Step2: Select Plot Types
+    ui.nav(
+        "Step 2",
+        ui.panel_title(ui.tags.h2("Select Plot Types")),
+    ),
+
+    # Step3: Select Columns
+    ui.nav(
+        "Step 3",
+        ui.panel_title(ui.tags.h2("Select Columns")),
+    ),
+
+    # Step4: Generate Plots
+    ui.nav(
+        "Step 4",
+        ui.panel_title(ui.tags.h2("Generate Plots")),
+    ),
+    title="Accessible Data Visualization",
 )
+
 
 def server(input: Inputs, output: Outputs, session: Session):
     
@@ -69,22 +101,20 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     def output_dataframe():
         # Seperator
-        seperator = str(input.sep())
-        if seperator == "Comma( , )":
+        if input.sep() == "Comma( , )":
             sep = ","
-        elif seperator == "Semicolon( ; )":
+        elif input.sep() == "Semicolon( ; )":
             sep = ";"
         else:
             sep = "\t"
 
         # Quote Character
-        qc = str(input.quotechar())
-        if qc == "Double Quote( \" )":
+        if input.quotechar() == "Double Quote( \" )":
             quotechar = "\""
         else:
             quotechar = "\'"
 
-
+        # Get file id
         file_id = functions.get_file_id(input.file_format())
         file_input = getattr(input, file_id)
 
@@ -99,6 +129,7 @@ def server(input: Inputs, output: Outputs, session: Session):
                                         header = 0)\
                                     .reset_index()\
                                     .fillna("N/A")
+            
         elif file_id == "tsv_file":
             data_frame = pd.read_table(file[0]["datapath"],
                                         sep = "\t",
