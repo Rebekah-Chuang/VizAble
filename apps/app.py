@@ -208,7 +208,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     def output_dataframe():
         data_frame = reactive_df.get()
-        return data_frame
+        return render.DataGrid(data_frame,
+                               filters = True)
  
     @reactive.Effect
     def update_plot_types_selectize():
