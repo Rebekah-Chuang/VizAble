@@ -36,3 +36,25 @@ def get_file_id(input_file_format_str):
     file_suffix = input_file_format_str.replace(".", "")
     file_id = f"{file_suffix}_file"
     return file_id
+
+def xaxis_input_selectize(plot_type_str):
+    """
+    Create a dropdown for user to select x-axis
+    """
+    x_axis_id = f"{plot_type_str}_x_axis"
+    return ui.input_selectize(id = x_axis_id,
+                              label = ui.strong("X-axis"),
+                              choices = [],
+                              selected = None,
+                              multiple = False)
+
+def yaxis_input_selectize(plot_type_str):
+    """
+    Create a dropdown for user to select y-axis
+    """
+    y_axis_id = f"{plot_type_str}_y_axis"
+    return ui.input_selectize(id = y_axis_id,
+                              label = ui.strong("Y-axis"),
+                              choices = [],
+                              selected = None,
+                              multiple = False)
