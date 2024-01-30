@@ -108,6 +108,7 @@ app_ui = ui.page_navbar(
               
               col_widths={"md": (5, 5, -1)},
           ),
+        #   ui.output_data_frame("get_output_df_head"),
           
           height = "80vh",
       ),
@@ -260,6 +261,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         return render.DataGrid(data_frame.head(1))
 
     # Step 2: Check datatypes
+    original_dtypes = {}
     reactive_dtypes_df = reactive.Value(pd.DataFrame())
     @reactive.Effect
     def get_reactive_dtypes_df():
@@ -272,15 +274,19 @@ def server(input: Inputs, output: Outputs, session: Session):
             for col in data_frame.columns.to_list():
                 data["Column Name"].append(col)
                 data["Data Type"].append(str(type(data_frame[col][0])))
-            
+
+                # Store the original data types in the dictionary
+                original_dtypes[col] = str(type(data_frame[col][0]))
+
             dtypes_df = pd.DataFrame(data)
             reactive_dtypes_df.set(dtypes_df)
 
     @output
     @render.data_frame
     def get_output_dtypes_df():
-        dtypes_df = reactive_dtypes_df.get()
-        return render.DataGrid(dtypes_df)
+        # Create a data frame from the original_data_types dictionary
+        original_dtypes_df = pd.DataFrame(original_dtypes.items(), columns=["Column Name", "Data Type"])
+        return render.DataGrid(original_dtypes_df)
 
     @reactive.Effect
     def update_column_to_convert_selectize():
@@ -288,18 +294,26 @@ def server(input: Inputs, output: Outputs, session: Session):
         ui.update_selectize(id = "column_to_convert",
                             choices = choices,
                             selected = None) 
-
-    reactive_updated_df = reactive.Value(pd.DataFrame())
+    
+    data_type_conversions = {}
     @output
     @render.data_frame
     @reactive.event(input.convert)
-    # TODO: update dateframe everytime user clicks the button
     def get_updated_output_dtypes_df():
-        print("The button is clicked!")
         data_frame = reactive_df.get()
-
+        
         if data_frame is not None and not data_frame.empty:
-            updated_data_frame = data_frame.astype({input.column_to_convert(): input.convert_dtype()})
+            column_to_convert = input.column_to_convert()
+            convert_dtype = input.convert_dtype()
+            
+            if column_to_convert:
+                data_type_conversions[column_to_convert] = convert_dtype
+            
+            updated_data_frame = data_frame.copy()  # Create a copy to avoid modifying the original
+            for col, dtype in data_type_conversions.items():
+                if col in updated_data_frame.columns:
+                    updated_data_frame[col] = updated_data_frame[col].astype(dtype)
+            
             data = {"Column Name": [],
                     "Data Type": []}
             
@@ -308,7 +322,12 @@ def server(input: Inputs, output: Outputs, session: Session):
                 data["Data Type"].append(str(type(updated_data_frame[col][0])))
             
             updated_dtypes_df = pd.DataFrame(data)
-        return render.DataGrid(updated_dtypes_df)
+            
+            # Update both reactive data frames
+            reactive_df.set(updated_data_frame)
+            reactive_dtypes_df.set(updated_dtypes_df)
+            
+            return render.DataGrid(updated_dtypes_df)
 
     # Step 3: Select Plot Types
     @reactive.Effect

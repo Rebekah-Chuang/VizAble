@@ -1,4 +1,7 @@
 ## [2024-01-30]
+### Fixed
+ - Fixed a bug that the dataframe is not updated when users convert datatype for columns (#24)
+
 ### Changed
  - Inserted a step between uploading a file and selecting plot types for users to check and convert data types of columns. (#22)
     - Step1: Upload a file
