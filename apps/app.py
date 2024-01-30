@@ -8,158 +8,202 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req
 from shiny.types import FileInfo
 
 app_ui = ui.page_navbar(
-  # theme for the app,,
+  # theme for the app,
   shinyswatch.theme.darkly(),
+
+  # Instructions:
   ui.nav_panel(
-            "Instructions",
-            ui.markdown(
-                """
-                This is an app for **Accessible Data Visualization**.
+      "Instructions",
+      ui.markdown(
+          """
+          This is an app for **Accessible Data Visualization**.
     
-                Instructions to be added...
-                """
-            )
-        ),
+          Instructions to be added...
+          """ 
+      ),
+  ),
+  
   # Step1: Upload a File,,
   ui.nav_panel(
-            "Step 1",
-            ui.panel_title(ui.tags.h3("Upload a File")),
-                        # window_title= "Accessible Data Visualization"),
-            ui.tags.br(),
-    
-            ui.card(
-            ui.layout_sidebar(
-                
-                ui.sidebar(
-                    ui.input_selectize(id = "file_format",
-                                       label = ui.strong("File Format"),
-                                       choices = [".csv", ".tsv", ".xlsx"],
-                                       width = "100%"),
-    
-                    # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
-                    # and only allowed to upload .csv file 
-                    ui.panel_conditional("input.file_format == '.csv'",
-                                        functions.sep_input_radio_buttons(),
-                                        ui.tags.hr(),
-                                        functions.quotechar_input_radio_buttons(),
-                                        ui.tags.hr(),
-                                        functions.input_file(".csv")
-                    ),
-    
-                    # Add condition: if user selects ".tsv" on file_format, they need to select quote character
-                    # and only allowed to upload .tsv file 
-                    ui.panel_conditional("input.file_format == '.tsv'",
-                                         ui.tags.hr(),
-                                         functions.input_file(".tsv")
-                    ),
-    
-                    # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
-                    ui.panel_conditional("input.file_format == '.xlsx'",
-                                         ui.input_text(id = "sheet_name",
-                                                       label = ui.strong("Sheet Name"),
-                                                       placeholder = "Type in sheet name...",),
-                                         ui.tags.hr(),
-                                         functions.input_file(".xlsx")
-                    ),  
-                ),            
-    
-                ui.output_data_frame("output_dataframe"),
-    
-                open = "always",  
-            ),
-    
-                height = "80vh",
-            )    
-        ),
-  # Step2: Select Plot Types,,
+      "Step 1",
+      ui.panel_title(ui.tags.h3("Upload a File")),
+      ui.tags.br(),
+      ui.card(
+          ui.layout_sidebar(
+              ui.sidebar(
+                  ui.input_selectize(id = "file_format",
+                                     label = ui.strong("File Format"),
+                                     choices = [".csv", ".tsv", ".xlsx"],
+                                     width = "100%"),
+
+                  # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
+                  # and only allowed to upload .csv file 
+                  ui.panel_conditional("input.file_format == '.csv'",
+                                       functions.sep_input_radio_buttons(),
+                                       ui.tags.hr(),
+                                       functions.quotechar_input_radio_buttons(),
+                                       ui.tags.hr(),
+                                       functions.input_file(".csv"),
+                  ),
+                  
+                  # Add condition: if user selects ".tsv" on file_format, they need to select quote character
+                  # and only allowed to upload .tsv file 
+                  ui.panel_conditional("input.file_format == '.tsv'",
+                                       ui.tags.hr(),
+                                       functions.input_file(".tsv"),
+                  ),
+
+                  # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
+                  ui.panel_conditional("input.file_format == '.xlsx'",
+                                       ui.input_text(id = "sheet_name",
+                                                     label = ui.strong("Sheet Name"),
+                                                     placeholder = "Type in sheet name...",),
+                                       ui.tags.hr(),
+                                       functions.input_file(".xlsx")
+                  ),  
+              ),
+              
+              ui.output_data_frame("get_output_df"),
+              open = "always",  
+          ),
+        height = "80vh",
+      )    
+  ),
+
+  # Step2: Check datatypes:
   ui.nav_panel(
-            "Step 2",
-            ui.panel_title(ui.tags.h3("Select Plot Types")),
-    
-            ui.tags.br(),
-    
-            ui.card(
-                ui.layout_sidebar(
-                    ui.sidebar(
-                        ui.input_selectize(id = "plot_types",
-                                           label = ui.strong("Plot Types"),
-                                           choices = [],
-                                           selected = None,
-                                           multiple = False)
-                        ),
-                    
-                    ui.output_ui("plot_introductions"),
-                    open = "always",
-                ),
-            
-                height = "80vh",
-            ),
-        ),
-  # Step3: Select Columns,,
+      "Step 2",
+      ui.panel_title(ui.tags.h3("Check datatypes for columns")),
+      ui.tags.br(),
+      ui.layout_sidebar(
+          ui.sidebar(
+              ui.input_selectize(id = "column_to_convert",
+                                 label = ui.strong("Column"),
+                                 choices = [],
+                                 selected = None,
+                                 multiple = False),
+              ui.input_selectize(id = "convert_dtype",
+                                 label = ui.strong("Convert to"),
+                                 choices = ["Select an option", "str", "int", "float"],
+                                 selected = None,
+                                 multiple = False),
+
+              ui.input_action_button(id = "convert",
+                                     label = "Convert",
+                                     class_ = "btn-success"),
+          ),
+          
+          ui.layout_columns(
+              ui.div(
+                  ui.tags.h5("Original Datatypes"),
+                  ui.tags.hr(),
+                  ui.output_data_frame("get_output_dtypes_df")
+              ),
+              
+              ui.div(
+                  ui.tags.h5("Updated Datatypes"),
+                  ui.tags.hr(),
+                  ui.output_data_frame("get_updated_output_dtypes_df"),
+              ),
+              
+              col_widths={"md": (5, 5, -1)},
+          ),
+          
+          height = "80vh",
+      ),
+  ),
+
+  # Step3: Select Plot Types:
   ui.nav_panel(
-            "Step 3",
-            ui.panel_title(ui.tags.h3("Select Columns")),
-    
-            ui.tags.br(),
-    
-            ui.card(
-                ui.layout_sidebar(
-                    ui.sidebar(
-                        # Add condition: if user selects "Line Plot" on plot_types
-                        ui.panel_conditional("input.plot_types == 'Line Plot'",
-                                             # add dropdown for x-axis and y-axis
-                                             functions.xaxis_input_selectize("line"),
-                                             ui.tags.hr(),
-                                             functions.yaxis_input_selectize("line"),
-    
-                            ),
-                        ui.panel_conditional("input.plot_types == 'Bar Plot'",
-                                             # add dropdown for x-axis
-                                             functions.xaxis_input_selectize("bar"),
-                            ),
-                        ui.panel_conditional("input.plot_types == 'Box Plot'",
-                                             # add dropdown for x-axis
-                                             functions.xaxis_input_selectize("box"),
-                            ),
-                        ui.panel_conditional("input.plot_types == 'Histogram'",
-                                             # add dropdown for x-axis
-                                             functions.xaxis_input_selectize("hist"),
-                            ),
-                        ui.panel_conditional("input.plot_types == 'Scatter Plot'",
-                                             # add dropdown for x-axis and y-axis
-                                             functions.xaxis_input_selectize("scatter"),
-                                             ui.tags.hr(),
-                                             functions.yaxis_input_selectize("scatter"),
-                            ),
-                        open = "always",
-                        ),
-                    ui.output_data_frame("output_selected_columns"),
-                    height = "80vh",
-                )
-            ),
-        ),
-  # Step4: Generate Plots,,
+      "Step 3",
+      ui.panel_title(ui.tags.h3("Select Plot Types")),
+      ui.tags.br(),
+      ui.card(
+          ui.layout_sidebar(
+              ui.sidebar(
+                  ui.input_selectize(id = "plot_types",
+                                     label = ui.strong("Plot Types"),
+                                     choices = [],
+                                     selected = None,
+                                     multiple = False)
+              ),
+              
+              ui.output_ui("get_plot_introductions"),
+              open = "always",
+          ),
+          
+          height = "80vh",
+      ),
+  ),
+  
+  # Step4: Select Columns:
   ui.nav_panel(
-            "Step 4",
-            ui.panel_title(ui.tags.h3("Generate Plots")),
-    
-            ui.tags.br(),
-    
-            ui.card(
-    
-                height = "80vh",
-            )
-        ),
+      "Step 4",
+      ui.panel_title(ui.tags.h3("Select Columns")),
+      ui.tags.br(),
+      ui.card(
+          ui.layout_sidebar(
+              ui.sidebar(
+                  # Add condition: if user selects "Line Plot" on plot_types
+                  ui.panel_conditional("input.plot_types == 'Line Plot'",
+                                       # add dropdown for x-axis and y-axis
+                                       functions.xaxis_input_selectize("line"),
+                                       ui.tags.hr(),
+                                       functions.yaxis_input_selectize("line"),
+                  ),
+                  
+                  ui.panel_conditional("input.plot_types == 'Bar Plot'",
+                                       # add dropdown for x-axis
+                                       functions.xaxis_input_selectize("bar"),
+                  ),
+                  
+                  ui.panel_conditional("input.plot_types == 'Box Plot'",
+                                       # add dropdown for x-axis
+                                       functions.xaxis_input_selectize("box"),
+                  ),
+                  
+                  ui.panel_conditional("input.plot_types == 'Histogram'",
+                                       # add dropdown for x-axis
+                                       functions.xaxis_input_selectize("hist"),
+                  ),
+                  
+                  ui.panel_conditional("input.plot_types == 'Scatter Plot'",
+                                       # add dropdown for x-axis and y-axis
+                                       functions.xaxis_input_selectize("scatter"),
+                                       ui.tags.hr(),
+                                       functions.yaxis_input_selectize("scatter"),
+                  ),
+                  
+                  open = "always",
+              ),
+              
+              ui.output_data_frame("get_output_selected_cols"),
+              height = "80vh",
+          ),
+      ),
+  ),
+  
+  # Step5: Generate Plots:
+  ui.nav_panel(
+      "Step 5",
+      ui.panel_title(ui.tags.h3("Generate Plots")),
+      ui.tags.br(),
+      ui.card(
+          height = "80vh",
+      ),
+  ),
+  
   title = "Accessible Data Visualization"
 )
 
 
 def server(input: Inputs, output: Outputs, session: Session):
 
+    # Step 1: Upload a File
     reactive_df = reactive.Value(pd.DataFrame())
 
     @reactive.Effect
-    def reactive_dataframe():
+    def get_reactive_df():
         # Seperator
         if input.sep() == "Comma( , )":
             sep = ","
@@ -180,7 +224,6 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         file: list[FileInfo] | None = file_input()
         if file is None:
-            # return pd.DataFrame()
             reactive_df.set(pd.DataFrame())
             return
         
@@ -206,20 +249,78 @@ def server(input: Inputs, output: Outputs, session: Session):
    
     @output
     @render.data_frame
-    def output_dataframe():
+    def get_output_df():
         data_frame = reactive_df.get()
-        return render.DataGrid(data_frame,
-                               filters = True)
- 
+        return render.DataGrid(data_frame, filters = True)
+    
+    @output
+    @render.data_frame
+    def get_output_df_head():
+        data_frame = reactive_df.get()
+        return render.DataGrid(data_frame.head(1))
+
+    # Step 2: Check datatypes
+    reactive_dtypes_df = reactive.Value(pd.DataFrame())
     @reactive.Effect
-    def update_plot_types_selectize():
-        ui.update_selectize(id = 'plot_types',
-                            choices = ["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"],
-                            selected = None)
+    def get_reactive_dtypes_df():
+        data_frame = reactive_df.get()
+
+        if data_frame is not None and not data_frame.empty:
+            data = {"Column Name": [],
+                    "Data Type": []}
+            
+            for col in data_frame.columns.to_list():
+                data["Column Name"].append(col)
+                data["Data Type"].append(str(type(data_frame[col][0])))
+            
+            dtypes_df = pd.DataFrame(data)
+            reactive_dtypes_df.set(dtypes_df)
 
     @output
+    @render.data_frame
+    def get_output_dtypes_df():
+        dtypes_df = reactive_dtypes_df.get()
+        return render.DataGrid(dtypes_df)
+
+    @reactive.Effect
+    def update_column_to_convert_selectize():
+        choices = ["Select an option"] + reactive_df().columns.tolist()
+        ui.update_selectize(id = "column_to_convert",
+                            choices = choices,
+                            selected = None) 
+
+    reactive_updated_df = reactive.Value(pd.DataFrame())
+    @output
+    @render.data_frame
+    @reactive.event(input.convert)
+    # TODO: update dateframe everytime user clicks the button
+    def get_updated_output_dtypes_df():
+        print("The button is clicked!")
+        data_frame = reactive_df.get()
+
+        if data_frame is not None and not data_frame.empty:
+            updated_data_frame = data_frame.astype({input.column_to_convert(): input.convert_dtype()})
+            data = {"Column Name": [],
+                    "Data Type": []}
+            
+            for col in updated_data_frame.columns.to_list():
+                data["Column Name"].append(col)
+                data["Data Type"].append(str(type(updated_data_frame[col][0])))
+            
+            updated_dtypes_df = pd.DataFrame(data)
+        return render.DataGrid(updated_dtypes_df)
+
+    # Step 3: Select Plot Types
+    @reactive.Effect
+    def update_plot_types_selectize():
+        ui.update_selectize(id = "plot_types",
+                            choices = ["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"],
+                            selected = None)
+        
+    # Step 4: Select Columns
+    @output
     @render.ui
-    def plot_introductions():
+    def get_plot_introductions():
         if input.plot_types() == "Line Plot":
             return (ui.markdown(
                 """
@@ -227,17 +328,16 @@ def server(input: Inputs, output: Outputs, session: Session):
                 
                 A line plot, also known as a line graph, is a type of chart that displays data points on a two-dimensional plane. It is particularly useful for showing trends and changes in data over a continuous interval or time period. In a line plot, data points are connected with straight lines, forming a continuous line that represents the overall trend.
                 """
-                ),
-
-                ui.tags.hr(),
-
-                ui.markdown(
+            ),
+            ui.tags.hr(),
+            ui.markdown(
                 """
                 #### **Instructions:**
                 If you would like to create a line plot, please select:
                  - one column for `x-axis` (typically represents independent variable such as time or categories)
                  - one column for `y-axis` (typically represents dependent variable which is the data being measured)
-                """))
+                """
+            ))
         
         elif input.plot_types() == "Bar Plot":
             return (ui.markdown(
@@ -245,16 +345,15 @@ def server(input: Inputs, output: Outputs, session: Session):
                 #### **Bar Plot:**
                 A bar plot, also known as a bar chart or bar graph, is a graphical representation of categorical data in the form of rectangular bars. Each bar's length or height corresponds to the frequency or value of the data it represents. Bar plots are commonly used to compare and display the distribution of categorical variables.
                 """
-                ),
-
-                ui.tags.hr(),
-
-                ui.markdown(
+            ),
+            ui.tags.hr(),
+            ui.markdown(
                 """
                 #### **Instructions:**
                 If you would like to create a bar plot, please select:
                  - one categorical column for `x-axis` (typically represents the categories or groups of the data)
-                """))
+                """
+            ))
         
         elif input.plot_types() == "Box Plot":
             return (ui.markdown(
@@ -268,16 +367,15 @@ def server(input: Inputs, output: Outputs, session: Session):
                 3. `Median` (line inside the box): A line inside the box represents the median (Q2) of the dataset, which is the middle value when the data is ordered.
                 4. `Outliers`: Individual data points beyond the whiskers may be considered outliers and are often plotted individually.
                 """
-                ),
-
-                ui.tags.hr(),
-
-                ui.markdown(
+            ),
+            ui.tags.hr(),
+            ui.markdown(
                 """
                 #### **Instructions:**
                 If you would like to create a box plot, please select:
                  - one numerical column (containing the  data for which you want to see the distribution)
-                """))
+                """
+            ))
 
         elif input.plot_types() == "Histogram":
             return (ui.markdown(
@@ -285,16 +383,15 @@ def server(input: Inputs, output: Outputs, session: Session):
                 #### **Histogram:**
                 A histogram is a graphical representation of the distribution of a continuous dataset. It is used to visualize the underlying frequency distribution of a set of continuous or interval data. Histograms provide insights into the shape, center, and spread of the data.
                 """
-                ),
-
-                ui.tags.hr(),
-
-                ui.markdown(
+            ),
+            ui.tags.hr(),
+            ui.markdown(
                 """
                 #### **Instructions:**
                 If you would like to create a histogram, please select:
                  - one numerical column for `x-axis`(containing the  data for which you want to see the distribution)
-                """))
+                """
+            ))
 
         elif input.plot_types() == "Scatter Plot":
             return (ui.markdown(
@@ -302,23 +399,23 @@ def server(input: Inputs, output: Outputs, session: Session):
                 #### **Scatter Plot:**
                 A scatter plot is a type of data visualization that displays individual data points on a two-dimensional graph. It is particularly useful for showing the relationship between two continuous variables. Each point on the scatter plot represents a unique observation or data point, and the position of the point is determined by the values of the two variables being compared.
                 """
-                ),
-
-                ui.tags.hr(),
-
-                ui.markdown(
+            ),
+            ui.tags.hr(),
+            ui.markdown(
                 """
                 #### **Instructions:**
                 If you would like to create a scatter plot, please select:
                  - one numerical column for `x-axis`(typically represents independent variable)
                  - one numerical column for `y-axis`(typically represents dependent variable)
-                """))
+                """
+            ))
         
         else:
-            return ui.markdown(
+            return (ui.markdown(
                 """
                 Please select a plot type.
-                """)
+                """
+            ))
     
     @reactive.Effect
     def update_xaxis_selectize():
@@ -356,7 +453,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @output
     @render.data_frame
-    def output_selected_columns():
+    def get_output_selected_cols():
         data_frame = reactive_df.get()
         if data_frame.empty:
             return
