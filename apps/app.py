@@ -91,7 +91,7 @@ app_ui = ui.page_navbar(
               ui.input_action_button(id = "convert",
                                      label = "Convert",
                                      class_ = "btn-success"),
-          ),
+              ),
           
           ui.layout_columns(
               ui.div(
@@ -106,9 +106,8 @@ app_ui = ui.page_navbar(
                   ui.output_data_frame("get_updated_output_dtypes_df"),
               ),
               
-              col_widths={"md": (5, 5, -1)},
+              col_widths={"sm": (5, 5)},
           ),
-        #   ui.output_data_frame("get_output_df_head"),
           
           height = "80vh",
       ),
@@ -284,6 +283,9 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.data_frame
     def get_output_dtypes_df():
+        if not original_dtypes:
+            return None
+        
         # Create a data frame from the original_data_types dictionary
         original_dtypes_df = pd.DataFrame(original_dtypes.items(), columns=["Column Name", "Data Type"])
         return render.DataGrid(original_dtypes_df)
@@ -294,39 +296,43 @@ def server(input: Inputs, output: Outputs, session: Session):
         ui.update_selectize(id = "column_to_convert",
                             choices = choices,
                             selected = None) 
-    
-    data_type_conversions = {}
+
     @output
     @render.data_frame
     @reactive.event(input.convert)
     def get_updated_output_dtypes_df():
+        print("The convert button is clicked.")
         data_frame = reactive_df.get()
-        
+
         if data_frame is not None and not data_frame.empty:
             column_to_convert = input.column_to_convert()
             convert_dtype = input.convert_dtype()
+
+            if column_to_convert == "Select an option":
+                ui.notification_show("Please select a column to convert.")
             
-            if column_to_convert:
-                data_type_conversions[column_to_convert] = convert_dtype
-            
-            updated_data_frame = data_frame.copy()  # Create a copy to avoid modifying the original
-            for col, dtype in data_type_conversions.items():
-                if col in updated_data_frame.columns:
-                    updated_data_frame[col] = updated_data_frame[col].astype(dtype)
+            elif convert_dtype == "Select an option":
+                ui.notification_show("Please select a data type to convert to.")
+
+            elif column_to_convert != "Select an option" and convert_dtype != "Select an option":
+                try:
+                    updated_data_frame = data_frame.copy()
+                    updated_data_frame[column_to_convert] = updated_data_frame[column_to_convert].astype(convert_dtype)
+                    reactive_df.set(updated_data_frame)
+                    ui.notification_show(f"Successfully converted column [{column_to_convert}] to type [{convert_dtype}].")
+
+                except ValueError as e:
+                    error_message = f"Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)}"
+                    ui.notification_show(error_message)
             
             data = {"Column Name": [],
                     "Data Type": []}
-            
-            for col in updated_data_frame.columns.to_list():
+        
+            for col in reactive_df.get().columns.to_list():
                 data["Column Name"].append(col)
-                data["Data Type"].append(str(type(updated_data_frame[col][0])))
+                data["Data Type"].append(str(type(reactive_df.get()[col][0])))
             
             updated_dtypes_df = pd.DataFrame(data)
-            
-            # Update both reactive data frames
-            reactive_df.set(updated_data_frame)
-            reactive_dtypes_df.set(updated_dtypes_df)
-            
             return render.DataGrid(updated_dtypes_df)
 
     # Step 3: Select Plot Types
