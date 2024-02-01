@@ -89,12 +89,7 @@ app_ui = ui.page_navbar(
                 ui.input_selectize(
                     id="convert_dtype",
                     label=ui.strong("Convert to"),
-                    choices=[
-                        "Select an option",
-                        "str",
-                        "int",
-                        "float"
-                    ],
+                    choices=[],
                     selected=None,
                     multiple=False,
                 ),
@@ -328,9 +323,18 @@ def server(input: Inputs, output: Outputs, session: Session):
         return render.DataGrid(original_dtypes_df)
 
     @reactive.Effect
+    @reactive.event(reactive_df)
     def update_column_to_convert_selectize():
         choices = ["Select an option"] + reactive_df().columns.tolist()
         ui.update_selectize(id="column_to_convert",
+                            choices=choices,
+                            selected=None)
+    
+    @reactive.Effect
+    @reactive.event(reactive_df)
+    def update_convert_dtype_selectize():
+        choices = ["Select an option", "str", "int", "float"]
+        ui.update_selectize(id="convert_dtype",
                             choices=choices,
                             selected=None)
 
@@ -374,6 +378,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     # Step 3: Select Plot Types
     @reactive.Effect
+    @reactive.event(input.file_format, reactive_df, input.sheet_name)
     def update_plot_types_selectize():
         ui.update_selectize(
             id="plot_types",
