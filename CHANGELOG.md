@@ -3,7 +3,8 @@
  - Added a dropdown to display all available sheet names if an excel file is uploaded. (#27)
 
 ### Fixed
- - Fixed a bug where the original data type of a DataFrame automatically updates during data type conversion. (#30)
+ - Fixed a bug where the original datatypes df automatically updates during data type conversion. (#30)
+ - Fixed a bug where plot types dropdown not resetting when users upload a new file. (#31)
 
 ## [2024-01-31]
 ### Added
