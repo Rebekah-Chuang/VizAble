@@ -1,3 +1,14 @@
+## [2024-02-01]
+### Added
+ - Added a dropdown to display all available sheet names if an excel file is uploaded. (#27)
+
+### Fixed
+ - Fixed a bug where the original data type of a DataFrame automatically updates during data type conversion. (#30)
+
+## [2024-01-31]
+### Added
+ - Added error handling for unsuccessful column conversion. (#26)
+
 ## [2024-01-30]
 ### Fixed
  - Fixed a bug that the dataframe is not updated when users convert datatype for columns (#24)

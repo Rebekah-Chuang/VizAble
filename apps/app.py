@@ -89,7 +89,12 @@ app_ui = ui.page_navbar(
                 ui.input_selectize(
                     id="convert_dtype",
                     label=ui.strong("Convert to"),
-                    choices=["Select an option", "str", "int", "float"],
+                    choices=[
+                        "Select an option",
+                        "str",
+                        "int",
+                        "float"
+                    ],
                     selected=None,
                     multiple=False,
                 ),
@@ -233,13 +238,19 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         if file_id == "csv_file":
             data_frame = pd.read_csv(
-                file[0]["datapath"], sep=sep, quotechar=quotechar, header=0
+                file[0]["datapath"],
+                sep=sep,
+                quotechar=quotechar,
+                header=0
             )
             reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
         elif file_id == "tsv_file":
             data_frame = pd.read_table(
-                file[0]["datapath"], sep="\t", quotechar=quotechar, header=0
+                file[0]["datapath"],
+                sep="\t",
+                quotechar=quotechar,
+                header=0
             )
             reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
@@ -297,9 +308,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                 original_dtypes[col] = str(type(data_frame[col][0]))
 
             # Generate the DataFrame for display based on the updated dictionary
-            dtypes_df = pd.DataFrame(
-                list(original_dtypes.items()), columns=["Column Name", "Data Type"]
-            )
+            dtypes_df = pd.DataFrame(list(original_dtypes.items()), 
+                                     columns=["Column Name", "Data Type"])
             reactive_dtypes_df.set(dtypes_df)
         else:
             reactive_dtypes_df.set(pd.DataFrame(columns=["Column Name", "Data Type"]))
@@ -313,15 +323,16 @@ def server(input: Inputs, output: Outputs, session: Session):
             return None
 
         # Create a data frame from the original_data_types dictionary
-        original_dtypes_df = pd.DataFrame(
-            original_dtypes.items(), columns=["Column Name", "Data Type"]
-        )
+        original_dtypes_df = pd.DataFrame(original_dtypes.items(),
+                                          columns=["Column Name", "Data Type"])
         return render.DataGrid(original_dtypes_df)
 
     @reactive.Effect
     def update_column_to_convert_selectize():
         choices = ["Select an option"] + reactive_df().columns.tolist()
-        ui.update_selectize(id="column_to_convert", choices=choices, selected=None)
+        ui.update_selectize(id="column_to_convert",
+                            choices=choices,
+                            selected=None)
 
     @output
     @render.data_frame
@@ -340,25 +351,19 @@ def server(input: Inputs, output: Outputs, session: Session):
             elif convert_dtype == "Select an option":
                 ui.notification_show("Please select a data type to convert to.")
 
-            elif (
-                column_to_convert != "Select an option"
-                and convert_dtype != "Select an option"
-            ):
+            elif (column_to_convert != "Select an option" and convert_dtype != "Select an option"):
                 try:
                     updated_data_frame = data_frame.copy()
-                    updated_data_frame[column_to_convert] = updated_data_frame[
-                        column_to_convert
-                    ].astype(convert_dtype)
+                    updated_data_frame[column_to_convert] = updated_data_frame[column_to_convert].astype(convert_dtype)
                     reactive_df.set(updated_data_frame)
-                    ui.notification_show(
-                        f"Successfully converted column [{column_to_convert}] to type [{convert_dtype}]."
-                    )
+                    ui.notification_show(f"Successfully converted column [{column_to_convert}] to type [{convert_dtype}].")
 
                 except ValueError as e:
                     error_message = f"Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)}"
                     ui.notification_show(error_message)
 
-            data = {"Column Name": [], "Data Type": []}
+            data = {"Column Name": [],
+                    "Data Type": []}
 
             for col in reactive_df.get().columns.to_list():
                 data["Column Name"].append(col)
@@ -497,21 +502,35 @@ def server(input: Inputs, output: Outputs, session: Session):
     def update_xaxis_selectize():
         choices = ["Select an option"] + reactive_df().columns.tolist()
         if input.plot_types() == "Line Plot":
-            ui.update_selectize(id="line_x_axis", choices=choices, selected=None)
-            ui.update_selectize(id="line_y_axis", choices=choices, selected=None)
+            ui.update_selectize(id="line_x_axis",
+                                choices=choices,
+                                selected=None)
+            ui.update_selectize(id="line_y_axis",
+                                choices=choices,
+                                selected=None)
 
         elif input.plot_types() == "Bar Plot":
-            ui.update_selectize(id="bar_x_axis", choices=choices, selected=None)
+            ui.update_selectize(id="bar_x_axis",
+                                choices=choices,
+                                selected=None)
 
         elif input.plot_types() == "Box Plot":
-            ui.update_selectize(id="box_x_axis", choices=choices, selected=None)
+            ui.update_selectize(id="box_x_axis",
+                                choices=choices,
+                                selected=None)
 
         elif input.plot_types() == "Histogram":
-            ui.update_selectize(id="hist_x_axis", choices=choices, selected=None)
+            ui.update_selectize(id="hist_x_axis",
+                                choices=choices,
+                                selected=None)
 
         else:
-            ui.update_selectize(id="scatter_x_axis", choices=choices, selected=None)
-            ui.update_selectize(id="scatter_y_axis", choices=choices, selected=None)
+            ui.update_selectize(id="scatter_x_axis",
+                                choices=choices,
+                                selected=None)
+            ui.update_selectize(id="scatter_y_axis",
+                                choices=choices,
+                                selected=None)
 
     @output
     @render.data_frame
@@ -558,9 +577,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             x_col = input.scatter_x_axis()
             y_col = input.scatter_y_axis()
             if x_col in data_frame.columns and y_col in data_frame.columns:
-                selected_cols = data_frame[
-                    [input.scatter_x_axis(), input.scatter_y_axis()]
-                ]
+                selected_cols = data_frame[[input.scatter_x_axis(), input.scatter_y_axis()]]
             else:
                 return pd.DataFrame()
 
