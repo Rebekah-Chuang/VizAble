@@ -55,11 +55,15 @@ app_ui = ui.page_navbar(
 
                   # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file 
                   ui.panel_conditional("input.file_format == '.xlsx'",
-                                       ui.input_text(id = "sheet_name",
-                                                     label = ui.strong("Sheet Name"),
-                                                     placeholder = "Type in sheet name...",),
+                                       functions.input_file(".xlsx"),
                                        ui.tags.hr(),
-                                       functions.input_file(".xlsx")
+                                       ui.panel_conditional("file_uploaded.get() == True",
+                                                            ui.input_selectize(id="sheet_name",
+                                                                               label=ui.strong("Sheet Name"),
+                                                                               choices=[],
+                                                                               selected=None,
+                                                                               multiple=False),
+                                        ),
                   ),  
               ),
               
@@ -198,9 +202,17 @@ app_ui = ui.page_navbar(
 
 
 def server(input: Inputs, output: Outputs, session: Session):
+    reactive_df = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
-    reactive_df = reactive.Value(pd.DataFrame())
+    def get_excel_sheet_names(file_path):
+        try:
+            workbook = openpyxl.load_workbook(file_path, read_only=True)
+            sheet_names = workbook.sheetnames
+            return sheet_names
+        except Exception as e:
+            print(f"Error reading Excel file: {e}")
+            return []
 
     @reactive.Effect
     def get_reactive_df():
@@ -232,21 +244,44 @@ def server(input: Inputs, output: Outputs, session: Session):
                                      sep = sep,
                                      quotechar = quotechar,
                                      header = 0)
+            reactive_df.set(data_frame.reset_index().fillna("N/A")) 
             
         elif file_id == "tsv_file":
             data_frame = pd.read_table(file[0]["datapath"],
                                        sep = "\t",
                                        quotechar = quotechar,
                                        header = 0)
+            reactive_df.set(data_frame.reset_index().fillna("N/A")) 
             
         else:
-            data_frame = pd.read_excel(file[0]["datapath"],
-                                       sheet_name = input.sheet_name(),
-                                       header = 0,
-                                       engine = 'openpyxl')
-
-        reactive_df.set(data_frame.reset_index().fillna("N/A"))
+            sheet_names = get_excel_sheet_names(file[0]["datapath"])
+            ui.update_selectize(id = "sheet_name",
+                                choices = sheet_names,
+                                selected = sheet_names[0] if sheet_names else None)
    
+
+    @reactive.Effect
+    @reactive.event(input.sheet_name)
+    def update_dataframe():
+        file_id = functions.get_file_id(input.file_format())
+        file_input = getattr(input, file_id)
+
+        file: list[FileInfo] | None = file_input()
+        if file is None or not file:
+            reactive_df.set(pd.DataFrame())
+            return
+
+        if file_id == "xlsx_file" and input.sheet_name():
+            try:
+                data_frame = pd.read_excel(file[0]["datapath"],
+                                           sheet_name = input.sheet_name(),
+                                           engine = "openpyxl")
+                reactive_df.set(data_frame.reset_index().fillna("N/A"))
+
+            except Exception as e:
+                print(f"Error reading Excel file sheet: {e}")
+                reactive_df.set(pd.DataFrame())
+
     @output
     @render.data_frame
     def get_output_df():
@@ -263,26 +298,26 @@ def server(input: Inputs, output: Outputs, session: Session):
     original_dtypes = {}
     reactive_dtypes_df = reactive.Value(pd.DataFrame())
     @reactive.Effect
+    @reactive.event(reactive_df)
     def get_reactive_dtypes_df():
         data_frame = reactive_df.get()
+        original_dtypes.clear()  # Clear existing entries in the dictionary
 
         if data_frame is not None and not data_frame.empty:
-            data = {"Column Name": [],
-                    "Data Type": []}
-            
-            for col in data_frame.columns.to_list():
-                data["Column Name"].append(col)
-                data["Data Type"].append(str(type(data_frame[col][0])))
+            # Repopulate the dictionary with current data types
+            for col in data_frame.columns:
+                original_dtypes[col] = str(data_frame[col].dtype)
 
-                # Store the original data types in the dictionary
-                original_dtypes[col] = str(type(data_frame[col][0]))
-
-            dtypes_df = pd.DataFrame(data)
+            # Generate the DataFrame for display based on the updated dictionary
+            dtypes_df = pd.DataFrame(list(original_dtypes.items()), columns=["Column Name", "Data Type"])
             reactive_dtypes_df.set(dtypes_df)
+        else:
+            reactive_dtypes_df.set(pd.DataFrame(columns=["Column Name", "Data Type"]))
 
     @output
     @render.data_frame
     def get_output_dtypes_df():
+        data_frame = reactive_dtypes_df.get()
         if not original_dtypes:
             return None
         
@@ -295,7 +330,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         choices = ["Select an option"] + reactive_df().columns.tolist()
         ui.update_selectize(id = "column_to_convert",
                             choices = choices,
-                            selected = None) 
+                            selected = None)
 
     @output
     @render.data_frame
