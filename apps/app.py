@@ -504,8 +504,10 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     def update_xaxis_selectize():
-        choices = ["Select an option"] + reactive_df().columns.tolist()
+        data_frame = reactive_df.get()
+        # choices = ["Select an option"] + data_frame.columns.tolist()
         if input.plot_types() == "Line Plot":
+            choices = ["Select an option"] + data_frame.columns.tolist()
             ui.update_selectize(id="line_x_axis",
                                 choices=choices,
                                 selected=None)
@@ -514,21 +516,29 @@ def server(input: Inputs, output: Outputs, session: Session):
                                 selected=None)
 
         elif input.plot_types() == "Bar Plot":
+            string_cols = data_frame.select_dtypes(include=["object"]).columns.tolist()
+            choices = ["Select an option"] + string_cols
             ui.update_selectize(id="bar_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Box Plot":
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="box_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Histogram":
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="hist_x_axis",
                                 choices=choices,
                                 selected=None)
 
         else:
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="scatter_x_axis",
                                 choices=choices,
                                 selected=None)
