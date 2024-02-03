@@ -380,16 +380,15 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.file_format, reactive_df, input.sheet_name)
     def update_plot_types_selectize():
+        data_frame = reactive_df.get()
+        if data_frame is not None and not data_frame.empty:
+            choices=["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"]
+        else:
+            choices=["Select an option"]
+
         ui.update_selectize(
             id="plot_types",
-            choices=[
-                "Select an option",
-                "Line Plot",
-                "Bar Plot",
-                "Box Plot",
-                "Histogram",
-                "Scatter Plot",
-            ],
+            choices=choices,
             selected=None,
         )
 
@@ -505,8 +504,10 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     def update_xaxis_selectize():
-        choices = ["Select an option"] + reactive_df().columns.tolist()
+        data_frame = reactive_df.get()
+        # choices = ["Select an option"] + data_frame.columns.tolist()
         if input.plot_types() == "Line Plot":
+            choices = ["Select an option"] + data_frame.columns.tolist()
             ui.update_selectize(id="line_x_axis",
                                 choices=choices,
                                 selected=None)
@@ -515,21 +516,29 @@ def server(input: Inputs, output: Outputs, session: Session):
                                 selected=None)
 
         elif input.plot_types() == "Bar Plot":
+            string_cols = data_frame.select_dtypes(include=["object"]).columns.tolist()
+            choices = ["Select an option"] + string_cols
             ui.update_selectize(id="bar_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Box Plot":
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="box_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Histogram":
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="hist_x_axis",
                                 choices=choices,
                                 selected=None)
 
         else:
+            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="scatter_x_axis",
                                 choices=choices,
                                 selected=None)
@@ -541,50 +550,42 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     def get_output_selected_cols():
         data_frame = reactive_df.get()
+        selected_cols = pd.DataFrame()
+
         if data_frame.empty:
-            return
+            return selected_cols
 
         if input.plot_types() == "Line Plot":
             req(input.line_x_axis(), input.line_y_axis())
             x_col = input.line_x_axis()
             y_col = input.line_y_axis()
             if x_col in data_frame.columns and y_col in data_frame.columns:
-                selected_cols = data_frame[[input.line_x_axis(), input.line_y_axis()]]
-            else:
-                return pd.DataFrame()
+                selected_cols = data_frame[[x_col, y_col]]
 
         elif input.plot_types() == "Bar Plot":
             req(input.bar_x_axis())
             x_col = input.bar_x_axis()
             if x_col in data_frame.columns:
-                selected_cols = data_frame[[input.bar_x_axis()]]
-            else:
-                return pd.DataFrame()
+                selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Box Plot":
             req(input.box_x_axis())
             x_col = input.box_x_axis()
             if x_col in data_frame.columns:
-                selected_cols = data_frame[[input.box_x_axis()]]
-            else:
-                return pd.DataFrame()
+                selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Histogram":
             req(input.hist_x_axis())
             x_col = input.hist_x_axis()
             if x_col in data_frame.columns:
-                selected_cols = data_frame[[input.hist_x_axis()]]
-            else:
-                return pd.DataFrame()
+                selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Scatter Plot":
             req(input.scatter_x_axis(), input.scatter_y_axis())
             x_col = input.scatter_x_axis()
             y_col = input.scatter_y_axis()
             if x_col in data_frame.columns and y_col in data_frame.columns:
-                selected_cols = data_frame[[input.scatter_x_axis(), input.scatter_y_axis()]]
-            else:
-                return pd.DataFrame()
+                selected_cols = data_frame[[x_col, y_col]]
 
         return selected_cols
 

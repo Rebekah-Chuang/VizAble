@@ -1,3 +1,14 @@
+## [2023-02-02]
+### Added
+ - Rescricted column choices based on the plot type selected. (#33, #34)
+    - Bar Plot: Only cateogorical columns are allowed.
+    - Box Plot: Only numerical columns are allowed.
+    - Histogram: Only numerical columns are allowed.
+    - Scatter Plot: Only numerical columns are allowed.
+
+### Fixed
+ - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type. (#28)
+
 ## [2024-02-01]
 ### Added
  - Added a dropdown to display all available sheet names if an excel file is uploaded. (#27)
