@@ -2,7 +2,6 @@ import functions
 import openpyxl
 import pandas as pd
 import shinyswatch
-import xlrd
 from htmltools import css
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req
 from shiny.types import FileInfo
@@ -29,7 +28,7 @@ app_ui = ui.page_navbar(
         ui.card(
             ui.layout_sidebar(
                 ui.sidebar(
-                    ui.input_selectize(
+                    ui.input_select(
                         id="file_format",
                         label=ui.strong("File Format"),
                         choices=[".csv", ".tsv", ".xlsx"],
@@ -57,7 +56,7 @@ app_ui = ui.page_navbar(
                         "input.file_format == '.xlsx'",
                         functions.input_file(".xlsx"),
                         ui.tags.hr(),
-                        ui.input_selectize(
+                        ui.input_select(
                             id="sheet_name",
                             label=ui.strong("Sheet Name"),
                             choices=[],
@@ -79,14 +78,14 @@ app_ui = ui.page_navbar(
         ui.tags.br(),
         ui.layout_sidebar(
             ui.sidebar(
-                ui.input_selectize(
+                ui.input_select(
                     id="column_to_convert",
                     label=ui.strong("Column"),
                     choices=[],
                     selected=None,
                     multiple=False,
                 ),
-                ui.input_selectize(
+                ui.input_select(
                     id="convert_dtype",
                     label=ui.strong("Convert to"),
                     choices=[],
@@ -121,7 +120,7 @@ app_ui = ui.page_navbar(
         ui.card(
             ui.layout_sidebar(
                 ui.sidebar(
-                    ui.input_selectize(
+                    ui.input_select(
                         id="plot_types",
                         label=ui.strong("Plot Types"),
                         choices=[],
@@ -147,31 +146,31 @@ app_ui = ui.page_navbar(
                     ui.panel_conditional(
                         "input.plot_types == 'Line Plot'",
                         # add dropdown for x-axis and y-axis
-                        functions.xaxis_input_selectize("line"),
+                        functions.xaxis_input_select("line"),
                         ui.tags.hr(),
-                        functions.yaxis_input_selectize("line"),
+                        functions.yaxis_input_select("line"),
                     ),
                     ui.panel_conditional(
                         "input.plot_types == 'Bar Plot'",
                         # add dropdown for x-axis
-                        functions.xaxis_input_selectize("bar"),
+                        functions.xaxis_input_select("bar"),
                     ),
                     ui.panel_conditional(
                         "input.plot_types == 'Box Plot'",
                         # add dropdown for x-axis
-                        functions.xaxis_input_selectize("box"),
+                        functions.xaxis_input_select("box"),
                     ),
                     ui.panel_conditional(
                         "input.plot_types == 'Histogram'",
                         # add dropdown for x-axis
-                        functions.xaxis_input_selectize("hist"),
+                        functions.xaxis_input_select("hist"),
                     ),
                     ui.panel_conditional(
                         "input.plot_types == 'Scatter Plot'",
                         # add dropdown for x-axis and y-axis
-                        functions.xaxis_input_selectize("scatter"),
+                        functions.xaxis_input_select("scatter"),
                         ui.tags.hr(),
-                        functions.yaxis_input_selectize("scatter"),
+                        functions.yaxis_input_select("scatter"),
                     ),
                     open="always",
                 ),
@@ -195,6 +194,7 @@ app_ui = ui.page_navbar(
 
 def server(input: Inputs, output: Outputs, session: Session):
     reactive_df = reactive.Value(pd.DataFrame())
+    reactive_dtypes_df = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
     def get_excel_sheet_names(file_path):
@@ -289,8 +289,6 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     # Step 2: Check datatypes
     original_dtypes = {}
-    reactive_dtypes_df = reactive.Value(pd.DataFrame())
-
     @reactive.Effect
     @reactive.event(reactive_df)
     def get_reactive_dtypes_df():
