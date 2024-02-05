@@ -1,3 +1,8 @@
+## [2023-02-05]
+### Fixed
+ - Added level-one headings to the page.
+ - Added lang attribute to the html tag to specify the language of the document.
+
 ## [2023-02-02]
 ### Added
  - Rescricted column choices based on the plot type selected. (#33, #34)
@@ -8,6 +13,7 @@
 
 ### Fixed
  - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type. (#28)
+ - Refactored all `ui.input_select()` to `ui.input_selectize()` to improve accessibility.
 
 ## [2024-02-01]
 ### Added
