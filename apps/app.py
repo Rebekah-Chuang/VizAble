@@ -150,21 +150,25 @@ app_ui = ui.page_navbar(
                         ui.tags.hr(),
                         functions.yaxis_input_select("line"),
                     ),
+                    # Add condition: if user selects "Bar Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Bar Plot'",
                         # add dropdown for x-axis
                         functions.xaxis_input_select("bar"),
                     ),
+                    # Add condition: if user selects "Box Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Box Plot'",
                         # add dropdown for x-axis
                         functions.xaxis_input_select("box"),
                     ),
+                    # Add condition: if user selects "Histogram" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Histogram'",
                         # add dropdown for x-axis
                         functions.xaxis_input_select("hist"),
                     ),
+                    # Add condition: if user selects "Scatter Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Scatter Plot'",
                         # add dropdown for x-axis and y-axis
@@ -189,6 +193,7 @@ app_ui = ui.page_navbar(
         ),
     ),
     title="Accessible Data Visualization",
+    lang="en",
 )
 
 
@@ -197,6 +202,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     reactive_dtypes_df = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
+    
     def get_excel_sheet_names(file_path):
         try:
             workbook = openpyxl.load_workbook(file_path, read_only=True)
@@ -208,6 +214,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     def get_reactive_df():
+
         # Seperator
         if input.sep() == "Comma( , )":
             sep = ","
