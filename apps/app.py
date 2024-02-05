@@ -12,13 +12,16 @@ app_ui = ui.page_navbar(
     # Instructions:
     ui.nav_panel(
         "Instructions",
-        ui.panel_title(ui.tags.h1("Instructions")),
-        ui.markdown(
+        # ui.panel_title(ui.tags.h1("Instructions")),
+        ui.tags.header(ui.tags.h1("Instructions")),
+        ui.tags.main(
+            ui.markdown(
+                """
+            This is an app for **Accessible Data Visualization**.
+        
+            Instructions to be added...
             """
-          This is an app for **Accessible Data Visualization**.
-    
-          Instructions to be added...
-          """
+            ),
         ),
     ),
     # Step1: Upload a File,,
