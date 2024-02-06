@@ -1,3 +1,7 @@
+## [2023-02-06]
+### Chores
+ - Use poetry package for better package maintenance. (#47)
+
 ## [2023-02-05]
 ### Fixed
  - Added level-one headings to the page.
