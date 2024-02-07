@@ -1,4 +1,5 @@
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
+import openpyxl
 
 def sep_input_radio_buttons():
     """
@@ -68,3 +69,12 @@ def yaxis_input_select(plot_type_str):
         selected = None,
         multiple = False
     )
+
+def get_excel_sheet_names(file_path):
+    try:
+        workbook = openpyxl.load_workbook(file_path, read_only=True)
+        sheet_names = workbook.sheetnames
+        return sheet_names
+    except Exception as e:
+        print(f"Error reading Excel file: {e}")
+        return []

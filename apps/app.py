@@ -206,16 +206,6 @@ def server(input: Inputs, output: Outputs, session: Session):
     reactive_dtypes_df = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
-    
-    def get_excel_sheet_names(file_path):
-        try:
-            workbook = openpyxl.load_workbook(file_path, read_only=True)
-            sheet_names = workbook.sheetnames
-            return sheet_names
-        except Exception as e:
-            print(f"Error reading Excel file: {e}")
-            return []
-
     @reactive.Effect
     def get_reactive_df():
 
@@ -261,7 +251,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
         else:
-            sheet_names = get_excel_sheet_names(file[0]["datapath"])
+            sheet_names = functions.get_excel_sheet_names(file[0]["datapath"])
             ui.update_selectize(
                 id="sheet_name",
                 choices=sheet_names,
