@@ -27,7 +27,9 @@ app_ui = ui.page_navbar(
     # Step1: Upload a File,,
     ui.nav_panel(
         "Step 1",
-        ui.panel_title(ui.tags.h1("Upload a File")),
+        ui.tags.header(
+            ui.panel_title(ui.tags.h1("Upload a File")),
+        ),
         ui.tags.br(),
         ui.card(
             ui.layout_sidebar(
@@ -80,7 +82,9 @@ app_ui = ui.page_navbar(
     # Step2: Check datatypes:
     ui.nav_panel(
         "Step 2",
-        ui.panel_title(ui.tags.h1("Check datatypes for columns")),
+        ui.tags.header(
+            ui.panel_title(ui.tags.h1("Check datatypes for columns")),
+        ),
         ui.tags.br(),
         ui.layout_sidebar(
             ui.sidebar(
@@ -123,7 +127,9 @@ app_ui = ui.page_navbar(
     # Step3: Select Plot Types:
     ui.nav_panel(
         "Step 3",
-        ui.panel_title(ui.tags.h1("Select Plot Types")),
+        ui.tags.header(
+            ui.panel_title(ui.tags.h1("Select Plot Types")),
+        ),
         ui.tags.br(),
         ui.card(
             ui.layout_sidebar(
@@ -148,7 +154,9 @@ app_ui = ui.page_navbar(
     # Step4: Select Columns:
     ui.nav_panel(
         "Step 4",
-        ui.panel_title(ui.tags.h1("Select Columns")),
+        ui.tags.header(
+            ui.panel_title(ui.tags.h1("Select Columns")),
+        ),
         ui.tags.br(),
         ui.card(
             ui.layout_sidebar(
@@ -199,7 +207,9 @@ app_ui = ui.page_navbar(
     # Step5: Generate Plots:
     ui.nav_panel(
         "Step 5",
-        ui.panel_title(ui.tags.h1("Generate Plots")),
+        ui.tags.header(
+            ui.panel_title(ui.tags.h1("Generate Plots")),
+        ),
         ui.tags.br(),
         ui.card(
             height="80vh",
