@@ -69,7 +69,9 @@ app_ui = ui.page_navbar(
                         ),
                     ),
                 ),
-                ui.output_data_frame("get_output_df"),
+                ui.tags.main(
+                    ui.output_data_frame("get_output_df"),
+                ),
                 open="always",
             ),
             height="80vh",
@@ -100,18 +102,20 @@ app_ui = ui.page_navbar(
                     id="convert", label="Convert", class_="btn-success"
                 ),
             ),
-            ui.layout_columns(
-                ui.div(
-                    ui.tags.h5("Original Datatypes"),
-                    ui.tags.hr(),
-                    ui.output_data_frame("get_output_dtypes_df"),
+            ui.tags.main(
+                ui.layout_columns(
+                    ui.div(
+                        ui.tags.h5("Original Datatypes"),
+                        ui.tags.hr(),
+                        ui.output_data_frame("get_output_dtypes_df"),
+                    ),
+                    ui.div(
+                        ui.tags.h5("Updated Datatypes"),
+                        ui.tags.hr(),
+                        ui.output_data_frame("get_updated_output_dtypes_df"),
+                    ),
+                    col_widths={"sm": (5, 5)},
                 ),
-                ui.div(
-                    ui.tags.h5("Updated Datatypes"),
-                    ui.tags.hr(),
-                    ui.output_data_frame("get_updated_output_dtypes_df"),
-                ),
-                col_widths={"sm": (5, 5)},
             ),
             height="80vh",
         ),
@@ -132,7 +136,10 @@ app_ui = ui.page_navbar(
                         multiple=False,
                     )
                 ),
-                ui.output_ui("get_plot_introductions"),
+                ui.tags.main(
+                    ui.output_ui("get_plot_introductions"),
+                ),
+                
                 open="always",
             ),
             height="80vh",
@@ -182,7 +189,9 @@ app_ui = ui.page_navbar(
                     ),
                     open="always",
                 ),
-                ui.output_data_frame("get_output_selected_cols"),
+                ui.tags.main(
+                    ui.output_data_frame("get_output_selected_cols"),
+                ),
                 height="80vh",
             ),
         ),
