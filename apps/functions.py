@@ -1,7 +1,9 @@
+from typing import List
+from pathlib import Path
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import openpyxl
 
-def sep_input_radio_buttons():
+def sep_input_radio_buttons() -> ui.input_radio_buttons:
     """
     Create a radio button for user to select separator as input
     """
@@ -12,7 +14,7 @@ def sep_input_radio_buttons():
         selected = None
     )
 
-def quotechar_input_radio_buttons():
+def quotechar_input_radio_buttons() -> ui.input_radio_buttons:
     """
     Create a radio button for user to select quote character as input
     """
@@ -23,7 +25,7 @@ def quotechar_input_radio_buttons():
         selected = None
     )
 
-def input_file(file_extension_str):
+def input_file(file_extension_str: str) -> ui.input_file:
     """
     Create a file input for user to upload file
     """
@@ -36,7 +38,7 @@ def input_file(file_extension_str):
         multiple = False
     )
 
-def get_file_id(input_file_format_str):
+def get_file_id(input_file_format_str: str) -> str:
     """
     Generate `file_id` based on file format user selected
     """
@@ -44,7 +46,7 @@ def get_file_id(input_file_format_str):
     file_id = f"{file_suffix}_file"
     return file_id
 
-def xaxis_input_select(plot_type_str):
+def xaxis_input_select(plot_type_str: str) -> ui.input_select:
     """
     Create a dropdown for user to select x-axis
     """
@@ -57,7 +59,7 @@ def xaxis_input_select(plot_type_str):
         multiple = False
     )
 
-def yaxis_input_select(plot_type_str):
+def yaxis_input_select(plot_type_str: str) -> ui.input_select:
     """
     Create a dropdown for user to select y-axis
     """
@@ -70,7 +72,7 @@ def yaxis_input_select(plot_type_str):
         multiple = False
     )
 
-def get_excel_sheet_names(file_path):
+def get_excel_sheet_names(file_path: Path) -> List[str]:
     try:
         workbook = openpyxl.load_workbook(file_path, read_only=True)
         sheet_names = workbook.sheetnames
