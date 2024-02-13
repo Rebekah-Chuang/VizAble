@@ -2248,6 +2248,20 @@ lint = ["docutils-stubs", "flake8 (>=3.5.0)", "flake8-simplify", "isort", "mypy 
 test = ["cython (>=3.0)", "filelock", "html5lib", "pytest (>=4.6)", "setuptools (>=67.0)"]
 
 [[package]]
+name = "sphinx-press-theme"
+version = "0.8.0"
+description = "A Sphinx-doc theme based on Vuepress"
+optional = false
+python-versions = "*"
+files = [
+    {file = "sphinx_press_theme-0.8.0-py3-none-any.whl", hash = "sha256:ddf877d414a2c66e13396d726115aa3f0c94d1ac9133b4df028c261bf388ab25"},
+    {file = "sphinx_press_theme-0.8.0.tar.gz", hash = "sha256:2884caab1dc01ecb11d158d4dd6d3179e2dd97cd48516c769cc27360272e62b3"},
+]
+
+[package.dependencies]
+sphinx = ">=4.0.1"
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "1.0.8"
 description = "sphinxcontrib-applehelp is a Sphinx extension which outputs Apple help books"
@@ -2835,4 +2849,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "acf69e07668b1e98703f627dfb4e8daecd57a20b5859c7adc3ff7f963b765d7b"
+content-hash = "4feddd6e7b1460bad6046054e8eb77343bbd525fec52c651fdddf54a52935a86"

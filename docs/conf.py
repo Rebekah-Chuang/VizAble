@@ -29,6 +29,5 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # avalable themes: https://sphinx-themes.org/
-# press, sphinx_material, alabaster, sphinx_wagtail_theme
 html_theme = 'press'
 html_static_path = ['_static']
