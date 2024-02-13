@@ -5,6 +5,7 @@ import shinyswatch
 from htmltools import css
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req
 from shiny.types import FileInfo
+from typing import Optional
 
 app_ui = ui.page_navbar(
     # theme for the app,
@@ -221,14 +222,15 @@ app_ui = ui.page_navbar(
 
 
 def server(input: Inputs, output: Outputs, session: Session):
-    reactive_df = reactive.Value(pd.DataFrame())
-    reactive_dtypes_df = reactive.Value(pd.DataFrame())
+    reactive_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
+    reactive_dtypes_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
     @reactive.Effect
-    def get_reactive_df():
+    def get_reactive_df() -> None:
 
         # Seperator
+        sep: str
         if input.sep() == "Comma( , )":
             sep = ","
         elif input.sep() == "Semicolon( ; )":
@@ -237,13 +239,14 @@ def server(input: Inputs, output: Outputs, session: Session):
             sep = "\t"
 
         # Quote Character
+        quotechar: str
         if input.quotechar() == 'Double Quote( " )':
             quotechar = '"'
         else:
             quotechar = "'"
 
         # Get file id
-        file_id = functions.get_file_id(input.file_format())
+        file_id: str = functions.get_file_id(input.file_format())
         file_input = getattr(input, file_id)
 
         file: list[FileInfo] | None = file_input()
@@ -251,6 +254,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             reactive_df.set(pd.DataFrame())
             return
 
+        data_frame: pd.DataFrame
         if file_id == "csv_file":
             data_frame = pd.read_csv(
                 file[0]["datapath"],
@@ -270,7 +274,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
         else:
-            sheet_names = functions.get_excel_sheet_names(file[0]["datapath"])
+            sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
             ui.update_selectize(
                 id="sheet_name",
                 choices=sheet_names,
@@ -279,8 +283,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     @reactive.event(input.sheet_name)
-    def update_excel_dataframe():
-        file_id = functions.get_file_id(input.file_format())
+    def update_excel_dataframe() -> None:
+        file_id: str = functions.get_file_id(input.file_format())
         file_input = getattr(input, file_id)
 
         file: list[FileInfo] | None = file_input()
@@ -303,15 +307,15 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @output
     @render.data_frame
-    def get_output_df():
-        data_frame = reactive_df.get()
+    def get_output_df() -> render.DataGrid:
+        data_frame: pd.DataFrame = reactive_df.get()
         return render.DataGrid(data_frame, filters=True)
 
     # Step 2: Check datatypes
-    original_dtypes = {}
+    original_dtypes: dict[str, str] = {}
     @reactive.Effect
     @reactive.event(reactive_df)
-    def get_reactive_dtypes_df():
+    def get_reactive_dtypes_df() -> None:
         data_frame = reactive_df.get()
         original_dtypes.clear()  # Clear existing entries in the dictionary
 
@@ -321,8 +325,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                 original_dtypes[col] = str(type(data_frame[col][0]))
 
             # Generate the DataFrame for display based on the updated dictionary
-            dtypes_df = pd.DataFrame(list(original_dtypes.items()), 
-                                     columns=["Column Name", "Data Type"])
+            dtypes_df: pd.DataFrame = pd.DataFrame(list(original_dtypes.items()),
+                                                   columns=["Column Name", "Data Type"])
             reactive_dtypes_df.set(dtypes_df)
         else:
             reactive_dtypes_df.set(pd.DataFrame(columns=["Column Name", "Data Type"]))
@@ -330,28 +334,27 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name)
-    def get_output_dtypes_df():
-        data_frame = reactive_dtypes_df.get()
+    def get_output_dtypes_df() -> Optional[render.DataGrid]:
         if not original_dtypes:
             return None
 
         # Create a data frame from the original_data_types dictionary
-        original_dtypes_df = pd.DataFrame(original_dtypes.items(),
-                                          columns=["Column Name", "Data Type"])
+        original_dtypes_df: pd.DataFrame = pd.DataFrame(original_dtypes.items(),
+                                                        columns=["Column Name", "Data Type"])
         return render.DataGrid(original_dtypes_df)
 
     @reactive.Effect
     @reactive.event(reactive_df)
-    def update_column_to_convert_selectize():
-        choices = ["Select an option"] + reactive_df().columns.tolist()
+    def update_column_to_convert_selectize() -> None:
+        choices: list[str] = ["Select an option"] + reactive_df().columns.tolist()
         ui.update_selectize(id="column_to_convert",
                             choices=choices,
                             selected=None)
     
     @reactive.Effect
     @reactive.event(reactive_df)
-    def update_convert_dtype_selectize():
-        choices = ["Select an option", "str", "int", "float"]
+    def update_convert_dtype_selectize() -> None:
+        choices: list[str] = ["Select an option", "str", "int", "float"]
         ui.update_selectize(id="convert_dtype",
                             choices=choices,
                             selected=None)
@@ -359,13 +362,13 @@ def server(input: Inputs, output: Outputs, session: Session):
     @output
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name, input.convert)
-    def get_updated_output_dtypes_df():
+    def get_updated_output_dtypes_df() -> Optional[render.DataGrid]:
         print("The convert button is clicked.")
         data_frame = reactive_df.get()
 
         if data_frame is not None and not data_frame.empty:
-            column_to_convert = input.column_to_convert()
-            convert_dtype = input.convert_dtype()
+            column_to_convert: str = input.column_to_convert()
+            convert_dtype: str = input.convert_dtype()
 
             if column_to_convert == "Select an option":
                 ui.notification_show("Please select a column to convert.")
@@ -381,28 +384,28 @@ def server(input: Inputs, output: Outputs, session: Session):
                     ui.notification_show(f"Successfully converted column [{column_to_convert}] to type [{convert_dtype}].")
 
                 except ValueError as e:
-                    error_message = f"Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)}"
+                    error_message: str = f"Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)}"
                     ui.notification_show(error_message)
 
-            data = {"Column Name": [],
-                    "Data Type": []}
+            data: dict = {"Column Name": [],
+                          "Data Type": []}
 
             for col in reactive_df.get().columns.to_list():
                 data["Column Name"].append(col)
                 data["Data Type"].append(str(type(reactive_df.get()[col][0])))
 
-            updated_dtypes_df = pd.DataFrame(data)
+            updated_dtypes_df: pd.DataFrame = pd.DataFrame(data)
             return render.DataGrid(updated_dtypes_df)
 
     # Step 3: Select Plot Types
     @reactive.Effect
     @reactive.event(input.file_format, reactive_df, input.sheet_name)
-    def update_plot_types_selectize():
+    def update_plot_types_selectize() -> None:
         data_frame = reactive_df.get()
         if data_frame is not None and not data_frame.empty:
-            choices=["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"]
+            choices: list[str] = ["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"]
         else:
-            choices=["Select an option"]
+            choices: list[str] = ["Select an option"]
 
         ui.update_selectize(
             id="plot_types",
@@ -521,9 +524,10 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
     @reactive.Effect
-    def update_xaxis_selectize():
+    def update_xaxis_selectize() -> None:
         data_frame = reactive_df.get()
-        # choices = ["Select an option"] + data_frame.columns.tolist()
+        choices: list[str]
+
         if input.plot_types() == "Line Plot":
             choices = ["Select an option"] + data_frame.columns.tolist()
             ui.update_selectize(id="line_x_axis",
@@ -534,28 +538,28 @@ def server(input: Inputs, output: Outputs, session: Session):
                                 selected=None)
 
         elif input.plot_types() == "Bar Plot":
-            string_cols = data_frame.select_dtypes(include=["object"]).columns.tolist()
+            string_cols: list[str] = data_frame.select_dtypes(include=["object"]).columns.tolist()
             choices = ["Select an option"] + string_cols
             ui.update_selectize(id="bar_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Box Plot":
-            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="box_x_axis",
                                 choices=choices,
                                 selected=None)
 
         elif input.plot_types() == "Histogram":
-            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="hist_x_axis",
                                 choices=choices,
                                 selected=None)
 
         else:
-            numeric_cols = data_frame.select_dtypes(include=["number"]).columns.tolist()
+            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
             ui.update_selectize(id="scatter_x_axis",
                                 choices=choices,
@@ -566,42 +570,42 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @output
     @render.data_frame
-    def get_output_selected_cols():
+    def get_output_selected_cols() -> pd.DataFrame:
         data_frame = reactive_df.get()
-        selected_cols = pd.DataFrame()
+        selected_cols: pd.DataFrame = pd.DataFrame()
 
         if data_frame.empty:
             return selected_cols
 
         if input.plot_types() == "Line Plot":
             req(input.line_x_axis(), input.line_y_axis())
-            x_col = input.line_x_axis()
-            y_col = input.line_y_axis()
+            x_col: str = input.line_x_axis()
+            y_col: str = input.line_y_axis()
             if x_col in data_frame.columns and y_col in data_frame.columns:
                 selected_cols = data_frame[[x_col, y_col]]
 
         elif input.plot_types() == "Bar Plot":
             req(input.bar_x_axis())
-            x_col = input.bar_x_axis()
+            x_col: str = input.bar_x_axis()
             if x_col in data_frame.columns:
                 selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Box Plot":
             req(input.box_x_axis())
-            x_col = input.box_x_axis()
+            x_col: str = input.box_x_axis()
             if x_col in data_frame.columns:
                 selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Histogram":
             req(input.hist_x_axis())
-            x_col = input.hist_x_axis()
+            x_col: str = input.hist_x_axis()
             if x_col in data_frame.columns:
                 selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Scatter Plot":
             req(input.scatter_x_axis(), input.scatter_y_axis())
-            x_col = input.scatter_x_axis()
-            y_col = input.scatter_y_axis()
+            x_col: str = input.scatter_x_axis()
+            y_col: str = input.scatter_y_axis()
             if x_col in data_frame.columns and y_col in data_frame.columns:
                 selected_cols = data_frame[[x_col, y_col]]
 
