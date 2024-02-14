@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>accessible-data-viz-application</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="apps package" href="apps.html" />
+  <link rel="prev" title="Welcome to Accessible Data Visualization Application’s documentation!" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <span class="site-name">Accessible Data Visualization Application</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="#accessible-data-viz-application">accessible-data-viz-application</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="tests.html" class="reference internal ">tests package</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+    <li>accessible-data-viz-application</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Welcome to Accessible Data Visualization Application’s documentation!</a>
+  </li>
+  <li class="next">
+    <a href="apps.html"
+       title="next chapter">apps package →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="accessible-data-viz-application">
+<h1>accessible-data-viz-application<a class="headerlink" href="#accessible-data-viz-application" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apps.html">apps package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apps.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.html#module-apps.app">apps.app module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.app.server"><code class="docutils literal notranslate"><span class="pre">server()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.html#module-apps.functions">apps.functions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.get_excel_sheet_names"><code class="docutils literal notranslate"><span class="pre">get_excel_sheet_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.get_file_id"><code class="docutils literal notranslate"><span class="pre">get_file_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.input_file"><code class="docutils literal notranslate"><span class="pre">input_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.quotechar_input_radio_buttons"><code class="docutils literal notranslate"><span class="pre">quotechar_input_radio_buttons()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.sep_input_radio_buttons"><code class="docutils literal notranslate"><span class="pre">sep_input_radio_buttons()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.xaxis_input_select"><code class="docutils literal notranslate"><span class="pre">xaxis_input_select()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.html#apps.functions.yaxis_input_select"><code class="docutils literal notranslate"><span class="pre">yaxis_input_select()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.html#module-apps">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_functions">tests.test_functions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_functions.test_get_excel_sheet_names"><code class="docutils literal notranslate"><span class="pre">test_get_excel_sheet_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_functions.test_get_excel_sheet_names_invalid"><code class="docutils literal notranslate"><span class="pre">test_get_excel_sheet_names_invalid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_functions.test_get_file_id"><code class="docutils literal notranslate"><span class="pre">test_get_file_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Welcome to Accessible Data Visualization Application’s documentation!</a>
+  </li>
+  <li class="next">
+    <a href="apps.html"
+       title="next chapter">apps package →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2024, Rebekah Chuang.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
