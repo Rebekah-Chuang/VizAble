@@ -1,4 +1,4 @@
-from . import functions
+from apps import functions
 import openpyxl
 import pandas as pd
 import shinyswatch
