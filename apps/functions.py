@@ -14,7 +14,7 @@ def sep_input_radio_buttons() -> ui.input_radio_buttons:
         id = "sep",
         label = ui.strong("Separator"),
         choices = ["Comma( , )", "Semicolon( ; )", "Tab( \\t )"],
-        selected = None
+        selected = []
     )
 
 def quotechar_input_radio_buttons() -> ui.input_radio_buttons:
@@ -28,7 +28,7 @@ def quotechar_input_radio_buttons() -> ui.input_radio_buttons:
         id = "quotechar",
         label = ui.strong("Quote Character"),
         choices= ["Double Quote( \" )", "Single Quote( \' )"],
-        selected = None
+        selected = []
     )
 
 def input_file(file_extension_str: str) -> ui.input_file:
