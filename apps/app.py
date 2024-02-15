@@ -1,4 +1,4 @@
-from . import functions
+from apps import functions
 import openpyxl
 import pandas as pd
 import shinyswatch
@@ -38,8 +38,9 @@ app_ui = ui.page_navbar(
                     ui.input_select(
                         id="file_format",
                         label=ui.strong("File Format"),
-                        choices=[".csv", ".tsv", ".xlsx"],
+                        choices=["", ".csv", ".tsv", ".xlsx"],
                         width="100%",
+                        selected=[],
                     ),
                     # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
                     # and only allowed to upload .csv file
