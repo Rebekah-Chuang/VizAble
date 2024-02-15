@@ -56,9 +56,10 @@ def get_file_id(input_file_format_str: str) -> str:
     :return: The `file_id` based on the provided file format string.
     :rtype: str
     """
-    file_suffix = input_file_format_str.replace(".", "")
-    file_id = f"{file_suffix}_file"
-    return file_id
+    if input_file_format_str != "Select an option":
+        file_suffix = input_file_format_str.replace(".", "")
+        file_id = f"{file_suffix}_file"
+        return file_id
 
 def xaxis_input_select(plot_type_str: str) -> ui.input_select:
     """ Create a dropdown for users to select the x-axis.
