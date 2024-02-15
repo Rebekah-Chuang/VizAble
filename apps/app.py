@@ -367,36 +367,44 @@ def server(input: Inputs, output: Outputs, session: Session):
         print("The convert button is clicked.")
         data_frame = reactive_df.get()
 
-        if data_frame is not None and not data_frame.empty:
-            column_to_convert: str = input.column_to_convert()
-            convert_dtype: str = input.convert_dtype()
+        if input.convert():
+            if data_frame is not None and not data_frame.empty:
+                column_to_convert: str = input.column_to_convert()
+                convert_dtype: str = input.convert_dtype()
 
-            if column_to_convert == "Select an option":
-                ui.notification_show("Please select a column to convert.")
+                if column_to_convert == "Select an option":
+                    message = ui.modal("Message: Please select a column to convert. Press Escape key or Dismiss button to close this message.",
+                                       easy_close=True)
+                    ui.modal_show(message)
 
-            elif convert_dtype == "Select an option":
-                ui.notification_show("Please select a data type to convert to.")
+                elif convert_dtype == "Select an option":
+                    message = ui.modal("Message: Please select a data type to convert to. \n Press Escape key or Dismiss button to close this message.",
+                                       easy_close=True)
+                    ui.modal_show(message)
 
-            elif (column_to_convert != "Select an option" and convert_dtype != "Select an option"):
-                try:
-                    updated_data_frame = data_frame.copy()
-                    updated_data_frame[column_to_convert] = updated_data_frame[column_to_convert].astype(convert_dtype)
-                    reactive_df.set(updated_data_frame)
-                    ui.notification_show(f"Successfully converted column [{column_to_convert}] to type [{convert_dtype}].")
+                elif (column_to_convert != "Select an option" and convert_dtype != "Select an option"):
+                    try:
+                        updated_data_frame = data_frame.copy()
+                        updated_data_frame[column_to_convert] = updated_data_frame[column_to_convert].astype(convert_dtype)
+                        reactive_df.set(updated_data_frame)
+                        message = ui.modal(f"Message: Successfully converted column [{column_to_convert}] to type [{convert_dtype}]. \n Press Escape key or Dismiss button to close this message.",
+                                           easy_close=True)
+                        ui.modal_show(message)
 
-                except ValueError as e:
-                    error_message: str = f"Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)}"
-                    ui.notification_show(error_message)
+                    except ValueError as e:
+                        error_message: str = f"Message: Failed to convert data in column '{column_to_convert}' to type '{convert_dtype}': {str(e)} \n Press Escape key or Dismiss button to close this message."
+                        ui.modal_show(ui.modal(error_message,
+                                               easy_close=True))
 
-            data: dict = {"Column Name": [],
-                          "Data Type": []}
+                data: dict = {"Column Name": [],
+                            "Data Type": []}
 
-            for col in reactive_df.get().columns.to_list():
-                data["Column Name"].append(col)
-                data["Data Type"].append(str(type(reactive_df.get()[col][0])))
+                for col in reactive_df.get().columns.to_list():
+                    data["Column Name"].append(col)
+                    data["Data Type"].append(str(type(reactive_df.get()[col][0])))
 
-            updated_dtypes_df: pd.DataFrame = pd.DataFrame(data)
-            return render.DataGrid(updated_dtypes_df)
+                updated_dtypes_df: pd.DataFrame = pd.DataFrame(data)
+                return render.DataGrid(updated_dtypes_df)
 
     # Step 3: Select Plot Types
     @reactive.Effect
