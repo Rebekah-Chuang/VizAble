@@ -3,7 +3,7 @@ import openpyxl
 import pandas as pd
 import shinyswatch
 from htmltools import css
-from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req
+from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module
 from shiny.types import FileInfo
 from typing import Optional
 
@@ -25,7 +25,7 @@ app_ui = ui.page_navbar(
             ),
         ),
     ),
-    # Step1: Upload a File,,
+    # Step1: Upload a File
     ui.nav_panel(
         "Step 1",
         ui.tags.header(
@@ -105,7 +105,9 @@ app_ui = ui.page_navbar(
                     multiple=False,
                 ),
                 ui.input_action_button(
-                    id="convert", label="Convert", class_="btn-success"
+                    id="convert",
+                    label="Convert",
+                    class_="btn-success"
                 ),
             ),
             ui.tags.main(
@@ -276,7 +278,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         else:
             sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
-            ui.update_selectize(
+            ui.update_select(
                 id="sheet_name",
                 choices=sheet_names,
                 selected=sheet_names[0] if sheet_names else None,
@@ -310,7 +312,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     def get_output_df() -> render.DataGrid:
         data_frame: pd.DataFrame = reactive_df.get()
-        return render.DataGrid(data_frame, filters=True)
+        return render.DataGrid(data_frame, row_selection_mode="multiple")
 
     # Step 2: Check datatypes
     original_dtypes: dict[str, str] = {}
@@ -348,17 +350,21 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.event(reactive_df)
     def update_column_to_convert_selectize() -> None:
         choices: list[str] = ["Select an option"] + reactive_df().columns.tolist()
-        ui.update_selectize(id="column_to_convert",
-                            choices=choices,
-                            selected=None)
+        ui.update_select(
+            id="column_to_convert",
+            choices=choices,
+            selected=None
+        )
     
     @reactive.Effect
     @reactive.event(reactive_df)
     def update_convert_dtype_selectize() -> None:
         choices: list[str] = ["Select an option", "str", "int", "float"]
-        ui.update_selectize(id="convert_dtype",
-                            choices=choices,
-                            selected=None)
+        ui.update_select(
+            id="convert_dtype",
+            choices=choices,
+            selected=None
+        )
 
     @output
     @render.data_frame
@@ -416,7 +422,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         else:
             choices: list[str] = ["Select an option"]
 
-        ui.update_selectize(
+        ui.update_select(
             id="plot_types",
             choices=choices,
             selected=None,
@@ -539,43 +545,57 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         if input.plot_types() == "Line Plot":
             choices = ["Select an option"] + data_frame.columns.tolist()
-            ui.update_selectize(id="line_x_axis",
-                                choices=choices,
-                                selected=None)
-            ui.update_selectize(id="line_y_axis",
-                                choices=choices,
-                                selected=None)
+            ui.update_select(
+                id="line_x_axis",
+                choices=choices,
+                selected=None
+            )
+            ui.update_select(
+                id="line_y_axis",
+                choices=choices,
+                selected=None
+            )
 
         elif input.plot_types() == "Bar Plot":
             string_cols: list[str] = data_frame.select_dtypes(include=["object"]).columns.tolist()
             choices = ["Select an option"] + string_cols
-            ui.update_selectize(id="bar_x_axis",
-                                choices=choices,
-                                selected=None)
+            ui.update_select(
+                id="bar_x_axis",
+                choices=choices,
+                selected=None
+            )
 
         elif input.plot_types() == "Box Plot":
             numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
-            ui.update_selectize(id="box_x_axis",
-                                choices=choices,
-                                selected=None)
+            ui.update_select(
+                id="box_x_axis",
+                choices=choices,
+                selected=None
+            )
 
         elif input.plot_types() == "Histogram":
             numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
-            ui.update_selectize(id="hist_x_axis",
-                                choices=choices,
-                                selected=None)
+            ui.update_select(
+                id="hist_x_axis",
+                choices=choices,
+                selected=None
+            )
 
         else:
             numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
             choices = ["Select an option"] + numeric_cols
-            ui.update_selectize(id="scatter_x_axis",
-                                choices=choices,
-                                selected=None)
-            ui.update_selectize(id="scatter_y_axis",
-                                choices=choices,
-                                selected=None)
+            ui.update_select(
+                id="scatter_x_axis",
+                choices=choices,
+                selected=None
+            )
+            ui.update_select(
+                id="scatter_y_axis",
+                choices=choices,
+                selected=None
+            )
 
     @output
     @render.data_frame
