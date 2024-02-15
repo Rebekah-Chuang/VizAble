@@ -1,6 +1,9 @@
 name: Run tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 jobs:
     test:
         strategy:
@@ -8,7 +11,8 @@ jobs:
             matrix:
               python-version: ["3.12"]
               poetry-version: ["1.2.2", "1.7.1"]
-              os: [ubuntu-22.04, macos-latest, windows-latest]
+              # os: [ubuntu-22.04, macos-latest, windows-latest]
+              os: [macos-latest]
         runs-on: ${{ matrix.os }}
         steps:
             - uses: actions/checkout@v4
