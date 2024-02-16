@@ -1,3 +1,7 @@
+## [2024-02-16]
+### Fixed
+ -  Increased the width of the datatypes DataFrame to 100% so that the text within the DataFrame does not wrap([#84](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/84))
+
 ## [2024-02-15]
 ### Added
  - Added a new action button allow users to reset their selection([#75](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/75))

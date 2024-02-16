@@ -364,7 +364,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         # Create a data frame from the original_data_types dictionary
         original_dtypes_df: pd.DataFrame = pd.DataFrame(original_dtypes.items(),
                                                         columns=["Column Name", "Data Type"])
-        return render.DataGrid(original_dtypes_df)
+        return render.DataGrid(original_dtypes_df,
+                               width="100%")
 
     @reactive.Effect
     @reactive.event(reactive_df)
@@ -430,7 +431,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                     data["Data Type"].append(str(type(reactive_df.get()[col][0])))
 
                 updated_dtypes_df: pd.DataFrame = pd.DataFrame(data)
-                return render.DataGrid(updated_dtypes_df)
+                return render.DataGrid(updated_dtypes_df,
+                                       width="100%")
 
     # Step 3: Select Plot Types
     @reactive.Effect
