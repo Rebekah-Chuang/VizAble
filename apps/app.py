@@ -38,9 +38,9 @@ app_ui = ui.page_navbar(
                     ui.input_select(
                         id="file_format",
                         label=ui.strong("File Format"),
-                        choices=["", ".csv", ".tsv", ".xlsx"],
+                        choices=["Select an option", ".csv", ".tsv", ".xlsx"],
                         width="100%",
-                        selected=[],
+                        selected=["Select an option"],
                     ),
                     # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
                     # and only allowed to upload .csv file
@@ -67,10 +67,15 @@ app_ui = ui.page_navbar(
                         ui.input_select(
                             id="sheet_name",
                             label=ui.strong("Sheet Name"),
-                            choices=[],
+                            choices=["Select an option"],
                             selected=None,
                             multiple=False,
                         ),
+                    ),
+                    ui.input_action_button(
+                        id="reset",
+                        label="Reset",
+                        class_="btn-danger",
                     ),
                 ),
                 ui.tags.main(
@@ -250,69 +255,84 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         # Get file id
         file_id: str = functions.get_file_id(input.file_format())
-        file_input = getattr(input, file_id)
+        if file_id:
+            file_input = getattr(input, file_id)
 
-        file: list[FileInfo] | None = file_input()
-        if file is None:
-            reactive_df.set(pd.DataFrame())
-            return
+            file: list[FileInfo] | None = file_input()
+            if file is None:
+                reactive_df.set(pd.DataFrame())
+                return
 
-        data_frame: pd.DataFrame
-        if file_id == "csv_file":
-            data_frame = pd.read_csv(
-                file[0]["datapath"],
-                sep=sep,
-                quotechar=quotechar,
-                header=0
-            )
-            reactive_df.set(data_frame.reset_index().fillna("N/A"))
+            data_frame: pd.DataFrame
+            if file_id == "csv_file":
+                data_frame = pd.read_csv(
+                    file[0]["datapath"],
+                    sep=sep,
+                    quotechar=quotechar,
+                    header=0
+                )
+                reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
-        elif file_id == "tsv_file":
-            data_frame = pd.read_table(
-                file[0]["datapath"],
-                sep="\t",
-                quotechar=quotechar,
-                header=0
-            )
-            reactive_df.set(data_frame.reset_index().fillna("N/A"))
+            elif file_id == "tsv_file":
+                data_frame = pd.read_table(
+                    file[0]["datapath"],
+                    sep="\t",
+                    quotechar=quotechar,
+                    header=0
+                )
+                reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
-        else:
-            sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
-            ui.update_select(
-                id="sheet_name",
-                choices=sheet_names,
-                selected=sheet_names[0] if sheet_names else None,
-            )
+            else:
+                sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
+                ui.update_select(
+                    id="sheet_name",
+                    choices=["Select an option"] + sheet_names,
+                    selected=sheet_names[0] if sheet_names else None,
+                )
 
     @reactive.Effect
     @reactive.event(input.sheet_name)
     def update_excel_dataframe() -> None:
         file_id: str = functions.get_file_id(input.file_format())
-        file_input = getattr(input, file_id)
+        if file_id:
+            file_input = getattr(input, file_id)
 
-        file: list[FileInfo] | None = file_input()
-        if file is None or not file:
-            reactive_df.set(pd.DataFrame())
-            return
-
-        if file_id == "xlsx_file" and input.sheet_name():
-            try:
-                data_frame = pd.read_excel(
-                    file[0]["datapath"],
-                    sheet_name=input.sheet_name(),
-                    engine="openpyxl",
-                )
-                reactive_df.set(data_frame.reset_index().fillna("N/A"))
-
-            except Exception as e:
-                print(f"Error reading Excel file sheet: {e}")
+            file: list[FileInfo] | None = file_input()
+            if file is None or not file:
                 reactive_df.set(pd.DataFrame())
+                return
+
+            if file_id == "xlsx_file" and input.sheet_name():
+                try:
+                    data_frame = pd.read_excel(
+                        file[0]["datapath"],
+                        sheet_name=input.sheet_name(),
+                        engine="openpyxl",
+                    )
+                    reactive_df.set(data_frame.reset_index().fillna("N/A"))
+
+                except Exception as e:
+                    print(f"Error reading Excel file sheet: {e}")
+                    reactive_df.set(pd.DataFrame())
 
     @output
     @render.data_frame
     def get_output_df() -> render.DataGrid:
         data_frame: pd.DataFrame = reactive_df.get()
         return render.DataGrid(data_frame, row_selection_mode="multiple")
+    
+    @reactive.Effect
+    @reactive.event(input.reset)
+    def reset_selections() -> None:
+        ui.update_selectize(
+            id="file_format",
+            selected="Select an option",
+        )
+        ui.update_selectize(
+            id="sheet_name",
+            selected="Select an option",
+        )
+        reactive_df.set(pd.DataFrame())
 
     # Step 2: Check datatypes
     original_dtypes: dict[str, str] = {}

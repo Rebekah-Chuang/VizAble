@@ -1,8 +1,12 @@
+## [2024-02-15]
+### Added
+ - Added a new action button allow users to reset their selection([#75](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/75))
+
 ## [2024-02-14]
 ### Fixed
- - Specified `apps` as parent package when importing `functions` to solve `ImportError`(#)
- - Addressed the issue where it's not possible for `ui.input_select` and `ui.input_radio_buttons` with no items selected
- - Addressed the issue where the pop-up messages were not accessible in datatype conversion step
+ - Specified `apps` as parent package when importing `functions` to solve `ImportError`([#73](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/73))
+ - Addressed the issue where it's not possible for `ui.input_select` and `ui.input_radio_buttons` with no items selected([#76](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/76))
+ - Addressed the issue where the pop-up messages were not accessible in datatype conversion step([#77](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/77))
 
 ## [2024-02-13]
 ### Changed
@@ -10,20 +14,20 @@
 
 ### Chores
 - Installed `Sphinx` using `poetry`
-- Generate documentation using `sphinx` by executing `make html`
+- Generate documentation using `sphinx` by executing `make html`([#71](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/71))
 - Installed `sphinx-press-theme` using `poetry`
 
 ## [2024-02-12]
 ### Added
- - Added type annotation for functions in `functions.py`
- - Added type annotations for functions in `app.py/server()`
+ - Added type annotation for functions in `functions.py`([#62](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/62))
+ - Added type annotations for functions in `app.py/server()`([#65](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/65))
 
 ### Chores
- - Added Github actions set up `.github/workflows/pytest.yaml`
+ - Added Github actions set up `.github/workflows/pytest.yaml`([#67](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/67))
  - Modified `pytest.yaml` and only keep `python-version: ["3.12"]`
 
 ### Changed
- - Modified the docstring in `functions.py` by using the **autoDocstring - Python Docstring Generator** extension
+ - Modified the docstring in `functions.py` by using the **autoDocstring - Python Docstring Generator** extension([#69](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/69))
  - Switched from `Google` docstring format to `Sphinx` docstring format
 
 ## [2024-02-08]
@@ -43,7 +47,7 @@
 ### Tests
  - Added `test_get_file_id()` in `tests/test_functions.py`
 ### Chores
- - Use `poetry` package for better package maintenance. (#47)
+ - Use `poetry` package for better package maintenance. ([#47](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/47))
 
 ## [2024-02-05]
 ### Fixed
@@ -52,31 +56,31 @@
 
 ## [2024-02-02]
 ### Added
- - Rescricted column choices based on the plot type selected. (#33, #34)
+ - Rescricted column choices based on the plot type selected. ([#33](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/33), [#34](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/34))
     - Bar Plot: Only cateogorical columns are allowed.
     - Box Plot: Only numerical columns are allowed.
     - Histogram: Only numerical columns are allowed.
     - Scatter Plot: Only numerical columns are allowed.
 
 ### Fixed
- - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type. (#28)
+ - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type. ([#28](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/28))
  - Refactored all `ui.input_select()` to `ui.input_selectize()` to improve accessibility.
 
 ## [2024-02-01]
 ### Added
- - Added a dropdown to display all available sheet names if an excel file is uploaded. (#27)
+ - Added a dropdown to display all available sheet names if an excel file is uploaded. ([#27](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/27))
 
 ### Fixed
  - Fixed a bug where the original datatypes df automatically updates during data type conversion. (#30)
- - Fixed a bug where plot types dropdown not resetting when users upload a new file. (#31)
+ - Fixed a bug where plot types dropdown not resetting when users upload a new file. ([#31](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/31))
 
 ## [2024-01-31]
 ### Added
- - Added error handling for unsuccessful column conversion. (#26)
+ - Added error handling for unsuccessful column conversion. ([#26](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/26))
 
 ## [2024-01-30]
 ### Fixed
- - Fixed a bug that the dataframe is not updated when users convert datatype for columns (#24)
+ - Fixed a bug that the dataframe is not updated when users convert datatype for columns ([#24](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/24))
 
 ### Changed
  - Inserted a step between uploading a file and selecting plot types for users to check and convert data types of columns. (#22)
@@ -87,7 +91,7 @@
     - Step5: Generate plots
 
 ### Added
- - Rendered a dataframe for datatypes of columns after users upload their file. (#22)
+ - Rendered a dataframe for datatypes of columns after users upload their file. ([#22](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/22))
    *Example:*
 
    |Column Name|Data Type|
@@ -97,16 +101,16 @@
 
 ## [2024-01-29]
 ### Added
- - Added a dropdown for users to select columns after choosing a plot type.(#21)
+ - Added a dropdown for users to select columns after choosing a plot type.([#21](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/21))
 
 ## [2024-01-25]
 ### Added
- - Added introductions for different plot types based on user selection.(#12)
+ - Added introductions for different plot types based on user selection.([#12](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/12))
 
 ## [2024-01-24]
 ### Added
- - Added a dropdown to allow different plot types(`line plot`/`bar plot`/`box plot`/`histogram`/`scatter plot`) to be selected. (#8)
- - Added navigation tabs for different steps of the process.(#7)
+ - Added a dropdown to allow different plot types(`line plot`/`bar plot`/`box plot`/`histogram`/`scatter plot`) to be selected. ([#8](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/8))
+ - Added navigation tabs for different steps of the process.([#7](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/7))
     - Step1: Upload a file
     - Step2: Select plot types
     - Step3: Select columns
@@ -114,8 +118,8 @@
 
 ## [2024-01-23]
 ### Added
- - Added a dropdown to allow different file formats(`.csv`/`.tsv`/`.xlsx`) to be uploaded. (#4)
+ - Added a dropdown to allow different file formats(`.csv`/`.tsv`/`.xlsx`) to be uploaded. ([#4](https://github.com/Rebekah-Chuang/accessible-data-viz-application/issues/4))
 
 ## [2024-01-17]
 ### Added
- - Added a feature to the application that allows users to upload CSV files.(70ef048)
+ - Added a feature to the application that allows users to upload CSV files.([70ef048](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/70ef048d4839caeaaaddd6812fda1d6c68880c4f))
