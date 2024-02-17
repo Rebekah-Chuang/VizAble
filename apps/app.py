@@ -315,7 +315,6 @@ def server(input: Inputs, output: Outputs, session: Session):
                     print(f"Error reading Excel file sheet: {e}")
                     reactive_df.set(pd.DataFrame())
 
-    @output
     @render.data_frame
     def get_output_df() -> render.DataGrid:
         data_frame: pd.DataFrame = reactive_df.get()
@@ -354,7 +353,6 @@ def server(input: Inputs, output: Outputs, session: Session):
         else:
             reactive_dtypes_df.set(pd.DataFrame(columns=["Column Name", "Data Type"]))
 
-    @output
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name)
     def get_output_dtypes_df() -> Optional[render.DataGrid]:
@@ -387,7 +385,6 @@ def server(input: Inputs, output: Outputs, session: Session):
             selected=None
         )
 
-    @output
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name, input.convert)
     def get_updated_output_dtypes_df() -> Optional[render.DataGrid]:
@@ -451,7 +448,6 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
     # Step 4: Select Columns
-    @output
     @render.ui
     def get_plot_introductions():
         if input.plot_types() == "Line Plot":
@@ -619,7 +615,6 @@ def server(input: Inputs, output: Outputs, session: Session):
                 selected=None
             )
 
-    @output
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
         data_frame = reactive_df.get()
