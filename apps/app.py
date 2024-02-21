@@ -72,10 +72,13 @@ app_ui = ui.page_navbar(
                             multiple=False,
                         ),
                     ),
-                    ui.input_action_button(
-                        id="reset",
-                        label="Reset",
-                        class_="btn-danger",
+                    ui.tooltip(
+                        ui.input_action_button(
+                            id="reset",
+                            label="Reset",
+                            class_="btn-danger",
+                        ),
+                        "You can reset all selections and uploaded file by clicking this \"Reset\" button.",
                     ),
                 ),
                 ui.tags.main(
@@ -109,10 +112,13 @@ app_ui = ui.page_navbar(
                     selected=None,
                     multiple=False,
                 ),
-                ui.input_action_button(
-                    id="convert",
-                    label="Convert",
-                    class_="btn-success"
+                ui.tooltip(
+                    ui.input_action_button(
+                        id="convert",
+                        label="Convert",
+                        class_="btn-success"
+                    ),
+                    "You can convert the selected column to the selected data type by clicking this \"Convert\" button.",
                 ),
             ),
             ui.tags.main(
