@@ -236,6 +236,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     # Step 1: Upload a File
     @reactive.Effect
     def get_reactive_df() -> None:
+        """ Read the uploaded file and store it in a reactive value.
+        """
 
         # Seperator
         sep: str
@@ -293,6 +295,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.sheet_name)
     def update_excel_dataframe() -> None:
+        """ Update the excel dataframe based on the selected sheet name.
+        """
         file_id: str = functions.get_file_id(input.file_format())
         if file_id:
             file_input = getattr(input, file_id)
@@ -317,12 +321,19 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.data_frame
     def get_output_df() -> render.DataGrid:
+        """ Render the data frame in a data grid based on the uploaded file.
+
+        :return: A data grid to display the uploaded data frame.
+        :rtype: render.DataGrid
+        """
         data_frame: pd.DataFrame = reactive_df.get()
         return render.DataGrid(data_frame, row_selection_mode="multiple")
     
     @reactive.Effect
     @reactive.event(input.reset)
     def reset_selections() -> None:
+        """ Reset users' selections(`file_format`, `sheet_name`), and uploaded file when the reset button is clicked.
+        """
         ui.update_selectize(
             id="file_format",
             selected="Select an option",
@@ -338,6 +349,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(reactive_df)
     def get_reactive_dtypes_df() -> None:
+        """ Get the data types of the columns in the uploaded data frame and store them in a reactive value.
+        """
         data_frame = reactive_df.get()
         original_dtypes.clear()  # Clear existing entries in the dictionary
 
@@ -356,6 +369,11 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name)
     def get_output_dtypes_df() -> Optional[render.DataGrid]:
+        """ Render the data types of the columns in a data grid based on the uploaded file.
+
+        :return: A data grid to display the data types of the columns in the uploaded data frame.
+        :rtype: Optional[render.DataGrid]
+        """
         if not original_dtypes:
             return None
 
@@ -368,6 +386,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(reactive_df)
     def update_column_to_convert_selectize() -> None:
+        """ Update the dropdown for users to select the column to convert based on the uploaded data frame.
+        """
         choices: list[str] = ["Select an option"] + reactive_df().columns.tolist()
         ui.update_select(
             id="column_to_convert",
@@ -378,6 +398,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(reactive_df)
     def update_convert_dtype_selectize() -> None:
+        """ Update the dropdown for users to select the data type to convert to based on the uploaded data frame.
+        """
         choices: list[str] = ["Select an option", "str", "int", "float"]
         ui.update_select(
             id="convert_dtype",
@@ -388,6 +410,11 @@ def server(input: Inputs, output: Outputs, session: Session):
     @render.data_frame
     @reactive.event(input.file_format, input.sheet_name, input.convert)
     def get_updated_output_dtypes_df() -> Optional[render.DataGrid]:
+        """ Render the updated data types of the columns in a data grid after data type conversion.
+
+        :return: A data grid to display the updated data types of the columns after data type conversion.
+        :rtype: Optional[render.DataGrid]
+        """
         print("The convert button is clicked.")
         data_frame = reactive_df.get()
 
@@ -435,6 +462,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.Effect
     @reactive.event(input.file_format, reactive_df, input.sheet_name)
     def update_plot_types_selectize() -> None:
+        """ Update the dropdown for users to select the plot types based on the uploaded data frame.
+        """
         data_frame = reactive_df.get()
         if data_frame is not None and not data_frame.empty:
             choices: list[str] = ["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"]
@@ -450,6 +479,8 @@ def server(input: Inputs, output: Outputs, session: Session):
     # Step 4: Select Columns
     @render.ui
     def get_plot_introductions():
+        """ Get the introduction and instructions for the selected plot type.
+        """
         if input.plot_types() == "Line Plot":
             return (
                 ui.markdown(
@@ -558,6 +589,8 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     def update_xaxis_selectize() -> None:
+        """ Update the dropdown for users to select the x-axis based on the uploaded file and selected plot type.
+        """
         data_frame = reactive_df.get()
         choices: list[str]
 
@@ -617,6 +650,11 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
+        """ Display the selected columns after users' column selections.
+
+        :return: A data frame containing the selected columns.
+        :rtype: pd.DataFrame
+        """
         data_frame = reactive_df.get()
         selected_cols: pd.DataFrame = pd.DataFrame()
 
