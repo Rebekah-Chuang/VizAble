@@ -29,10 +29,13 @@ def check_datatypes_ui() -> ui.nav_panel:
                     selected=None,
                     multiple=False,
                 ),
-                ui.input_action_button(
-                    id="convert",
-                    label="Convert",
-                    class_="btn-success"
+                ui.tooltip(
+                    ui.input_action_button(
+                        id="convert",
+                        label="Convert",
+                        class_="btn-success"
+                    ),
+                    "You can convert the selected column to the selected data type by clicking this \"Convert\" button.",
                 ),
             ),
             ui.tags.main(

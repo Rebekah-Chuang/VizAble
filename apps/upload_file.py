@@ -53,10 +53,13 @@ def upload_ui() -> ui.nav_panel:
                             multiple=False,
                         ),
                     ),
-                    ui.input_action_button(
-                        id="reset",
-                        label="Reset",
-                        class_="btn-danger",
+                    ui.tooltip(
+                        ui.input_action_button(
+                            id="reset",
+                            label="Reset",
+                            class_="btn-danger",
+                        ),
+                        "You can reset all selections and uploaded file by clicking this \"Reset\" button.",
                     ),
                 ),
                 ui.tags.main(
