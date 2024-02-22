@@ -396,10 +396,9 @@ def server(input: Inputs, output: Outputs, session: Session):
         """ Update the dropdown for users to select the x-axis based on the uploaded file and selected plot type.
         """
         data_frame = reactive_df.get()
-        choices: list[str]
+        choices: list[str] = functions.return_choices_for_columns(data_frame, input.plot_types())
 
         if input.plot_types() == "Line Plot":
-            choices = ["Select an option"] + data_frame.columns.tolist()
             ui.update_select(
                 id="line_x_axis",
                 choices=choices,
@@ -412,8 +411,6 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
         elif input.plot_types() == "Bar Plot":
-            string_cols: list[str] = data_frame.select_dtypes(include=["object"]).columns.tolist()
-            choices = ["Select an option"] + string_cols
             ui.update_select(
                 id="bar_x_axis",
                 choices=choices,
@@ -421,8 +418,6 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
         elif input.plot_types() == "Box Plot":
-            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
-            choices = ["Select an option"] + numeric_cols
             ui.update_select(
                 id="box_x_axis",
                 choices=choices,
@@ -430,8 +425,6 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
         elif input.plot_types() == "Histogram":
-            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
-            choices = ["Select an option"] + numeric_cols
             ui.update_select(
                 id="hist_x_axis",
                 choices=choices,
@@ -439,8 +432,6 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
         else:
-            numeric_cols: list[str] = data_frame.select_dtypes(include=["number"]).columns.tolist()
-            choices = ["Select an option"] + numeric_cols
             ui.update_select(
                 id="scatter_x_axis",
                 choices=choices,
