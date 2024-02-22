@@ -1,5 +1,4 @@
-from apps import functions
-import openpyxl
+from apps import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
 import pandas as pd
 import shinyswatch
 from htmltools import css
@@ -10,226 +9,25 @@ from typing import Optional
 app_ui = ui.page_navbar(
     # theme for the app,
     shinyswatch.theme.darkly(),
+
     # Instructions:
-    ui.nav_panel(
-        "Instructions",
-        # ui.panel_title(ui.tags.h1("Instructions")),
-        ui.tags.header(ui.tags.h1("Instructions")),
-        ui.tags.main(
-            ui.markdown(
-                """
-            This is an app for **Accessible Data Visualization**.
-        
-            Instructions to be added...
-            """
-            ),
-        ),
-    ),
+    introductions.introductions_ui(),
+
     # Step1: Upload a File
-    ui.nav_panel(
-        "Step 1",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Upload a File")),
-        ),
-        ui.tags.br(),
-        ui.card(
-            ui.layout_sidebar(
-                ui.sidebar(
-                    ui.input_select(
-                        id="file_format",
-                        label=ui.strong("File Format"),
-                        choices=["Select an option", ".csv", ".tsv", ".xlsx"],
-                        width="100%",
-                        selected=["Select an option"],
-                    ),
-                    # Add condition: if user selects ".csv" on file_format, they need to select separator/quote character
-                    # and only allowed to upload .csv file
-                    ui.panel_conditional(
-                        "input.file_format == '.csv'",
-                        functions.sep_input_radio_buttons(),
-                        ui.tags.hr(),
-                        functions.quotechar_input_radio_buttons(),
-                        ui.tags.hr(),
-                        functions.input_file(".csv"),
-                    ),
-                    # Add condition: if user selects ".tsv" on file_format, they need to select quote character
-                    # and only allowed to upload .tsv file
-                    ui.panel_conditional(
-                        "input.file_format == '.tsv'",
-                        ui.tags.hr(),
-                        functions.input_file(".tsv"),
-                    ),
-                    # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file
-                    ui.panel_conditional(
-                        "input.file_format == '.xlsx'",
-                        functions.input_file(".xlsx"),
-                        ui.tags.hr(),
-                        ui.input_select(
-                            id="sheet_name",
-                            label=ui.strong("Sheet Name"),
-                            choices=["Select an option"],
-                            selected=None,
-                            multiple=False,
-                        ),
-                    ),
-                    ui.tooltip(
-                        ui.input_action_button(
-                            id="reset",
-                            label="Reset",
-                            class_="btn-danger",
-                        ),
-                        "You can reset all selections and uploaded file by clicking this \"Reset\" button.",
-                    ),
-                ),
-                ui.tags.main(
-                    ui.output_data_frame("get_output_df"),
-                ),
-                open="always",
-            ),
-            height="80vh",
-        ),
-    ),
+    upload_file.upload_ui(),
+
     # Step2: Check datatypes:
-    ui.nav_panel(
-        "Step 2",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Check datatypes for columns")),
-        ),
-        ui.tags.br(),
-        ui.layout_sidebar(
-            ui.sidebar(
-                ui.input_select(
-                    id="column_to_convert",
-                    label=ui.strong("Column"),
-                    choices=[],
-                    selected=None,
-                    multiple=False,
-                ),
-                ui.input_select(
-                    id="convert_dtype",
-                    label=ui.strong("Convert to"),
-                    choices=[],
-                    selected=None,
-                    multiple=False,
-                ),
-                ui.tooltip(
-                    ui.input_action_button(
-                        id="convert",
-                        label="Convert",
-                        class_="btn-success"
-                    ),
-                    "You can convert the selected column to the selected data type by clicking this \"Convert\" button.",
-                ),
-            ),
-            ui.tags.main(
-                ui.layout_columns(
-                    ui.div(
-                        ui.tags.h5("Original Datatypes"),
-                        ui.tags.hr(),
-                        ui.output_data_frame("get_output_dtypes_df"),
-                    ),
-                    ui.div(
-                        ui.tags.h5("Updated Datatypes"),
-                        ui.tags.hr(),
-                        ui.output_data_frame("get_updated_output_dtypes_df"),
-                    ),
-                    col_widths={"sm": (5, 5)},
-                ),
-            ),
-            height="80vh",
-        ),
-    ),
+    check_datatypes.check_datatypes_ui(),
+
     # Step3: Select Plot Types:
-    ui.nav_panel(
-        "Step 3",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Select Plot Types")),
-        ),
-        ui.tags.br(),
-        ui.card(
-            ui.layout_sidebar(
-                ui.sidebar(
-                    ui.input_select(
-                        id="plot_types",
-                        label=ui.strong("Plot Types"),
-                        choices=[],
-                        selected=None,
-                        multiple=False,
-                    )
-                ),
-                ui.tags.main(
-                    ui.output_ui("get_plot_introductions"),
-                ),
-                
-                open="always",
-            ),
-            height="80vh",
-        ),
-    ),
+    select_plottypes.select_plottypes_ui(),
+
     # Step4: Select Columns:
-    ui.nav_panel(
-        "Step 4",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Select Columns")),
-        ),
-        ui.tags.br(),
-        ui.card(
-            ui.layout_sidebar(
-                ui.sidebar(
-                    # Add condition: if user selects "Line Plot" on plot_types
-                    ui.panel_conditional(
-                        "input.plot_types == 'Line Plot'",
-                        # add dropdown for x-axis and y-axis
-                        functions.xaxis_input_select("line"),
-                        ui.tags.hr(),
-                        functions.yaxis_input_select("line"),
-                    ),
-                    # Add condition: if user selects "Bar Plot" on plot_types
-                    ui.panel_conditional(
-                        "input.plot_types == 'Bar Plot'",
-                        # add dropdown for x-axis
-                        functions.xaxis_input_select("bar"),
-                    ),
-                    # Add condition: if user selects "Box Plot" on plot_types
-                    ui.panel_conditional(
-                        "input.plot_types == 'Box Plot'",
-                        # add dropdown for x-axis
-                        functions.xaxis_input_select("box"),
-                    ),
-                    # Add condition: if user selects "Histogram" on plot_types
-                    ui.panel_conditional(
-                        "input.plot_types == 'Histogram'",
-                        # add dropdown for x-axis
-                        functions.xaxis_input_select("hist"),
-                    ),
-                    # Add condition: if user selects "Scatter Plot" on plot_types
-                    ui.panel_conditional(
-                        "input.plot_types == 'Scatter Plot'",
-                        # add dropdown for x-axis and y-axis
-                        functions.xaxis_input_select("scatter"),
-                        ui.tags.hr(),
-                        functions.yaxis_input_select("scatter"),
-                    ),
-                    open="always",
-                ),
-                ui.tags.main(
-                    ui.output_data_frame("get_output_selected_cols"),
-                ),
-                height="80vh",
-            ),
-        ),
-    ),
+    select_columns.select_columns_ui(),
+
     # Step5: Generate Plots:
-    ui.nav_panel(
-        "Step 5",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Generate Plots")),
-        ),
-        ui.tags.br(),
-        ui.card(
-            height="80vh",
-        ),
-    ),
+    generate_plots.generate_plots_ui(),
+
     title="Accessible Data Visualization",
     lang="en",
 )
