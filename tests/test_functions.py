@@ -1,4 +1,6 @@
 import pytest
+from unittest.mock import patch
+from typing import List
 import apps.functions as functions
 import pandas as pd
 
@@ -42,3 +44,26 @@ def test_return_choices_for_columns(plot_type, expected_columns):
     data_frame = pd.read_csv("tests/test_dataframe/csv_comma_no_quote.csv")
     columns = functions.return_choices_for_columns(data_frame, plot_type=plot_type)
     assert columns == expected_columns
+
+@pytest.mark.parametrize("plot_type, expected_id",
+                         [
+                             ("Line Plot", "line_y_axis"),
+                             ("Bar Plot", "bar_y_axis"),
+                             ("Box Plot", "box_y_axis"),
+                             ("Histogram", "histogram_y_axis"),
+                             ("Scatter Plot", "scatter_y_axis")
+                         ])
+
+def test_update_yaxis_input_select(plot_type: str, expected_id: str):
+    """ Test the `update_yaxis_input_select()` function. This function updates the y-axis dropdown based on the selected plot type.
+
+    :param plot_type: the plot type passed to the function
+    :type plot_type: str
+    :param expected_id: the expected id for the updated input select
+    :type expected_id: str
+    """
+    choices = ["col1", "col2", "col3"]
+
+    with patch("apps.functions.ui.update_select") as mock_update_select:
+        functions.update_yaxis_input_select(plot_type, choices)
+        mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
