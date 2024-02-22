@@ -2,6 +2,7 @@ from typing import List
 from pathlib import Path
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import openpyxl
+import pandas as pd
 
 def sep_input_radio_buttons() -> ui.input_radio_buttons:
     """ Create a radio button group for users to select a separator for input.
@@ -111,3 +112,27 @@ def get_excel_sheet_names(file_path: Path) -> List[str]:
     except Exception as e:
         print(f"Error reading Excel file: {e}")
         return []
+
+def return_choices_for_columns(data_frame: pd.DataFrame, plot_type: str) -> List[str]:
+    """ Return a list of column names for the dropdown based on the plot type.
+
+    :param data_frame: The input data frame.
+    :type data_frame: pd.DataFrame
+    :param plot_type: The plot type selected by the user.
+    :type plot_type: str
+    :return: A list of column names for the dropdown based on the plot type.
+    :rtype: List[str]
+    """
+    if plot_type == "Line Plot":
+        choices = ["Select an option"] + data_frame.columns.tolist()
+    elif plot_type == "Bar Plot":
+        choices = ["Select an option"] + data_frame.select_dtypes(include=["object"]).columns.tolist()
+    elif plot_type == "Box Plot":
+        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
+    elif plot_type == "Histogram":
+        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
+    elif plot_type == "Scatter Plot":
+        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
+    else:
+        choices = ["Select an option"]
+    return choices
