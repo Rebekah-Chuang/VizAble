@@ -392,56 +392,20 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
     @reactive.Effect
-    def update_xaxis_selectize() -> None:
-        """ Update the dropdown for users to select the x-axis based on the uploaded file and selected plot type.
+    def update_axis_selectize() -> None:
+        """ Updates dropdown options for selecting the x-axis and optionally the y-axis, based on the uploaded data and the chosen plot type.
         """
         data_frame = reactive_df.get()
         choices: list[str] = functions.return_choices_for_columns(data_frame, input.plot_types())
 
-        if input.plot_types() == "Line Plot":
-            ui.update_select(
-                id="line_x_axis",
-                choices=choices,
-                selected=None
-            )
-            ui.update_select(
-                id="line_y_axis",
-                choices=choices,
-                selected=None
-            )
+        # update both x-axis and y-axis dropdowns
+        if input.plot_types() in ["Line Plot", "Scatter Plot"]:
+            functions.update_xaxis_dropdown(input.plot_types(), choices)
+            functions.update_yaxis_dropdown(input.plot_types(), choices)
 
-        elif input.plot_types() == "Bar Plot":
-            ui.update_select(
-                id="bar_x_axis",
-                choices=choices,
-                selected=None
-            )
-
-        elif input.plot_types() == "Box Plot":
-            ui.update_select(
-                id="box_x_axis",
-                choices=choices,
-                selected=None
-            )
-
-        elif input.plot_types() == "Histogram":
-            ui.update_select(
-                id="hist_x_axis",
-                choices=choices,
-                selected=None
-            )
-
-        else:
-            ui.update_select(
-                id="scatter_x_axis",
-                choices=choices,
-                selected=None
-            )
-            ui.update_select(
-                id="scatter_y_axis",
-                choices=choices,
-                selected=None
-            )
+        # update only x-axis dropdowns
+        elif input.plot_types() in ["Bar Plot", "Box Plot", "Histogram"]:
+            functions.update_xaxis_dropdown(input.plot_types(), choices)
 
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
@@ -476,8 +440,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                 selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Histogram":
-            req(input.hist_x_axis())
-            x_col: str = input.hist_x_axis()
+            req(input.histogram_x_axis())
+            x_col: str = input.histogram_x_axis()
             if x_col in data_frame.columns:
                 selected_cols = data_frame[[x_col]]
 
