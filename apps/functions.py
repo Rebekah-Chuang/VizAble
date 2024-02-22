@@ -137,7 +137,7 @@ def return_choices_for_columns(data_frame: pd.DataFrame, plot_type: str) -> List
         choices = ["Select an option"]
     return choices
 
-def update_xaxis_dropdown(plot_type: str, choices: List[str]) -> ui.update_select:
+def update_xaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
     """ Update the x-axis dropdown based on the selected plot type.
 
     :param plot_type: The plot type selected by the user.
@@ -155,7 +155,7 @@ def update_xaxis_dropdown(plot_type: str, choices: List[str]) -> ui.update_selec
         selected=None
     )
 
-def update_yaxis_dropdown(plot_type: str, choices: List[str]):
+def update_yaxis_input_select(plot_type: str, choices: List[str]):
     """ Update the y-axis dropdown based on the selected plot type.
 
     :param plot_type: The plot type selected by the user.

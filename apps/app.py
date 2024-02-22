@@ -400,12 +400,12 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         # update both x-axis and y-axis dropdowns
         if input.plot_types() in ["Line Plot", "Scatter Plot"]:
-            functions.update_xaxis_dropdown(input.plot_types(), choices)
-            functions.update_yaxis_dropdown(input.plot_types(), choices)
+            functions.update_xaxis_input_select(input.plot_types(), choices)
+            functions.update_yaxis_input_select(input.plot_types(), choices)
 
         # update only x-axis dropdowns
         elif input.plot_types() in ["Bar Plot", "Box Plot", "Histogram"]:
-            functions.update_xaxis_dropdown(input.plot_types(), choices)
+            functions.update_xaxis_input_select(input.plot_types(), choices)
 
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
