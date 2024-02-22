@@ -136,3 +136,39 @@ def return_choices_for_columns(data_frame: pd.DataFrame, plot_type: str) -> List
     else:
         choices = ["Select an option"]
     return choices
+
+def update_xaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
+    """ Update the x-axis dropdown based on the selected plot type.
+
+    :param plot_type: The plot type selected by the user.
+    :type plot_type: str
+    :param choices: A list of column names for the dropdown based on the plot type.
+    :type choices: List[str]
+    :return: An updated x-axis dropdown based on the selected plot type.
+    :rtype: ui.update_select
+    """
+    axis_id = plot_type.split(" ")[0].lower() + "_x_axis"
+
+    return ui.update_select(
+        id=axis_id,
+        choices=choices,
+        selected=None
+    )
+
+def update_yaxis_input_select(plot_type: str, choices: List[str]):
+    """ Update the y-axis dropdown based on the selected plot type.
+
+    :param plot_type: The plot type selected by the user.
+    :type plot_type: str
+    :param choices: A list of column names for the dropdown based on the plot type.
+    :type choices: List[str]
+    :return: An updated x-axis dropdown based on the selected plot type.
+    :rtype: ui.update_select
+    """
+    axis_id = plot_type.split(" ")[0].lower() + "_y_axis"
+
+    return ui.update_select(
+        id=axis_id,
+        choices=choices,
+        selected=None
+    )

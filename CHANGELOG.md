@@ -1,6 +1,7 @@
 ## [2024-02-22]
 ### Changed
  - Moved column choices logic based on different plot types to `functions.py` for enhanced modularity ([0c23ef8](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/0c23ef8c047c5089f88086ae44202fe243904192))
+ - Moved update x-axis/y-axis dropdown logic based on different plot types to `functions.py` for enhanced modularity ([d6a46af](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/98/commits/d6a46af0b9c8f04b8a3eb098b6434643ec4cf5e5))
 
 ### Tests
  - Added unit test for `return_choices_for_columns()` function([45aea21](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/45aea21e561eff11b79763ff54f1e5d23746dc1a))
@@ -110,6 +111,7 @@
 ## [2024-01-30]
 ### Added
  - Rendered a dataframe for datatypes of columns after users upload their file ([28ce413](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/28ce41356244727bdc30512b3293ad4971a294d7))
+ 
    *Example:*
 
    |Column Name|Data Type|

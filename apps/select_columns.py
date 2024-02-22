@@ -40,7 +40,7 @@ def select_columns_ui() -> ui.nav_panel:
                     ui.panel_conditional(
                         "input.plot_types == 'Histogram'",
                         # add dropdown for x-axis
-                        functions.xaxis_input_select("hist"),
+                        functions.xaxis_input_select("histogram"),
                     ),
                     # Add condition: if user selects "Scatter Plot" on plot_types
                     ui.panel_conditional(
