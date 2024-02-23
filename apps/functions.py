@@ -123,18 +123,25 @@ def return_choices_for_columns(data_frame: pd.DataFrame, plot_type: str) -> List
     :return: A list of column names for the dropdown based on the plot type.
     :rtype: List[str]
     """
-    if plot_type == "Line Plot":
-        choices = ["Select an option"] + data_frame.columns.tolist()
-    elif plot_type == "Bar Plot":
-        choices = ["Select an option"] + data_frame.select_dtypes(include=["object"]).columns.tolist()
-    elif plot_type == "Box Plot":
-        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
-    elif plot_type == "Histogram":
-        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
-    elif plot_type == "Scatter Plot":
-        choices = ["Select an option"] + data_frame.select_dtypes(include=["number"]).columns.tolist()
-    else:
-        choices = ["Select an option"]
+    choices = ["Select an option"]
+    
+    # Mapping of plot types to data types they accept(add more if needed)
+    plot_type_to_dtypes = {
+        "Line Plot": None,
+        "Bar Plot": ["object", "category"],
+        "Box Plot": ["number"],
+        "Histogram": ["number"],
+        "Scatter Plot": ["number"],
+    }
+
+    # Get the relevant data types for the selected plot type
+    dtypes = plot_type_to_dtypes.get(plot_type)
+
+    if dtypes is None:
+        choices += data_frame.columns.tolist()
+    elif dtypes:
+        choices += data_frame.select_dtypes(include=dtypes).columns.tolist()
+
     return choices
 
 def update_xaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
