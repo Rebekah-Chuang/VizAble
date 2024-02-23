@@ -60,13 +60,13 @@ def test_xaxis_input_select(plot_type_str: str, expected_id: str):
     :param expected_id: the expected id for the initial input select
     :type expected_id: str
     """
-    with patch("apps.functions.ui.input_select") as mock_update_select:
+    with patch("apps.functions.ui.input_select") as mock_input_select:
         functions.xaxis_input_select(plot_type_str)
-        mock_update_select.assert_called_once_with(id=expected_id,
-                                                   label=ui.strong("X-axis"),
-                                                   choices=[],
-                                                   selected=None,
-                                                   multiple=False)
+        mock_input_select.assert_called_once_with(id=expected_id,
+                                                  label=ui.strong("X-axis"),
+                                                  choices=[],
+                                                  selected=None,
+                                                  multiple=False)
 
 @pytest.mark.parametrize("plot_type, expected_id",
                          [
