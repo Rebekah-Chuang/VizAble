@@ -6,6 +6,7 @@
 ### Tests
  - Added unit test for `return_choices_for_columns()` function ([45aea21](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/45aea21e561eff11b79763ff54f1e5d23746dc1a))
  - Added unit test for `update_xaxis_input_select()` function ([9bb463f](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/100/commits/9bb463f882cb57d1fa7b6188d6d9ba16eb3d8aa8))
+ - Added unit test for `update_yaxis_input_select()` function ([f505dff](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/102/commits/f505dff7ec41d8362522942d1ae3a1313f72f227))
 
 ## [2024-02-21]
 ### Added
