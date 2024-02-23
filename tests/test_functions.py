@@ -1,3 +1,4 @@
+from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import pytest
 from unittest.mock import patch
 from typing import List
@@ -42,6 +43,30 @@ def test_return_choices_for_columns(plot_type: str, expected_columns: List[str])
     columns = functions.return_choices_for_columns(data_frame, plot_type=plot_type)
     assert columns == expected_columns
 
+@pytest.mark.parametrize("plot_type_str, expected_id",
+                         [
+                             ("line", "line_y_axis"),
+                             ("bar", "bar_y_axis"),
+                             ("box", "box_y_axis"),
+                             ("histogram", "histogram_y_axis"),
+                             ("scatter", "scatter_y_axis")
+                         ])
+
+def test_yaxis_input_select(plot_type_str: str, expected_id: str):
+    """ Test the `yaxis_input_select()` function. This function returns an empty dropdown for users to select the `y-axis`, where the input id is based on the provided `plot_type_str`.
+    :param plot_type_str: Plot type string, e.g., "line", "bar", "box", "histogram", "scatter".
+    :type plot_type_str: str
+    :param expected_id: the expected id for the initial input select
+    :type expected_id: str
+    """
+    with patch("apps.functions.ui.input_select") as mock_update_select:
+        functions.yaxis_input_select(plot_type_str)
+        mock_update_select.assert_called_once_with(id=expected_id,
+                                                   label=ui.strong("Y-axis"),
+                                                   choices=[],
+                                                   selected=None,
+                                                   multiple=False)
+        
 @pytest.mark.parametrize("plot_type, expected_id",
                          [
                              ("Line Plot", "line_x_axis"),
