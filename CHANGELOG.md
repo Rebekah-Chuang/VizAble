@@ -4,7 +4,8 @@
  - Moved update x-axis/y-axis dropdown logic based on different plot types to `functions.py` for enhanced modularity ([d6a46af](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/98/commits/d6a46af0b9c8f04b8a3eb098b6434643ec4cf5e5))
 
 ### Tests
- - Added unit test for `return_choices_for_columns()` function([45aea21](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/45aea21e561eff11b79763ff54f1e5d23746dc1a))
+ - Added unit test for `return_choices_for_columns()` function ([45aea21](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/45aea21e561eff11b79763ff54f1e5d23746dc1a))
+ - Added unit test for `update_xaxis_input_select()` function ([9bb463f](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/100/commits/9bb463f882cb57d1fa7b6188d6d9ba16eb3d8aa8))
 
 ## [2024-02-21]
 ### Added
@@ -23,13 +24,13 @@
 
 ## [2024-02-15]
 ### Added
- - Added a new action button allow users to reset their selection([f6eacf0](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/f6eacf09a0a42a70f820e13695ba185dc6c247a5))
+ - Added a new action button allow users to reset their selection ([f6eacf0](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/f6eacf09a0a42a70f820e13695ba185dc6c247a5))
 
 ## [2024-02-14]
 ### Fixed
- - Specified `apps` as parent package when importing `functions` to solve `ImportError`([235a419](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/235a41951d39a436ad9e933781d40d3bb1243b1a))
- - Addressed the issue where it's not possible for `ui.input_select` and `ui.input_radio_buttons` with no items selected([3c67a61](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/3c67a617e14cb98e642bfee89bc0bca25263fb9b))
- - Addressed the issue where the pop-up messages were not accessible in datatype conversion step([210dbc2](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/210dbc27b67d5fa071b942f1e543b4f12d55548f))
+ - Specified `apps` as parent package when importing `functions` to solve `ImportError` ([235a419](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/235a41951d39a436ad9e933781d40d3bb1243b1a))
+ - Addressed the issue where it's not possible for `ui.input_select` and `ui.input_radio_buttons` with no items selected ([3c67a61](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/3c67a617e14cb98e642bfee89bc0bca25263fb9b))
+ - Addressed the issue where the pop-up messages were not accessible in datatype conversion step ([210dbc2](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/210dbc27b67d5fa071b942f1e543b4f12d55548f))
 
 ## [2024-02-13]
 ### Changed
@@ -101,7 +102,7 @@
 ### Fixed
  - Fixed a bug where the original datatypes df automatically updates during data type conversion ([107dd0e](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/107dd0e703e51db7bd387b699a89a6f725210a24))
  - Fixed a bug where plot types dropdown not resetting when users upload a new file ([48b9546](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/48b9546d0cc3f4bc59be2e8343c1df35478fb02f))
-  - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type. ([7a6dcb4](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/7a6dcb45361a67fa0f969a2b2560606d915991b3))
+  - Fixed the problem where an error occurs when a user uploads a file but haven't selected a plot type ([7a6dcb4](https://github.com/Rebekah-Chuang/accessible-data-viz-application/commit/7a6dcb45361a67fa0f969a2b2560606d915991b3))
 
 ## [2024-01-31]
 ### Added
