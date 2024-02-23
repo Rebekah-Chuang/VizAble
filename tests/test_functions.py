@@ -64,3 +64,26 @@ def test_update_xaxis_input_select(plot_type: str, expected_id: str):
     with patch("apps.functions.ui.update_select") as mock_update_select:
         functions.update_xaxis_input_select(plot_type, choices)
         mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
+
+@pytest.mark.parametrize("plot_type, expected_id",
+                         [
+                             ("Line Plot", "line_y_axis"),
+                             ("Bar Plot", "bar_y_axis"),
+                             ("Box Plot", "box_y_axis"),
+                             ("Histogram", "histogram_y_axis"),
+                             ("Scatter Plot", "scatter_y_axis")
+                         ])
+
+def test_update_yaxis_input_select(plot_type: str, expected_id: str):
+    """ Test the `update_yaxis_input_select()` function. This function updates the y-axis dropdown based on the selected plot type.
+
+    :param plot_type: the plot type passed to the function
+    :type plot_type: str
+    :param expected_id: the expected id for the updated input select
+    :type expected_id: str
+    """
+    choices = ["col1", "col2", "col3"]
+
+    with patch("apps.functions.ui.update_select") as mock_update_select:
+        functions.update_yaxis_input_select(plot_type, choices)
+        mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
