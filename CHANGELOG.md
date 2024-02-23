@@ -1,8 +1,11 @@
 ## [2024-02-23]
+### Changed
+ - Improved `return_choices_for_columns()` function to enhance readability ([ac0f9bf](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/110/commits/ac0f9bf815baa0b4f540dc66a97d6646b36b16d6))
+
 ### Tests
- -  Added unit test for `xaxis_input_select()` function ([524afb7](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/105/commits/524afb71bb47ac89ee55c98100e891a0bb640ede))
- -  Added unit test for `yaxis_input_select()` function ([7bb4f32](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/106/commits/7bb4f3217a957c92fcfe0c68a76cd8303f0c28ef))
- -  Added unit test for `input_file()` function ([6250806](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/108/commits/625080684aee8d8a693ddff0c29882b207cdf6f7))
+ - Added unit test for `xaxis_input_select()` function ([524afb7](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/105/commits/524afb71bb47ac89ee55c98100e891a0bb640ede))
+ - Added unit test for `yaxis_input_select()` function ([7bb4f32](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/106/commits/7bb4f3217a957c92fcfe0c68a76cd8303f0c28ef))
+ - Added unit test for `input_file()` function ([6250806](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/108/commits/625080684aee8d8a693ddff0c29882b207cdf6f7))
 
 ## [2024-02-22]
 ### Changed
