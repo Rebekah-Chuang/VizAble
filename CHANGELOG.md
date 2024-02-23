@@ -1,3 +1,7 @@
+## [2024-02-23]
+### Tests
+ -  Added unit test for `input_file()` function ([6250806](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/108/commits/625080684aee8d8a693ddff0c29882b207cdf6f7))
+
 ## [2024-02-22]
 ### Changed
  - Moved column choices logic based on different plot types to `functions.py` for enhanced modularity ([0c23ef8](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/96/commits/0c23ef8c047c5089f88086ae44202fe243904192))

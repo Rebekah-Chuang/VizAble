@@ -5,6 +5,30 @@ from typing import List
 import apps.functions as functions
 import pandas as pd
 
+@pytest.mark.parametrize("file_extension_str, expected_id, expected_accept",
+                         [
+                             (".csv", "csv_file", [".csv"]),
+                             (".tsv", "tsv_file", [".tsv"]),
+                             (".xlsx", "xlsx_file", [".xlsx"])
+                         ])
+
+def test_input_file(file_extension_str: str, expected_id: str, expected_accept: List[str]):
+    """ Test the `input_file()` function. This function creates a file input for users to upload a file.
+
+    :param file_extension_str: File extension string, e.g., ".csv", ".tsv", ".xlsx".
+    :type file_extension_str: str
+    :param expected_id: Expected id for different file extensions, e.g., "csv_file", "tsv_file", "xlsx_file".
+    :type expected_id: str
+    :param expected_accept: Expected accept list for different file extensions, e.g., [".csv"], [".tsv"], [".xlsx"].
+    :type expected_accept: List[str]
+    """
+    with patch("apps.functions.ui.input_file") as mock_input_file:
+        functions.input_file(file_extension_str)
+        mock_input_file.assert_called_once_with(id=expected_id,
+                                                label="",
+                                                accept=expected_accept,
+                                                multiple=False)
+
 def test_get_file_id():
     """ Test the `get_file_id()` function. This function generates a `file_id` based on the file format selected by the user. For example, if the user selects ".csv", the returned `file_id` will be "csv_file". Similarly, if ".xlsx" is selected, the returned `file_id` will be "xlsx_file".
     """
