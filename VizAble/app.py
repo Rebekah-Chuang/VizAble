@@ -1,4 +1,4 @@
-from apps import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
+from VizAble import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
 import pandas as pd
 import shinyswatch
 from htmltools import css
