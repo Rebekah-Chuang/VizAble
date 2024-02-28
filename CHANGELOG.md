@@ -1,7 +1,11 @@
+## [2024-02-28]
+### Chores
+ - Removed `pytest.yaml` from Github Action workflow as it's replaced by `tox.yaml` ([1a0446d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/115/commits/1a0446df4efd911b5237d4c5ae68fecf360e5b6b)) 
+ - Added `.gitignore` ([209426d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/117/commits/209426d128cfc3adb76b1a968b81429441ee8937))
+
 ## [2024-02-27]
 ### Chores
  - Added `tox` workflow to run tests in Github Action ([1445e3](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/113/commits/1445e3ad1ed4e5239682271028e051a36f395da5))
- - Remove `pytest.yaml` from Github Action workflow as it's replaced by `tox.yaml` ([1a0446d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/115/commits/1a0446df4efd911b5237d4c5ae68fecf360e5b6b)) 
 
 ## [2024-02-23]
 ### Changed
