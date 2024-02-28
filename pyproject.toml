@@ -6,7 +6,7 @@ authors = ["Chi-Ying Chuang <83235098+Rebekah-Chuang@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.9,<4.0"
 numpy = "^1.26.4"
 pandas = "^2.2.0"
 shiny = "^0.7.1"

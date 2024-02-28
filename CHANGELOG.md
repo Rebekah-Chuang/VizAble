@@ -1,3 +1,7 @@
+## [2024-02-27]
+### Chores
+ - Added `tox` workflow to run tests in Github Action ([1445e3](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/113/commits/1445e3ad1ed4e5239682271028e051a36f395da5))
+
 ## [2024-02-23]
 ### Changed
  - Improved `return_choices_for_columns()` function to enhance readability ([ac0f9bf](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/110/commits/ac0f9bf815baa0b4f540dc66a97d6646b36b16d6))
