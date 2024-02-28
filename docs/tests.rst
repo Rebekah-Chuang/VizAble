@@ -1,8 +1,8 @@
 tests package
 =============
 
-Submodules
-----------
+.. Submodules
+.. ----------
 
 tests.test\_functions module
 ----------------------------

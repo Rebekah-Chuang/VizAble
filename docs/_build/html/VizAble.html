@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <title>VizAble package</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="tests package" href="tests.html" />
+  <link rel="prev" title="VizAble" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <span class="site-name">VizAble</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="modules.html#vizable">vizable</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">VizAble package</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#vizable-functions-module" class="reference internal">VizAble.functions module</a></li>
+                
+                  <li class="toctree-l2"><a href="#module-VizAble" class="reference internal">Module contents</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="tests.html" class="reference internal ">tests package</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">VizAble</a> &raquo;</li>
+    
+    <li>VizAble package</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="previous chapter">← VizAble</a>
+  </li>
+  <li class="next">
+    <a href="tests.html"
+       title="next chapter">tests package →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="vizable-package">
+<h1>VizAble package<a class="headerlink" href="#vizable-package" title="Link to this heading">¶</a></h1>
+<section id="vizable-functions-module">
+<h2>VizAble.functions module<a class="headerlink" href="#vizable-functions-module" title="Link to this heading">¶</a></h2>
+<dl class="py function" id="module-VizAble.functions">
+<dt class="sig sig-object py" id="VizAble.functions.get_excel_sheet_names">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">get_excel_sheet_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#VizAble.functions.get_excel_sheet_names" title="Link to this definition">¶</a></dt>
+<dd><p>Get a list of all sheet names for the uploaded Excel file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>Path</em>) – Path to the uploaded Excel file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of all sheet names for the uploaded Excel file. 
+Returns an empty list if the file path is invalid or there is an error reading the file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.get_file_id">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">get_file_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file_format_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#VizAble.functions.get_file_id" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a <cite>file_id</cite> based on the file format selected by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_file_format_str</strong> (<em>str</em>) – File format string, e.g., “.csv”, “.tsv”, “.xlsx”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <cite>file_id</cite> based on the provided file format string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.input_file">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">input_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_extension_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">input_file</span></span></span><a class="headerlink" href="#VizAble.functions.input_file" title="Link to this definition">¶</a></dt>
+<dd><p>Create a file input for users to upload a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_extension_str</strong> (<em>str</em>) – File extension string, e.g., “.csv”, “.tsv”, “.xlsx”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>File input for users to upload a file, with the input id based on the provided <cite>file_extension_str</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ui.input_file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.quotechar_input_radio_buttons">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">quotechar_input_radio_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">input_radio_buttons</span></span></span><a class="headerlink" href="#VizAble.functions.quotechar_input_radio_buttons" title="Link to this definition">¶</a></dt>
+<dd><p>Create a radio button group for users to select a quote character for input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A radio button group for selecting a quote character.
+Users can choose from Double Quote (<cite>”</cite>) and Single Quote (<cite>’</cite>).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ui.input_radio_buttons</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.return_choices_for_columns">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">return_choices_for_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#VizAble.functions.return_choices_for_columns" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of column names for the dropdown based on the plot type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_frame</strong> (<em>pd.DataFrame</em>) – The input data frame.</p></li>
+<li><p><strong>plot_type</strong> (<em>str</em>) – The plot type selected by the user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of column names for the dropdown based on the plot type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.sep_input_radio_buttons">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">sep_input_radio_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">input_radio_buttons</span></span></span><a class="headerlink" href="#VizAble.functions.sep_input_radio_buttons" title="Link to this definition">¶</a></dt>
+<dd><p>Create a radio button group for users to select a separator for input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A radio button group for selecting a separator.
+Users can choose from Comma (<cite>,</cite>), Semicolon (<cite>;</cite>), and Tab (`      <a href="#id1"><span class="problematic" id="id2">`</span></a>).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ui.input_radio_buttons</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.update_xaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">update_xaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">update_select</span></span></span><a class="headerlink" href="#VizAble.functions.update_xaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Update the x-axis dropdown based on the selected plot type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_type</strong> (<em>str</em>) – The plot type selected by the user.</p></li>
+<li><p><strong>choices</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of column names for the dropdown based on the plot type.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An updated x-axis dropdown based on the selected plot type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ui.update_select</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.update_yaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">update_yaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#VizAble.functions.update_yaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Update the y-axis dropdown based on the selected plot type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_type</strong> (<em>str</em>) – The plot type selected by the user.</p></li>
+<li><p><strong>choices</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of column names for the dropdown based on the plot type.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An updated x-axis dropdown based on the selected plot type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ui.update_select</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.xaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">xaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">input_select</span></span></span><a class="headerlink" href="#VizAble.functions.xaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Create a dropdown for users to select the x-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plot_type_str</strong> (<em>str</em>) – Plot type string, e.g., “line”, “bar”, “box”, “histogram”, “scatter”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An empty dropdown for users to select the <cite>x-axis</cite>, where the input id is based on the provided <cite>plot_type_str</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ui.input_select</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VizAble.functions.yaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">VizAble.functions.</span></span><span class="sig-name descname"><span class="pre">yaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">input_select</span></span></span><a class="headerlink" href="#VizAble.functions.yaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Create a dropdown for users to select the y-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plot_type_str</strong> (<em>str</em>) – Plot type string, e.g., “line”, “bar”, “box”, “histogram”, “scatter”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An empty dropdown for users to select the <cite>y-axis</cite>, where the input id is based on the provided <cite>plot_type_str</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ui.input_select</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-VizAble">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-VizAble" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="previous chapter">← VizAble</a>
+  </li>
+  <li class="next">
+    <a href="tests.html"
+       title="next chapter">tests package →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2024, Rebekah Chuang.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
