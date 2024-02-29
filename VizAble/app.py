@@ -5,6 +5,7 @@ from htmltools import css
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module, run_app
 from shiny.types import FileInfo
 from typing import Optional
+from pandas.errors import ParserError
 
 app_ui = ui.page_navbar(
     # theme for the app,
@@ -70,22 +71,32 @@ def server(input: Inputs, output: Outputs, session: Session):
                 return
 
             data_frame: pd.DataFrame
+            
             if file_id == "csv_file":
-                data_frame = pd.read_csv(
-                    file[0]["datapath"],
-                    sep=sep,
-                    quotechar=quotechar,
-                    header=0
-                )
-                reactive_df.set(data_frame.reset_index().fillna("N/A"))
+                try:
+                    data_frame = pd.read_csv(
+                        file[0]["datapath"],
+                        sep=sep,
+                        quotechar=quotechar,
+                        header=0
+                    )
+                    reactive_df.set(data_frame.reset_index().fillna("N/A"))
+
+                except ParserError as e:
+                    # TODO: use a better way to display the error message so that users know how to fix their data.
+                    # TODO: figure out how to reset all selection
+                    error_message = f"{str(e)} \n Press Escape key or Dismiss button to close this message."
+                    ui.modal_show(ui.modal(error_message,
+                                           easy_close=True))
+                    reactive_df.set(pd.DataFrame())
 
             elif file_id == "tsv_file":
                 data_frame = pd.read_table(
-                    file[0]["datapath"],
-                    sep="\t",
-                    quotechar=quotechar,
-                    header=0
-                )
+                        file[0]["datapath"],
+                        sep="\t",
+                        quotechar=quotechar,
+                        header=0
+                    )
                 reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
             else:
@@ -459,7 +470,6 @@ app = App(app_ui, server)
 
 def main():
     run_app(app)
-    # print("hey")
 
 if __name__ == "__main__":
     main()
