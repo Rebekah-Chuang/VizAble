@@ -1,5 +1,4 @@
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module
-from apps import functions
 
 def check_datatypes_ui() -> ui.nav_panel:
     """ user interface for checking/converting datatypes for columns(step 2)

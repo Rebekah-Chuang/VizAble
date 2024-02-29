@@ -1,9 +1,8 @@
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
-from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import pytest
 from unittest.mock import patch
 from typing import List
-import apps.functions as functions
+import VizAble.functions as functions
 import pandas as pd
 
 @pytest.mark.parametrize("file_extension_str, expected_id, expected_accept",
@@ -23,7 +22,7 @@ def test_input_file(file_extension_str: str, expected_id: str, expected_accept: 
     :param expected_accept: Expected accept list for different file extensions, e.g., [".csv"], [".tsv"], [".xlsx"].
     :type expected_accept: List[str]
     """
-    with patch("apps.functions.ui.input_file") as mock_input_file:
+    with patch("VizAble.functions.ui.input_file") as mock_input_file:
         functions.input_file(file_extension_str)
         mock_input_file.assert_called_once_with(id=expected_id,
                                                 label="",
@@ -84,7 +83,7 @@ def test_xaxis_input_select(plot_type_str: str, expected_id: str):
     :param expected_id: the expected id for the initial input select
     :type expected_id: str
     """
-    with patch("apps.functions.ui.input_select") as mock_input_select:
+    with patch("VizAble.functions.ui.input_select") as mock_input_select:
         functions.xaxis_input_select(plot_type_str)
         mock_input_select.assert_called_once_with(id=expected_id,
                                                   label=ui.strong("X-axis"),
@@ -108,7 +107,7 @@ def test_yaxis_input_select(plot_type_str: str, expected_id: str):
     :param expected_id: the expected id for the initial input select
     :type expected_id: str
     """
-    with patch("apps.functions.ui.input_select") as mock_input_select:
+    with patch("VizAble.functions.ui.input_select") as mock_input_select:
         functions.yaxis_input_select(plot_type_str)
         mock_input_select.assert_called_once_with(id=expected_id,
                                                   label=ui.strong("Y-axis"),
@@ -135,7 +134,7 @@ def test_update_xaxis_input_select(plot_type: str, expected_id: str):
     """
     choices = ["col1", "col2", "col3"]
 
-    with patch("apps.functions.ui.update_select") as mock_update_select:
+    with patch("VizAble.functions.ui.update_select") as mock_update_select:
         functions.update_xaxis_input_select(plot_type, choices)
         mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
 
@@ -158,6 +157,6 @@ def test_update_yaxis_input_select(plot_type: str, expected_id: str):
     """
     choices = ["col1", "col2", "col3"]
 
-    with patch("apps.functions.ui.update_select") as mock_update_select:
+    with patch("VizAble.functions.ui.update_select") as mock_update_select:
         functions.update_yaxis_input_select(plot_type, choices)
         mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)

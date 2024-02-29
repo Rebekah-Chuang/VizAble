@@ -21,7 +21,7 @@
     
   <link rel="index" title="Index" href="genindex.html" />
   <link rel="search" title="Search" href="search.html" />
-  <link rel="prev" title="apps package" href="apps.html" /> 
+  <link rel="prev" title="VizAble package" href="VizAble.html" /> 
   </head>
 
   <body>
@@ -29,7 +29,7 @@
     <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
   <router-link to="index.html" class="home-link">
     
-      <span class="site-name">Accessible Data Visualization Application</span>
+      <span class="site-name">VizAble</span>
     
   </router-link>
 
@@ -68,13 +68,13 @@
   
     <div class="sidebar-group">
       <p class="caption">
-        <span class="caption-text"><a href="modules.html#accessible-data-viz-application">accessible-data-viz-application</a></span>
+        <span class="caption-text"><a href="modules.html#vizable">vizable</a></span>
       </p>
       <ul class="current">
         
           <li class="toctree-l1 ">
             
-              <a href="apps.html" class="reference internal ">apps package</a>
+              <a href="VizAble.html" class="reference internal ">VizAble package</a>
             
 
             
@@ -88,8 +88,6 @@
 
             
               <ul>
-                
-                  <li class="toctree-l2"><a href="#submodules" class="reference internal">Submodules</a></li>
                 
                   <li class="toctree-l2"><a href="#module-tests.test_functions" class="reference internal">tests.test_functions module</a></li>
                 
@@ -112,7 +110,7 @@
   <ul class="breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
     
-      <li><a href="modules.html">accessible-data-viz-application</a> &raquo;</li>
+      <li><a href="modules.html">VizAble</a> &raquo;</li>
     
     <li>tests package</li>
   </ul>
@@ -120,8 +118,8 @@
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="apps.html"
-       title="previous chapter">← apps package</a>
+    <a href="VizAble.html"
+       title="previous chapter">← VizAble package</a>
   </li>
 </ul>
   
@@ -131,9 +129,6 @@
             
   <section id="tests-package">
 <h1>tests package<a class="headerlink" href="#tests-package" title="Link to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
-</section>
 <section id="module-tests.test_functions">
 <span id="tests-test-functions-module"></span><h2>tests.test_functions module<a class="headerlink" href="#module-tests.test_functions" title="Link to this heading">¶</a></h2>
 <dl class="py function">
@@ -152,6 +147,21 @@
 <dt class="sig sig-object py" id="tests.test_functions.test_get_file_id">
 <span class="sig-prename descclassname"><span class="pre">tests.test_functions.</span></span><span class="sig-name descname"><span class="pre">test_get_file_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_functions.test_get_file_id" title="Link to this definition">¶</a></dt>
 <dd><p>Test the <cite>get_file_id()</cite> function. This function generates a <cite>file_id</cite> based on the file format selected by the user. For example, if the user selects “.csv”, the returned <cite>file_id</cite> will be “csv_file”. Similarly, if “.xlsx” is selected, the returned <cite>file_id</cite> will be “xlsx_file”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_functions.test_input_file">
+<span class="sig-prename descclassname"><span class="pre">tests.test_functions.</span></span><span class="sig-name descname"><span class="pre">test_input_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_extension_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_accept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_functions.test_input_file" title="Link to this definition">¶</a></dt>
+<dd><p>Test the <cite>input_file()</cite> function. This function creates a file input for users to upload a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_extension_str</strong> (<em>str</em>) – File extension string, e.g., “.csv”, “.tsv”, “.xlsx”.</p></li>
+<li><p><strong>expected_id</strong> (<em>str</em>) – Expected id for different file extensions, e.g., “csv_file”, “tsv_file”, “xlsx_file”.</p></li>
+<li><p><strong>expected_accept</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Expected accept list for different file extensions, e.g., [“.csv”], [“.tsv”], [“.xlsx”].</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -182,6 +192,44 @@
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_functions.test_update_yaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">tests.test_functions.</span></span><span class="sig-name descname"><span class="pre">test_update_yaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_functions.test_update_yaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Test the <cite>update_yaxis_input_select()</cite> function. This function updates the y-axis dropdown based on the selected plot type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_type</strong> (<em>str</em>) – the plot type passed to the function</p></li>
+<li><p><strong>expected_id</strong> (<em>str</em>) – the expected id for the updated input select</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_functions.test_xaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">tests.test_functions.</span></span><span class="sig-name descname"><span class="pre">test_xaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_functions.test_xaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Test the <cite>xaxis_input_select()</cite> function. This function returns an empty dropdown for users to select the <cite>x-axis</cite>, where the input id is based on the provided <cite>plot_type_str</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_type_str</strong> (<em>str</em>) – Plot type string, e.g., “line”, “bar”, “box”, “histogram”, “scatter”.</p></li>
+<li><p><strong>expected_id</strong> (<em>str</em>) – the expected id for the initial input select</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_functions.test_yaxis_input_select">
+<span class="sig-prename descclassname"><span class="pre">tests.test_functions.</span></span><span class="sig-name descname"><span class="pre">test_yaxis_input_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_functions.test_yaxis_input_select" title="Link to this definition">¶</a></dt>
+<dd><p>Test the <cite>yaxis_input_select()</cite> function. This function returns an empty dropdown for users to select the <cite>y-axis</cite>, where the input id is based on the provided <cite>plot_type_str</cite>.
+:param plot_type_str: Plot type string, e.g., “line”, “bar”, “box”, “histogram”, “scatter”.
+:type plot_type_str: str
+:param expected_id: the expected id for the initial input select
+:type expected_id: str</p>
+</dd></dl>
+
 </section>
 <section id="module-tests">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="Link to this heading">¶</a></h2>
@@ -193,8 +241,8 @@
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="apps.html"
-       title="previous chapter">← apps package</a>
+    <a href="VizAble.html"
+       title="previous chapter">← VizAble package</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2024, Rebekah Chuang.

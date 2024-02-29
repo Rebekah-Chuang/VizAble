@@ -1,8 +1,8 @@
-accessible-data-viz-application
+VizAble
 ===============================
 
 .. toctree::
    :maxdepth: 4
 
-   apps
+   VizAble
    tests
