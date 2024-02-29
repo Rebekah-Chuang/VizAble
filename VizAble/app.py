@@ -2,7 +2,7 @@ import functions, introductions, upload_file, check_datatypes, select_plottypes,
 import pandas as pd
 import shinyswatch
 from htmltools import css
-from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module
+from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module, run_app
 from shiny.types import FileInfo
 from typing import Optional
 
@@ -456,3 +456,9 @@ def server(input: Inputs, output: Outputs, session: Session):
 
 
 app = App(app_ui, server)
+
+def main():
+    run_app(app)
+
+if __name__ == "__main__":
+    main()
