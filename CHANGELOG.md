@@ -1,4 +1,7 @@
 ## [2024-02-28]
+### Added
+ - Added `main()` function to `app.py` for command-line app execution ([741af59](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/121/commits/741af59f7bcda3c1fa49c4f1d96318125650d596))
+
 ### Chores
  - Removed `pytest.yaml` from Github Action workflow as it's replaced by `tox.yaml` ([1a0446d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/115/commits/1a0446df4efd911b5237d4c5ae68fecf360e5b6b)) 
  - Added `.gitignore` ([209426d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/117/commits/209426d128cfc3adb76b1a968b81429441ee8937))
