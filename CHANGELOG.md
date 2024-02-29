@@ -2,6 +2,7 @@
 ### Chores
  - Removed `pytest.yaml` from Github Action workflow as it's replaced by `tox.yaml` ([1a0446d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/115/commits/1a0446df4efd911b5237d4c5ae68fecf360e5b6b)) 
  - Added `.gitignore` ([209426d](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/117/commits/209426d128cfc3adb76b1a968b81429441ee8937))
+ - Changed package name from `apps` to `VizAble` ([86c47a5](https://github.com/Rebekah-Chuang/accessible-data-viz-application/pull/119/commits/86c47a5d2d7913b93302d570b2f7a836cdf6ff8a))
 
 ## [2024-02-27]
 ### Chores
