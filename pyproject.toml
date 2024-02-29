@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "accessible-data-viz-application"
-version = "0.1.0"
-description = ""
-authors = ["Chi-Ying Chuang <83235098+Rebekah-Chuang@users.noreply.github.com>"]
+name = "VizAble"
+version = "0.5.0"
+description = "A web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind)."
+authors = ["Chi-Ying Chuang <rebekah890110@gmail.com>"]
 readme = "README.md"
+packages = [{include = "VizAble"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
