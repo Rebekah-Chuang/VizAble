@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "VizAble"
-version = "0.5.0"
+version = "0.5.1"
 description = "A web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind)."
 authors = ["Chi-Ying Chuang <rebekah890110@gmail.com>"]
 readme = "README.md"
@@ -32,6 +32,8 @@ wheel = "^0.42.0"
 sphinx = "^7.2.6"
 sphinx-press-theme = "^0.8.0"
 
+[tool.poetry.scripts]
+"VizAble.run_app" = "VizAble.app:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
