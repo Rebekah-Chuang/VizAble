@@ -1,4 +1,4 @@
-import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
+from VizAble import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
 import pandas as pd
 import shinyswatch
 from htmltools import css
@@ -459,6 +459,7 @@ app = App(app_ui, server)
 
 def main():
     run_app(app)
+    # print("hey")
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, module
-import functions
+from VizAble import functions
 
 def select_columns_ui() -> ui.nav_panel:
     """ user interface for selecting columns(step 4)
