@@ -3,6 +3,7 @@ from pathlib import Path
 from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import openpyxl
 import pandas as pd
+from pandas.errors import ParserError
 
 def sep_input_radio_buttons() -> ui.input_radio_buttons:
     """ Create a radio button group for users to select a separator for input.
@@ -61,6 +62,38 @@ def get_file_id(input_file_format_str: str) -> str:
         file_suffix = input_file_format_str.replace(".", "")
         file_id = f"{file_suffix}_file"
         return file_id
+
+def read_csv_file(file_path: Path, sep: str, quotechar: str) -> pd.DataFrame:
+    """ 
+    Read a csv file that users uploaded and the separator and quote character they selected and return a pandas DataFrame.
+    :param file_path: file path to the uploaded csv file.
+    :type file_path: Path
+    :param sep: seperator selected by the user.
+    :type sep: str
+    :param quotechar: quote character selected by the user.
+    :type quotechar: str
+    :return: an empty DataFrame if there is an error reading the file, otherwise return the DataFrame that the index is reset and already fill na with "N/A".
+    :rtype: pd.DataFrame
+    """
+    try:
+        data_frame = pd.read_csv(
+            file_path,
+            sep=sep,
+            quotechar=quotechar,
+            header=0
+        )
+        data_frame = data_frame.reset_index().fillna("N/A")
+
+    except ParserError as e:
+        # TODO: use a better way to display the error message so that users know how to fix their data.
+        # TODO: figure out how to reset all selection
+        error_message = f"{str(e)} \n Press Escape key or Dismiss button to close this message."
+        ui.modal_show(ui.modal(error_message,
+                               easy_close=True))
+        data_frame = pd.DataFrame()
+        
+    return data_frame
+
 
 def xaxis_input_select(plot_type_str: str) -> ui.input_select:
     """ Create a dropdown for users to select the x-axis.

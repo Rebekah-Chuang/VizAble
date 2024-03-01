@@ -73,22 +73,8 @@ def server(input: Inputs, output: Outputs, session: Session):
             data_frame: pd.DataFrame
             
             if file_id == "csv_file":
-                try:
-                    data_frame = pd.read_csv(
-                        file[0]["datapath"],
-                        sep=sep,
-                        quotechar=quotechar,
-                        header=0
-                    )
-                    reactive_df.set(data_frame.reset_index().fillna("N/A"))
-
-                except ParserError as e:
-                    # TODO: use a better way to display the error message so that users know how to fix their data.
-                    # TODO: figure out how to reset all selection
-                    error_message = f"{str(e)} \n Press Escape key or Dismiss button to close this message."
-                    ui.modal_show(ui.modal(error_message,
-                                           easy_close=True))
-                    reactive_df.set(pd.DataFrame())
+                data_frame = functions.read_csv_file(file[0]["datapath"], sep, quotechar)
+                reactive_df.set(data_frame)
 
             elif file_id == "tsv_file":
                 data_frame = pd.read_table(
