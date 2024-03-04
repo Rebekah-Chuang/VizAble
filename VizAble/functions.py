@@ -84,10 +84,10 @@ def read_csv_file(file_path: Path, sep: str, quotechar: str) -> pd.DataFrame:
         )
         data_frame = data_frame.reset_index().fillna("N/A")
 
-    except ParserError as e:
-        # TODO: use a better way to display the error message so that users know how to fix their data.
+    except Exception as e:
+        # catch all error instead of specific error(ex:ParserError)
         # TODO: figure out how to reset all selection
-        error_message = f"{str(e)} \n Press Escape key or Dismiss button to close this message."
+        error_message = f"An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: {str(e)}.\n Press Escape key or Dismiss button to close this message."
         ui.modal_show(ui.modal(error_message,
                                easy_close=True))
         data_frame = pd.DataFrame()
