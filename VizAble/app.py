@@ -77,13 +77,21 @@ def server(input: Inputs, output: Outputs, session: Session):
                 reactive_df.set(data_frame)
 
             elif file_id == "tsv_file":
-                data_frame = pd.read_table(
-                        file[0]["datapath"],
-                        sep="\t",
-                        quotechar=quotechar,
-                        header=0
-                    )
-                reactive_df.set(data_frame.reset_index().fillna("N/A"))
+                try: 
+                    data_frame = pd.read_table(
+                            file[0]["datapath"],
+                            sep="\t",
+                            quotechar=quotechar,
+                            header=0
+                        )
+                    reactive_df.set(data_frame.reset_index().fillna("N/A"))
+
+                except Exception as e:
+                    # catch the error and display it to the user
+                    error_message = f"An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: {str(e)}.\n Press Escape key or Dismiss button to close this message."
+                    ui.modal_show(ui.modal(error_message,
+                                           easy_close=True))
+                    reactive_df.set(pd.DataFrame())
 
             else:
                 sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
@@ -117,7 +125,10 @@ def server(input: Inputs, output: Outputs, session: Session):
                     reactive_df.set(data_frame.reset_index().fillna("N/A"))
 
                 except Exception as e:
-                    print(f"Error reading Excel file sheet: {e}")
+                    # catch the error and display it to the user
+                    error_message = f"An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: {str(e)}.\n Press Escape key or Dismiss button to close this message."
+                    ui.modal_show(ui.modal(error_message,
+                                           easy_close=True))
                     reactive_df.set(pd.DataFrame())
 
     @render.data_frame
