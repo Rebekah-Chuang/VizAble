@@ -10,7 +10,7 @@ packages = [{include = "VizAble"}]
 python = ">=3.9,<4.0"
 numpy = "^1.26.4"
 pandas = "^2.2.0"
-shiny = "^0.7.1"
+shiny = "^0.8.0"
 openpyxl = "^3.1.2"
 great-tables = "^0.2.0"
 shinyswatch = "^0.4.2"

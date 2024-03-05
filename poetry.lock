@@ -2156,13 +2156,13 @@ files = [
 
 [[package]]
 name = "shiny"
-version = "0.7.1"
+version = "0.8.0"
 description = "A web development framework for Python."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "shiny-0.7.1-py3-none-any.whl", hash = "sha256:6fc29c2dd5acec25efc0543542df7b0ea9591565acb628d51329261fb6744663"},
-    {file = "shiny-0.7.1.tar.gz", hash = "sha256:25f6402f8639375d9d300fa4533cceaab0ee08eb2cd3ecc4cae5d12a89bc5624"},
+    {file = "shiny-0.8.0-py3-none-any.whl", hash = "sha256:860397e5733b7170d68a3d0281560a4b84a211eb66ca09b40c937a133743b9a7"},
+    {file = "shiny-0.8.0.tar.gz", hash = "sha256:63172b7c156eaf07e057fc821315e7fef6fa91512297b8eda5373e211be87fe2"},
 ]
 
 [package.dependencies]
@@ -2173,16 +2173,19 @@ htmltools = ">=0.5.1"
 linkify-it-py = ">=1.0"
 markdown-it-py = ">=1.1.0"
 mdit-py-plugins = ">=0.3.0"
-python-multipart = "*"
+python-multipart = [
+    {version = ">=0.0.7", markers = "platform_system != \"Emscripten\""},
+    {version = "*", markers = "platform_system == \"Emscripten\""},
+]
 questionary = {version = ">=2.0.0", markers = "platform_system != \"Emscripten\""}
-starlette = ">=0.17.1,<0.35.0"
+starlette = "*"
 typing-extensions = ">=4.0.1"
 uvicorn = ">=0.16.0"
 watchfiles = {version = ">=0.18.0", markers = "platform_system != \"Emscripten\""}
 websockets = ">=10.0"
 
 [package.extras]
-dev = ["black (>=23.1,<24.0)", "flake8 (>=6.0.0)", "flake8-bugbear (>=23.2.13)", "isort (>=5.10.1)", "matplotlib", "numpy", "pandas", "pandas-stubs", "pre-commit (>=2.15.0)", "pyright (>=1.1.348)", "shinyswatch (>=0.2.4)", "wheel"]
+dev = ["black (>=24.0)", "flake8 (>=6.0.0)", "flake8-bugbear (>=23.2.13)", "isort (>=5.10.1)", "matplotlib", "numpy", "pandas", "pandas-stubs", "pre-commit (>=2.15.0)", "pyright (>=1.1.348)", "shinyswatch (>=0.2.4)", "wheel"]
 doc = ["griffe (==0.33.0)", "jupyter", "jupyter-client (<8.0.0)", "pydantic (==1.10)", "quartodoc (==0.7.2)", "shinylive", "tabulate"]
 test = ["astropy", "bokeh", "coverage", "duckdb", "folium", "geodatasets", "geopandas", "holoviews", "ipyleaflet", "missingno", "plotly", "plotnine", "psutil", "pytest (>=6.2.4)", "pytest-asyncio (>=0.17.2)", "pytest-cov", "pytest-playwright (>=0.3.0)", "pytest-rerunfailures", "pytest-timeout", "pytest-xdist", "rsconnect-python", "scikit-learn", "seaborn", "shinywidgets", "suntime", "syrupy", "timezonefinder", "xarray"]
 
@@ -2880,4 +2883,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "d1364fc27d7b9cd20ffe212d8b6bc73ad38f8d76564d049b1917d09702aa7d3f"
+content-hash = "9a7d8c0240a5f763817a9a874ae74acae6149d5f123b8a774f865e19696567e2"
