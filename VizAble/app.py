@@ -29,7 +29,8 @@ app_ui = ui.page_navbar(
     # Step5: Generate Plots:
     generate_plots.generate_plots_ui(),
 
-    title="Accessible Data Visualization",
+    title="VizAble - Accessible Data Visualization Tool",
+    window_title="VizAble",
     lang="en",
 )
 

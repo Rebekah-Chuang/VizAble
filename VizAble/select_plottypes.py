@@ -8,8 +8,7 @@ def select_plottypes_ui() -> ui.nav_panel:
     """
     return ui.nav_panel(
         "Step 3",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Select Plot Types")),
+        ui.tags.header(ui.tags.h1("Select Plot Types"),
         ),
         ui.tags.br(),
         ui.card(

@@ -9,8 +9,7 @@ def select_columns_ui() -> ui.nav_panel:
     """
     return ui.nav_panel(
         "Step 4",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Select Columns")),
+        ui.tags.header(ui.tags.h1("Select Columns"),
         ),
         ui.tags.br(),
         ui.card(

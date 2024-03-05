@@ -8,8 +8,7 @@ def check_datatypes_ui() -> ui.nav_panel:
     """
     return ui.nav_panel(
         "Step 2",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Check datatypes for columns")),
+        ui.tags.header(ui.tags.h1("Check datatypes for columns"),
         ),
         ui.tags.br(),
         ui.layout_sidebar(

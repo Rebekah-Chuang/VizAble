@@ -8,8 +8,7 @@ def generate_plots_ui() -> ui.nav_panel:
     """
     return ui.nav_panel(
         "Step 5",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Generate Plots")),
+        ui.tags.header(ui.tags.h1("Generate Plots"),
         ),
         ui.tags.br(),
         ui.card(

@@ -9,8 +9,7 @@ def upload_ui() -> ui.nav_panel:
     """
     return ui.nav_panel(
         "Step 1",
-        ui.tags.header(
-            ui.panel_title(ui.tags.h1("Upload a File")),
+        ui.tags.header(ui.tags.h1("Upload a File"),
         ),
         ui.tags.br(),
         ui.card(
