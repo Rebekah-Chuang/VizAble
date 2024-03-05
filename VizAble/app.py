@@ -9,7 +9,7 @@ from pandas.errors import ParserError
 
 app_ui = ui.page_navbar(
     # theme for the app,
-    shinyswatch.theme.darkly(),
+    shinyswatch.theme.cosmo(),
 
     # Instructions:
     introductions.introductions_ui(),
