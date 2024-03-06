@@ -4,6 +4,9 @@ on:
     branches:
         - Rebekah-Chuang/issue146
 
+permissions:
+    contents: write
+    
 jobs:
   generate-changelog:
     runs-on: ubuntu-latest
