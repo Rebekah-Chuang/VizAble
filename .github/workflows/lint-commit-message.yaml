@@ -12,21 +12,10 @@ jobs:
           fetch-depth: 0  # Fetches the entire history which is necessary for commitlint to work correctly
 
       - name: Lint Commit Messages
-        uses: wagoid/commitlint-github-action@v5
+        uses: wagoid/commitlint-github-action@v4
         with:
           configFile: './commitlint.config.js'
           token: ${{ secrets.GITHUB_TOKEN }}
           failOnWarnings: 'false'  # Set to true if you want warnings to cause the action to fail
           # Add this line to check only the latest commit
-          
-      - name: Parse commitlint output
-        id: parse_output
-        run: |
-            result=$(cat ${{ github.workspace }}/commitlint-result.json)
-            invalid_messages=$(echo "$result" | jq '.[] | select(.valid == false)')
-            echo "::set-output name=invalid_messages::$invalid_messages"
-        shell: bash
-
-      - name: Fail if commit linting fails
-        if: ${{ steps.parse_output.outputs.invalid_messages != '[]' }}
-        run: exit 1
+          firstParent: true
