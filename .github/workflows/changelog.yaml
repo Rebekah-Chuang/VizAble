@@ -2,11 +2,8 @@ name: Generate changelog
 on:
   push:
     branches:
-        - Rebekah-Chuang/issue146
+        - issue146
 
-permissions:
-    contents: write
-    
 jobs:
   generate-changelog:
     runs-on: ubuntu-latest
