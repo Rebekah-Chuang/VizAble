@@ -91,7 +91,7 @@ def test_read_csv_file_invalid(mock_ui_modal, mock_ui_modal_show):
     test_file_path = "tests/test_dataframe/with_parser_error.csv"
     test_sep = ","
     test_quotechar = "'"
-    test_error_message = "An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: Error tokenizing data. C error: Expected 5 fields in line 5, saw 6 . Press Escape key or Dismiss button to close this message."
+    test_error_message = f"An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: Error tokenizing data. C error: Expected 5 fields in line 5, saw 6\n.\n Press Escape key or Dismiss button to close this message."
     expected_df = pd.DataFrame()
 
     output_df = functions.read_csv_file(test_file_path, test_sep, test_quotechar)
