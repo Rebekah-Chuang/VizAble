@@ -16,6 +16,7 @@ jobs:
         with:
           configFile: './commitlint.config.js'
           token: ${{ secrets.GITHUB_TOKEN }}
-          failOnWarnings: 'false'  # Set to true if you want warnings to cause the action to fail
+          # Set to true if you want warnings to cause the action to fail
+          failOnWarnings: 'false'
           # Add this line to check only the latest commit
           firstParent: true
