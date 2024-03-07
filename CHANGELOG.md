@@ -2,6 +2,17 @@
 
 
 
+## v0.5.4 (2024-03-07)
+
+### Ci
+
+* ci: trigger publish to PyPI workflow when releasing [skip ci] ([`560cc30`](https://github.com/Rebekah-Chuang/VizAble/commit/560cc3072da9ff6c1cfda63a8fdfe120b823e866))
+
+### Fix
+
+* fix: modify instructions in home page [skip ci] ([`6a57f60`](https://github.com/Rebekah-Chuang/VizAble/commit/6a57f60636db1754b61cfd8db2cd2b1d0eec4b59))
+
+
 ## v0.5.3 (2024-03-07)
 
 ### Chore
