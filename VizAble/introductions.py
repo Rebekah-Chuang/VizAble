@@ -12,7 +12,8 @@ def introductions_ui() -> ui.nav_panel:
         ui.tags.main(
             ui.markdown(
                 """
-            This is an app for **Accessible Data Visualization**.
+            This is an web app for **Accessible Data Visualization**.
+            Add this line to test if semantic-release works...
         
             Instructions to be added...
             """
