@@ -2,7 +2,7 @@ name: Generate changelog
 on:
   push:
     branches:
-        - issue146
+        - Rebekah-Chuang/issue146
 
 jobs:
   generate-changelog:
