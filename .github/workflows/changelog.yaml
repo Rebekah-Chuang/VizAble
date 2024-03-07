@@ -4,6 +4,9 @@ on:
     branches:
         - Rebekah-Chuang/issue146
 
+permissions:
+  contents: write
+
 jobs:
   generate-changelog:
     runs-on: ubuntu-latest
@@ -16,5 +19,5 @@ jobs:
         REPO_NAME: 'Rebekah-Chuang/VizAble'
         ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
         PATH: 'CHANGELOG.md'
-        COMMIT_MESSAGE: 'docs(CHANGELOG): update `CHAGELOG.md`'
+        COMMIT_MESSAGE: 'docs(CHANGELOG): update `CHANGELOG.md`'
         TYPE: 'feat:Feature,fix:Bug Fixes,docs:Documentation,refactor:Refactor,perf:Performance Improvements'
