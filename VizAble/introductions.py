@@ -13,7 +13,7 @@ def introductions_ui() -> ui.nav_panel:
             ui.markdown(
                 """
             This is an web app for **Accessible Data Visualization**.
-            Add this line to test if semantic-release works...
+            test if v0.5.4 release is triggered
         
             Instructions to be added...
             """
