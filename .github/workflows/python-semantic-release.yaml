@@ -42,7 +42,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "action@github.com"
 
-          semantic-release publish commit_author="github-actions <action@github.com>"
+          semantic-release publish
 
         env:
           GH_TOKEN: ${{secrets.SEMANTIC_RELEASE_GH_TOKEN}}
