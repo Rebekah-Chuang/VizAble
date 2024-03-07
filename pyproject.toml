@@ -2,6 +2,7 @@
 name = "VizAble"
 version = "0.5.1"
 description = "A web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind)."
+license = "MIT"
 authors = ["Chi-Ying Chuang <rebekah890110@gmail.com>"]
 readme = "README.md"
 packages = [{include = "VizAble"}]
@@ -37,6 +38,7 @@ sphinx-press-theme = "^0.8.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
+python-semantic-release = "^9.1.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -45,3 +47,17 @@ build-backend = "poetry.core.masonry.api"
 [virtualenvs]
 create = true
 in-project = true
+
+[tool.semantic_release]
+version_variable = [
+    "VizAble/__init__.py:__version__",
+]
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
+
+major_on_zero = false
+branch = "main"
+upload_to_PyPI = true
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
