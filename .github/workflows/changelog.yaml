@@ -23,4 +23,3 @@ jobs:
         COMMIT_MESSAGE: 'docs(CHANGELOG): update `CHANGELOG.md`'
         TYPE: 'feat:Feature,fix:Bug Fixes,docs:Documentation,refactor:Refactor,perf:Performance Improvements'
         REGENERATE_COUNT: -1
-        UNRELEASED_COMMITS: 'true'
