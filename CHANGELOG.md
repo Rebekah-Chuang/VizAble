@@ -10,10 +10,10 @@
   - update app title and window title ([5fff538](https://github.com/Rebekah-Chuang/VizAble/commit/5fff5388a6f5e698409058f08cb6f04f6a60e6a6)) ([#139](https://github.com/Rebekah-Chuang/VizAble/pull/139))
   - add `main()` function to `app.py` for command-line app execution ([741af59](https://github.com/Rebekah-Chuang/VizAble/commit/741af59f7bcda3c1fa49c4f1d96318125650d596)) ([#121](https://github.com/Rebekah-Chuang/VizAble/pull/121))
   - add an input action button: `reset` to erase `output_df`, and users' selection on `file_format`and `sheet_name` ([f6eacf0](https://github.com/Rebekah-Chuang/VizAble/commit/f6eacf09a0a42a70f820e13695ba185dc6c247a5)) ([#83](https://github.com/Rebekah-Chuang/VizAble/pull/83))
-  - Restrict column choices based on different plot types ([1e25fcb](https://github.com/Rebekah-Chuang/VizAble/commit/1e25fcb06ad503e7a78046e52ad56c8e56e312c3)) ([#35](https://github.com/Rebekah-Chuang/VizAble/pull/35))
-  - Add a dropdown to display all available sheet names if an excel file is uploaded ([86be965](https://github.com/Rebekah-Chuang/VizAble/commit/86be9656475c004fcc3fbc43bc75d46d23299bf9)) ([#27](https://github.com/Rebekah-Chuang/VizAble/pull/27))
-  - Add error handling for unsuccessful column conversion ([f0e9743](https://github.com/Rebekah-Chuang/VizAble/commit/f0e974317db7c1b7b9aa7fd47a3a846d75c0e501)) ([#26](https://github.com/Rebekah-Chuang/VizAble/pull/26))
-  - Added introductions for different plot types based on user selection
+  - restrict column choices based on different plot types ([1e25fcb](https://github.com/Rebekah-Chuang/VizAble/commit/1e25fcb06ad503e7a78046e52ad56c8e56e312c3)) ([#35](https://github.com/Rebekah-Chuang/VizAble/pull/35))
+  - add a dropdown to display all available sheet names if an excel file is uploaded ([86be965](https://github.com/Rebekah-Chuang/VizAble/commit/86be9656475c004fcc3fbc43bc75d46d23299bf9)) ([#27](https://github.com/Rebekah-Chuang/VizAble/pull/27))
+  - add error handling for unsuccessful column conversion ([f0e9743](https://github.com/Rebekah-Chuang/VizAble/commit/f0e974317db7c1b7b9aa7fd47a3a846d75c0e501)) ([#26](https://github.com/Rebekah-Chuang/VizAble/pull/26))
+  - add introductions for different plot types based on user selection
 Fixes #9 ([56e5c27](https://github.com/Rebekah-Chuang/VizAble/commit/56e5c273f886e84b3d9e1129cc4b975967646082)) ([#12](https://github.com/Rebekah-Chuang/VizAble/pull/12))
 
 - accessibility:
@@ -31,10 +31,10 @@ Fixes #9 ([56e5c27](https://github.com/Rebekah-Chuang/VizAble/commit/56e5c273f88
   - increase the width of the datatypes DataFrame so that the text within the DataFrame does not wrap ([2d948ec](https://github.com/Rebekah-Chuang/VizAble/commit/2d948ecc47a83cf517ea211334d171470aee514a)) ([#85](https://github.com/Rebekah-Chuang/VizAble/pull/85))
   - address the issue where it's not possible for `ui.input_select`and `ui.input_radio_buttons` with no items selected ([3c67a61](https://github.com/Rebekah-Chuang/VizAble/commit/3c67a617e14cb98e642bfee89bc0bca25263fb9b)) ([#78](https://github.com/Rebekah-Chuang/VizAble/pull/78))
   - specify `apps` as parent package when importing `functions` ([235a419](https://github.com/Rebekah-Chuang/VizAble/commit/235a41951d39a436ad9e933781d40d3bb1243b1a)) ([#74](https://github.com/Rebekah-Chuang/VizAble/pull/74))
-  - Fixed the problem where an error occurs when a user uploads a file but hasn't selected a plot type. ([7a6dcb4](https://github.com/Rebekah-Chuang/VizAble/commit/7a6dcb45361a67fa0f969a2b2560606d915991b3)) ([#35](https://github.com/Rebekah-Chuang/VizAble/pull/35))
-  - Fixed the problem where the plot types dropdown didn't return to the default when the dataframe was updated. ([48b9546](https://github.com/Rebekah-Chuang/VizAble/commit/48b9546d0cc3f4bc59be2e8343c1df35478fb02f)) ([#32](https://github.com/Rebekah-Chuang/VizAble/pull/32))
-  - Fixed the issue where the original data type of a DataFrame automatically updates during data type conversion ([107dd0e](https://github.com/Rebekah-Chuang/VizAble/commit/107dd0e703e51db7bd387b699a89a6f725210a24)) ([#30](https://github.com/Rebekah-Chuang/VizAble/pull/30))
-  - Update dataframe if a column's data type is changed ([3765ce5](https://github.com/Rebekah-Chuang/VizAble/commit/3765ce5bbd1d4b329703dddab617993554028246)) ([#24](https://github.com/Rebekah-Chuang/VizAble/pull/24))
+  - fix the problem where an error occurs when a user uploads a file but hasn't selected a plot type. ([7a6dcb4](https://github.com/Rebekah-Chuang/VizAble/commit/7a6dcb45361a67fa0f969a2b2560606d915991b3)) ([#35](https://github.com/Rebekah-Chuang/VizAble/pull/35))
+  - fix the problem where the plot types dropdown didn't return to the default when the dataframe was updated. ([48b9546](https://github.com/Rebekah-Chuang/VizAble/commit/48b9546d0cc3f4bc59be2e8343c1df35478fb02f)) ([#32](https://github.com/Rebekah-Chuang/VizAble/pull/32))
+  - fix the issue where the original data type of a DataFrame automatically updates during data type conversion ([107dd0e](https://github.com/Rebekah-Chuang/VizAble/commit/107dd0e703e51db7bd387b699a89a6f725210a24)) ([#30](https://github.com/Rebekah-Chuang/VizAble/pull/30))
+  - update dataframe if a column's data type is changed ([3765ce5](https://github.com/Rebekah-Chuang/VizAble/commit/3765ce5bbd1d4b329703dddab617993554028246)) ([#24](https://github.com/Rebekah-Chuang/VizAble/pull/24))
 
 - accessibility:
   - address the issue where the pop-up messages were not accessible ([210dbc2](https://github.com/Rebekah-Chuang/VizAble/commit/210dbc27b67d5fa071b942f1e543b4f12d55548f)) ([#79](https://github.com/Rebekah-Chuang/VizAble/pull/79))
