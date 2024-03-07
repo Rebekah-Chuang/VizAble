@@ -1,9 +1,10 @@
+# https://guicommits.com/semantic-release-to-automate-versioning-and-publishing-to-pypi-with-github-actions/
 name: Semantic Release
 
 on:
-  push:
-    branches:
-      - main
+    schedule:
+      - cron: '0 0 * * *'  # Runs at 00:00 UTC every day.
+    workflow_dispatch:
 
 jobs:
   release:
@@ -22,7 +23,7 @@ jobs:
           python-version: 3.8
 
       - name: Install poetry
-        uses: Gr1N/setup-poetry@v7
+        uses: abatilo/actions-poetry@v2
 
       - name: Cache poetry dependencies
         uses: actions/cache@v2
