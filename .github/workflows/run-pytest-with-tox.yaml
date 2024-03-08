@@ -1,9 +1,12 @@
-name: Run Tox
+# this workflow is triggered on push to the main branch and runs all tests across multiple python versions
+# test python versions from 3.9 to 3.12(since sphinx depends on >=3.9)
+
+name: run-pytest-with-tox
 
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
 
 jobs:
   build:

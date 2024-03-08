@@ -1,6 +1,11 @@
-name: "Lint Commit Messages"
+# this workflow is triggered everytime a push is made to the repository(on any branch)
+# it checks if the commit message follows the conventional commit format
+# if not, the action will fail
 
-on: [push]
+name: lint-commit-messages
+
+on:
+  [push]
 
 jobs:
   commitlint:

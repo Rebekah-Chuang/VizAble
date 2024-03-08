@@ -1,8 +1,18 @@
-name: Github Semantic Release
+# reference: https://python-semantic-release.readthedocs.io/en/latest/automatic-releases/github-actions.html
+
+# this workflow automatically checks commit history and determine if a new release should be made
+# fix --> patch release, feat --> minor release, breaking --> major release
+# if so, it will create a new release, tag it, update the version in `pyproject.toml` & `VizAble/__init__.py`, and update the `CHANGELOG.md`
+# a new release will also trigger the `pypi-publish` workflow to publish the new release to PyPI
+
+name: python-semantic-release
 
 on:
+  # triggered every day at 00:00
   schedule:
     - cron: '0 0 * * *'
+
+  # triggered manually
   workflow_dispatch:
 
 jobs:
