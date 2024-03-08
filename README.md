@@ -1,10 +1,10 @@
 # VizAble
-![PyPI - Version](https://img.shields.io/pypi/v/VizAble?style=for-the-badge&logo=PyPI&logoColor=white&color=blue&link=https%3A%2F%2Fpypi.org%2Fproject%2FVizAble%2F)
-![GitHub Release](https://img.shields.io/github/v/release/Rebekah-Chuang/VizAble?display_name=release&style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FRebekah-Chuang%2FVizAble%2Freleases)
-![GitHub License](https://img.shields.io/github/license/Rebekah-Chuang/VizAble?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FRebekah-Chuang%2FVizAble%3Ftab%3DMIT-1-ov-file%23readme)
+[![PyPI - Version](https://img.shields.io/pypi/v/VizAble?style=for-the-badge&logo=PyPI&logoColor=white&color=blue&link=https%3A%2F%2Fpypi.org%2Fproject%2FVizAble%2F)](https://pypi.org/project/VizAble/)
+[![GitHub Release](https://img.shields.io/github/v/release/Rebekah-Chuang/VizAble?display_name=release&style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FRebekah-Chuang%2FVizAble%2Freleases)](https://github.com/Rebekah-Chuang/VizAble/releases)
+[![GitHub License](https://img.shields.io/github/license/Rebekah-Chuang/VizAble?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FRebekah-Chuang%2FVizAble%3Ftab%3DMIT-1-ov-file%23readme)](https://github.com/Rebekah-Chuang/VizAble?tab=MIT-1-ov-file#readme)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Rebekah-Chuang/VizAble/run-pytest-with-tox.yaml?style=for-the-badge&label=Tests)](https://github.com/Rebekah-Chuang/VizAble/actions/workflows/run-pytest-with-tox.yaml)
 
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/VizAble?style=for-the-badge&link=https%3A%2F%2Fpypi.org%2Fproject%2FVizAble%2F)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/VizAble?style=for-the-badge&link=https%3A%2F%2Fpypi.org%2Fproject%2FVizAble%2F)](https://pypi.org/project/VizAble/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json&style=for-the-badge)](https://python-poetry.org/)
 
