@@ -39,12 +39,12 @@ def check_datatypes_ui() -> ui.nav_panel:
             ui.tags.main(
                 ui.layout_columns(
                     ui.div(
-                        ui.tags.h5("Original Datatypes"),
+                        ui.tags.h2("Original Datatypes"),
                         ui.tags.hr(),
                         ui.output_data_frame("get_output_dtypes_df"),
                     ),
                     ui.div(
-                        ui.tags.h5("Updated Datatypes"),
+                        ui.tags.h2("Updated Datatypes"),
                         ui.tags.hr(),
                         ui.output_data_frame("get_updated_output_dtypes_df"),
                     ),
