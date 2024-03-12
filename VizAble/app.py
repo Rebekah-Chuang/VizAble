@@ -298,7 +298,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             return (
                 ui.markdown(
                     """
-                #### **Line Plot:**
+                ## **Line Plot:**
                 
                 A line plot, also known as a line graph, is a type of chart that displays data points on a two-dimensional plane. It is particularly useful for showing trends and changes in data over a continuous interval or time period. In a line plot, data points are connected with straight lines, forming a continuous line that represents the overall trend.
                 """
@@ -306,7 +306,7 @@ def server(input: Inputs, output: Outputs, session: Session):
                 ui.tags.hr(),
                 ui.markdown(
                     """
-                #### **Instructions:**
+                ## **Instructions:**
                 If you would like to create a line plot, please select:
                  - one column for `x-axis` (typically represents independent variable such as time or categories)
                  - one column for `y-axis` (typically represents dependent variable which is the data being measured)
@@ -318,14 +318,14 @@ def server(input: Inputs, output: Outputs, session: Session):
             return (
                 ui.markdown(
                     """
-                #### **Bar Plot:**
+                ## **Bar Plot:**
                 A bar plot, also known as a bar chart or bar graph, is a graphical representation of categorical data in the form of rectangular bars. Each bar's length or height corresponds to the frequency or value of the data it represents. Bar plots are commonly used to compare and display the distribution of categorical variables.
                 """
                 ),
                 ui.tags.hr(),
                 ui.markdown(
                     """
-                #### **Instructions:**
+                ## **Instructions:**
                 If you would like to create a bar plot, please select:
                  - one categorical column for `x-axis` (typically represents the categories or groups of the data)
                 """
@@ -336,7 +336,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             return (
                 ui.markdown(
                     """
-                #### **Box Plot:**
+                ## **Box Plot:**
                 A box plot, also known as a box-and-whisker plot, is a graphical representation of the distribution of a dataset. It provides a summary of key statistical measures and displays the spread and central tendency of the data. The plot is particularly useful for comparing the distribution of different groups or datasets.
                 
                 Here are the components of a box plot:
@@ -349,7 +349,7 @@ def server(input: Inputs, output: Outputs, session: Session):
                 ui.tags.hr(),
                 ui.markdown(
                     """
-                #### **Instructions:**
+                ## **Instructions:**
                 If you would like to create a box plot, please select:
                  - one numerical column (containing the  data for which you want to see the distribution)
                 """
@@ -360,14 +360,14 @@ def server(input: Inputs, output: Outputs, session: Session):
             return (
                 ui.markdown(
                     """
-                #### **Histogram:**
+                ## **Histogram:**
                 A histogram is a graphical representation of the distribution of a continuous dataset. It is used to visualize the underlying frequency distribution of a set of continuous or interval data. Histograms provide insights into the shape, center, and spread of the data.
                 """
                 ),
                 ui.tags.hr(),
                 ui.markdown(
                     """
-                #### **Instructions:**
+                ## **Instructions:**
                 If you would like to create a histogram, please select:
                  - one numerical column for `x-axis`(containing the  data for which you want to see the distribution)
                 """
@@ -378,14 +378,14 @@ def server(input: Inputs, output: Outputs, session: Session):
             return (
                 ui.markdown(
                     """
-                #### **Scatter Plot:**
+                ## **Scatter Plot:**
                 A scatter plot is a type of data visualization that displays individual data points on a two-dimensional graph. It is particularly useful for showing the relationship between two continuous variables. Each point on the scatter plot represents a unique observation or data point, and the position of the point is determined by the values of the two variables being compared.
                 """
                 ),
                 ui.tags.hr(),
                 ui.markdown(
                     """
-                #### **Instructions:**
+                ## **Instructions:**
                 If you would like to create a scatter plot, please select:
                  - one numerical column for `x-axis`(typically represents independent variable)
                  - one numerical column for `y-axis`(typically represents dependent variable)
