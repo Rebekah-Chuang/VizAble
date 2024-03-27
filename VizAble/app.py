@@ -36,14 +36,23 @@ app_ui = ui.page_navbar(
 
 
 def server(input: Inputs, output: Outputs, session: Session):
+    file_check = reactive.value(False)
     reactive_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
     reactive_dtypes_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
 
     # Step 1: Upload a File
+    @render.ui
+    @reactive.event(file_check, input.file_format)
+    def dynamic_file_input():
+        if input.file_format() != "Select an option":
+            return functions.input_file(input.file_format())
+
     @reactive.Effect
-    def get_reactive_df() -> None:
-        """ Read the uploaded file and store it in a reactive value.
+    @reactive.event(input.csv_file, input.sep, input.quotechar)
+    def get_reactive_df_csv() -> None:
+        """ Read the uploaded csv file and store it in a reactive value.
         """
+        print("Before selecting csv file input...")  # Initial check to see if this gets called
 
         # Seperator
         sep: str
@@ -72,35 +81,76 @@ def server(input: Inputs, output: Outputs, session: Session):
                 return
 
             data_frame: pd.DataFrame
-            
+
             if file_id == "csv_file":
                 data_frame = functions.read_csv_file(file[0]["datapath"], sep, quotechar)
                 reactive_df.set(data_frame)
+                print("File processed, updating reactive_df...")  # Debugging statement
 
-            elif file_id == "tsv_file":
+    @reactive.Effect
+    @reactive.event(input.tsv_file)
+    def get_reactive_df_tsv() -> None:
+        """ Read the uploaded tsv file and store it in a reactive value.
+        """
+        print("Before selecting tsv file input...")  # Initial check to see if this gets called
+
+        # Get file id
+        file_id: str = functions.get_file_id(input.file_format())
+        if file_id:
+            file_input = getattr(input, file_id)
+
+            file: list[FileInfo] | None = file_input()
+            if file is None:
+                reactive_df.set(pd.DataFrame())
+                return
+
+            data_frame: pd.DataFrame
+
+            if file_id == "tsv_file":
                 try: 
                     data_frame = pd.read_table(
                             file[0]["datapath"],
                             sep="\t",
-                            quotechar=quotechar,
+                            quotechar="'",
                             header=0
                         )
                     reactive_df.set(data_frame.reset_index().fillna("N/A"))
+                    print("File processed, updating reactive_df...")  # Debugging statement
 
                 except Exception as e:
                     # catch the error and display it to the user
                     error_message = f"An error occurred while processing the file. Please ensure that the file format is correct and try again. Error: {str(e)}.\n Press Escape key or Dismiss button to close this message."
                     ui.modal_show(ui.modal(error_message,
-                                           easy_close=True))
+                                            easy_close=True))
                     reactive_df.set(pd.DataFrame())
 
-            else:
+    @reactive.Effect
+    @reactive.event(input.xlsx_file)
+    def get_reactive_df_xlsx() -> None:
+        """ Read the uploaded xlsx file and store it in a reactive value.
+        """
+        print("Before selecting xlsx file input...")  # Initial check to see if this gets called
+
+        # Get file id
+        file_id: str = functions.get_file_id(input.file_format())
+        if file_id:
+            file_input = getattr(input, file_id)
+
+            file: list[FileInfo] | None = file_input()
+            if file is None:
+                reactive_df.set(pd.DataFrame())
+                return
+
+            data_frame: pd.DataFrame
+
+            if file_id == "xlsx_file":
                 sheet_names: list[str] = functions.get_excel_sheet_names(file[0]["datapath"])
                 ui.update_select(
                     id="sheet_name",
                     choices=["Select an option"] + sheet_names,
                     selected=sheet_names[0] if sheet_names else None,
                 )
+                print("File processed, updating reactive_df...")  # Debugging statement
 
     @reactive.Effect
     @reactive.event(input.sheet_name)
@@ -139,22 +189,37 @@ def server(input: Inputs, output: Outputs, session: Session):
         :return: A data grid to display the uploaded data frame.
         :rtype: render.DataGrid
         """
-        data_frame: pd.DataFrame = reactive_df.get()
-        return render.DataGrid(data_frame, row_selection_mode="multiple")
+        if not reactive_df.get().empty:
+            data_frame: pd.DataFrame = reactive_df.get()
+            print(f"Rendering data frame, rows: {len(data_frame)}")  # Debugging statement
+            return render.DataGrid(data_frame, row_selection_mode="multiple")
+        else:
+            print("Data frame is empty.")  # Confirm empty state handling
+            return render.DataGrid(pd.DataFrame(), row_selection_mode="multiple")                
     
     @reactive.Effect
     @reactive.event(input.reset)
     def reset_selections() -> None:
         """ Reset users' selections(`file_format`, `sheet_name`), and uploaded file when the reset button is clicked.
         """
-        ui.update_selectize(
+        ui.update_select(
             id="file_format",
             selected="Select an option",
         )
-        ui.update_selectize(
+        ui.update_select(
             id="sheet_name",
             selected="Select an option",
         )
+        ui.update_select(
+            id="sep",
+            selected=[]
+        )
+        ui.update_select(
+            id="quotechar", 
+            selected=[]
+        )
+        
+        file_check.set(not file_check.get())
         reactive_df.set(pd.DataFrame())
 
     # Step 2: Check datatypes
@@ -180,7 +245,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             reactive_dtypes_df.set(pd.DataFrame(columns=["Column Name", "Data Type"]))
 
     @render.data_frame
-    @reactive.event(input.file_format, input.sheet_name)
+    @reactive.event(reactive_df)
     def get_output_dtypes_df() -> Optional[render.DataGrid]:
         """ Render the data types of the columns in a data grid based on the uploaded file.
 
@@ -198,7 +263,7 @@ def server(input: Inputs, output: Outputs, session: Session):
 
     @reactive.Effect
     @reactive.event(reactive_df)
-    def update_column_to_convert_selectize() -> None:
+    def update_column_to_convert_select() -> None:
         """ Update the dropdown for users to select the column to convert based on the uploaded data frame.
         """
         choices: list[str] = ["Select an option"] + reactive_df().columns.tolist()
@@ -210,7 +275,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     
     @reactive.Effect
     @reactive.event(reactive_df)
-    def update_convert_dtype_selectize() -> None:
+    def update_convert_dtype_select() -> None:
         """ Update the dropdown for users to select the data type to convert to based on the uploaded data frame.
         """
         choices: list[str] = ["Select an option", "str", "int", "float"]
@@ -221,7 +286,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
     @render.data_frame
-    @reactive.event(input.file_format, input.sheet_name, input.convert)
+    @reactive.event(input.convert)
     def get_updated_output_dtypes_df() -> Optional[render.DataGrid]:
         """ Render the updated data types of the columns in a data grid after data type conversion.
 
@@ -274,7 +339,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     # Step 3: Select Plot Types
     @reactive.Effect
     @reactive.event(input.file_format, reactive_df, input.sheet_name)
-    def update_plot_types_selectize() -> None:
+    def update_plot_types_select() -> None:
         """ Update the dropdown for users to select the plot types based on the uploaded data frame.
         """
         data_frame = reactive_df.get()
@@ -401,7 +466,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
     @reactive.Effect
-    def update_axis_selectize() -> None:
+    def update_axis_select() -> None:
         """ Updates dropdown options for selecting the x-axis and optionally the y-axis, based on the uploaded data and the chosen plot type.
         """
         data_frame = reactive_df.get()
