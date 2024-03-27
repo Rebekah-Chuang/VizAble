@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{include = "VizAble"}]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
+python = "^3.9 || ^3.10 || ^3.11"
 numpy = "^1.26.4"
 pandas = "^2.2.0"
 shiny = "^0.8.0"
@@ -32,6 +32,7 @@ setuptools = "^69.0.3"
 wheel = "^0.42.0"
 sphinx = "^7.2.6"
 sphinx-press-theme = "^0.8.0"
+rsconnect-python = "^1.22.0"
 
 [tool.poetry.scripts]
 "VizAble.run_app" = "VizAble.app:main"
