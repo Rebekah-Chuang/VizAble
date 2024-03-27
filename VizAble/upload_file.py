@@ -29,21 +29,15 @@ def upload_ui() -> ui.nav_panel:
                         functions.sep_input_radio_buttons(),
                         ui.tags.hr(),
                         functions.quotechar_input_radio_buttons(),
-                        ui.tags.hr(),
-                        functions.input_file(".csv"),
                     ),
                     # Add condition: if user selects ".tsv" on file_format, they need to select quote character
                     # and only allowed to upload .tsv file
                     ui.panel_conditional(
                         "input.file_format == '.tsv'",
-                        ui.tags.hr(),
-                        functions.input_file(".tsv"),
                     ),
                     # Add condition: if user selects ".xlsx" on file_format, they are only allowed to upload .xlsx file
                     ui.panel_conditional(
                         "input.file_format == '.xlsx'",
-                        functions.input_file(".xlsx"),
-                        ui.tags.hr(),
                         ui.input_select(
                             id="sheet_name",
                             label=ui.strong("Sheet Name"),
@@ -52,6 +46,7 @@ def upload_ui() -> ui.nav_panel:
                             multiple=False,
                         ),
                     ),
+                    ui.output_ui("dynamic_file_input"),
                     ui.tooltip(
                         ui.input_action_button(
                             id="reset",
