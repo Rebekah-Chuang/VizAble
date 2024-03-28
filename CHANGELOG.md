@@ -2,6 +2,23 @@
 
 
 
+## v0.6.0 (2024-03-28)
+
+### Chore
+
+* chore: trigger python-semantic-release every three days at 00:00 EST(05:00 UTC) ([`f522179`](https://github.com/Rebekah-Chuang/VizAble/commit/f5221798e6e28ad95c69416d6c96715063a64993))
+
+* chore: add `shinywidgets` and `plotly` to project for generating plots ([`a093934`](https://github.com/Rebekah-Chuang/VizAble/commit/a093934e7787bb870f1880453090e2d82fafaf79))
+
+### Documentation
+
+* docs: update `README.md` with link to shinyapps.io ([`55ddf64`](https://github.com/Rebekah-Chuang/VizAble/commit/55ddf64b534b9c374c3b2754c980a5addd87715a))
+
+### Feature
+
+* feat: add line plot example ([`eec029e`](https://github.com/Rebekah-Chuang/VizAble/commit/eec029ebdb04c5c6cce800984c220f463b594451))
+
+
 ## v0.5.6 (2024-03-28)
 
 ### Build
