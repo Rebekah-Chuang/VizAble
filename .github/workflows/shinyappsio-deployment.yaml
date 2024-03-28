@@ -19,7 +19,6 @@ jobs:
     # poetry is used as the package manager in this project, but rsconnect will create one
     - name: Install dependencies
       run: |
-        pip freeze > requirements.txt
         pip install -r requirements.txt
     
     - name: Install rsconnect-python
