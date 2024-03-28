@@ -16,9 +16,9 @@ jobs:
       with:
         python-version: '3.11' # Use the appropriate Python version
     
-    # will be ignored since poetry is used as the package manager in this project, but rsconnect will create one
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+    # poetry is used as the package manager in this project, but rsconnect will create one
+    # - name: Install dependencies
+    #   run: pip install -r requirements.txt
     
     - name: Install rsconnect-python
       run: pip install rsconnect-python
