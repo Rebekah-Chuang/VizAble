@@ -17,12 +17,17 @@ jobs:
         python-version: '3.11' # Use the appropriate Python version
     
     # poetry is used as the package manager in this project, but rsconnect will create one
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+    # - name: Install dependencies
+    #   run: |
+    #     pip install -r requirements.txt
+    
+    # - name: Install rsconnect-python
+    #   run: pip install rsconnect-python
+    - name: Install poetry
+      uses: abatilo/actions-poetry@v2
     
     - name: Install rsconnect-python
-      run: pip install rsconnect-python
+      run: poetry add rsconnect-python --dev
 
     - name: Configure rsconnect
       run: |
