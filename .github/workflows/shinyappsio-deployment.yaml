@@ -19,11 +19,11 @@ jobs:
     - name: Install Poetry
       uses: abatilo/actions-poetry@v2
 
-    - name: Install project dependencies with Poetry
-      run: poetry install
+    - name: Install dependencies
+      run: pip install -r requirements.txt
     
     - name: Install rsconnect-python
-      run: poetry add rsconnect-python
+      run: pip install rsconnect-python
 
     - name: Configure rsconnect
       run: |
