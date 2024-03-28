@@ -19,15 +19,18 @@ jobs:
     - name: Install Poetry
       uses: abatilo/actions-poetry@v2
 
-    - name: Load cached venv
-      uses: actions/cache@v4
+    - name: Cache Poetry virtual environment
+      uses: actions/cache@v2
       with:
-        path: .tox
-        key: venv-${{ runner.os }}-3.11-${{ hashFiles('poetry.lock') }}
+        path: ~/.cache/pypoetry/virtualenvs
+        key: venv-${{ runner.os }}-3.11-${{ hashFiles('pyproject.toml') }}
+    
+    - name: Activate Poetry virtual environment
+      run: poetry shell
     
     - name: Install project dependencies with Poetry
       run: poetry install
-
+    
     - name: Configure rsconnect
       run: |
         rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
