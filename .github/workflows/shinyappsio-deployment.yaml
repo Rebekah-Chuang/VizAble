@@ -24,7 +24,7 @@ jobs:
       run: ls
 
     - name: Check requirements.txt content
-      run: cat requirements.txt
+      run: cat requirements.txt || echo "Failed to read requirements.txt"
     
     # poetry is used as the package manager in this project, but rsconnect will create one
     # - name: Install dependencies
