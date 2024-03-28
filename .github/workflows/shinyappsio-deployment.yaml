@@ -16,9 +16,6 @@ jobs:
       with:
         python-version: '3.11' # Use the appropriate Python version
 
-    - name: Install Poetry
-      uses: abatilo/actions-poetry@v2
-
     - name: Install dependencies
       run: pip install -r requirements.txt
     
@@ -31,5 +28,5 @@ jobs:
 
     - name: Deploy to shinyapps.io 
       run: |
-        cd VizAble/VizAble
-        rsconnect deploy shiny . --name rebekah-chuang --title VizAble
+        ls
+        rsconnect deploy shiny ../VizAble --name rebekah-chuang --title VizAble
