@@ -15,15 +15,13 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11' # Use the appropriate Python version
-
-    - name: Install Poetry
-      uses: abatilo/actions-poetry@v2
-
-    - name: Install project dependencies with Poetry
-      run: poetry install
+    
+    # will be ignored since poetry is used as the package manager in this project, but rsconnect will create one
+    - name: Install dependencies
+      run: pip install -r requirements.txt
     
     - name: Install rsconnect-python
-      run: poetry add rsconnect-python
+      run: pip install rsconnect-python
 
     - name: Configure rsconnect
       run: |
@@ -31,5 +29,6 @@ jobs:
 
     - name: Deploy to shinyapps.io 
       run: |
-        cd VizAble/VizAble
+        cd VizAble
+        ls
         rsconnect deploy shiny . --name rebekah-chuang --title VizAble
