@@ -24,6 +24,9 @@ jobs:
       with:
         path: .tox
         key: venv-${{ runner.os }}-3.11-${{ hashFiles('poetry.lock') }}
+    
+    - name: Install project dependencies with Poetry
+      run: poetry install
 
     - name: Configure rsconnect
       run: |
