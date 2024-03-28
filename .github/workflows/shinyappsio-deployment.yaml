@@ -23,12 +23,15 @@ jobs:
     
     # - name: Install rsconnect-python
     #   run: pip install rsconnect-python
-    - name: Install poetry
-      uses: abatilo/actions-poetry@v2
+
+    - name: Install dependencies from pyproject.toml
+      run: |
+        pip install poetry
+        poetry install --no-root --no-dev
     
     - name: Install rsconnect-python
-      run: poetry add rsconnect-python --dev
-
+      run: pip install rsconnect-python
+      
     - name: Configure rsconnect
       run: |
         rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
