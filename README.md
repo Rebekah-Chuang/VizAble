@@ -8,9 +8,16 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json&style=for-the-badge)](https://python-poetry.org/)
 
-**VizAble** is a web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind).
+**VizAble** is a web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind). There are 2 ways that you can access to **VizAble**:
 
-## Prerequisites
+
+## Web Application
+You can access the web application version of **VizAble** by visiting the following link:
+[Go to VizAble](https://rebekah-chuang.shinyapps.io/vizable/)
+
+## Install Package from PyPI or GitHub
+You can also install the **VizAble** package and run the application locally on your machine. Below are the instructions for installation and usage:
+### A. Prerequisites
 Before getting started, ensure you have the following requirements in place:
 1. **Python Version:** Ensure you have Python version **3.9** or higher installed. You can verify your Python version by running:
     ```python
@@ -27,19 +34,19 @@ Before getting started, ensure you have the following requirements in place:
     source env_name/bin/activate
     ```
 
-## Installation
+### B. Installation
 You can install **VizAble** either from **PyPI** for the latest stable version or directly from **GitHub** for the latest development version:
 
-a. Install the latest stable version from **PyPI** using `pip`:
-```
-pip install -U VizAble
-```
-b. Or, install the latest development version from **GitHub**:
-```
-pip install -U git+https://github.com/Rebekah-Chuang/VizAble.git
-```
+1. Install the latest stable version from **PyPI** using `pip`:
+    ```
+    pip install -U VizAble
+    ```
+2. Or, install the latest development version from **GitHub**:
+    ```
+    pip install -U git+https://github.com/Rebekah-Chuang/VizAble.git
+    ```
 
-## Usage
+### Usage
 To run the **VizAble** application, execute the following command:
 ```
 VizAble.run_app
