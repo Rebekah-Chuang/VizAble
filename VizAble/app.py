@@ -6,6 +6,8 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui, req, modu
 from shiny.types import FileInfo
 from typing import Optional
 from pandas.errors import ParserError
+import plotly.express as px
+from shinywidgets import output_widget, render_widget 
 
 app_ui = ui.page_navbar(
     # theme for the app,
@@ -39,7 +41,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     file_check = reactive.value(False)
     reactive_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
     reactive_dtypes_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
-
+    
     # Step 1: Upload a File
     @render.ui
     @reactive.event(file_check, input.file_format)
@@ -528,6 +530,35 @@ def server(input: Inputs, output: Outputs, session: Session):
 
         return selected_cols
 
+    # Step 5: Generate Plots
+    @render_widget
+    @reactive.event(input.generate)
+    def get_output_plot():
+        print("The generate plot button is clicked.")
+        color_by_choices = reactive_df.get().columns.tolist()
+
+        # ui.update_select(
+        #     id="color_by",
+        #     label="Color by",
+        #     choices=color_by_choices
+        # ),
+
+        if input.plot_types() == "Line Plot":
+            req(input.line_x_axis(), input.line_y_axis(), input.plot_title())
+            plot_title = input.plot_title()
+            markers = input.markers()
+            # color_by = input.color_by()
+            lineplot = px.line(
+                data_frame = reactive_df.get(),
+                x = input.line_x_axis(),
+                y = input.line_y_axis(),
+                markers = markers,
+                # color = color_by,
+            ).update_layout(
+                template="seaborn",
+                title={"text": plot_title, "x": 0.5},
+            )
+            return lineplot
 
 app = App(app_ui, server)
 
