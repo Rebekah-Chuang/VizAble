@@ -20,7 +20,6 @@ def select_columns_ui() -> ui.nav_panel:
                         "input.plot_types == 'Line Plot'",
                         # add dropdown for x-axis and y-axis
                         functions.xaxis_input_select("line"),
-                        ui.tags.hr(),
                         functions.yaxis_input_select("line"),
                     ),
                     # Add condition: if user selects "Bar Plot" on plot_types
@@ -46,7 +45,6 @@ def select_columns_ui() -> ui.nav_panel:
                         "input.plot_types == 'Scatter Plot'",
                         # add dropdown for x-axis and y-axis
                         functions.xaxis_input_select("scatter"),
-                        ui.tags.hr(),
                         functions.yaxis_input_select("scatter"),
                     ),
                     open="always",
