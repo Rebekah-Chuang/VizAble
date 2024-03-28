@@ -26,7 +26,7 @@ jobs:
         key: venv-${{ runner.os }}-3.11-${{ hashFiles('pyproject.toml') }}
     
     - name: Activate Poetry virtual environment
-      run: poetry shell
+      run: poetry shell --no-interaction
     
     - name: Install project dependencies with Poetry
       run: poetry install
