@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry add rsconnect-python
+          pip install rsconnect-python
 
     - name: Configure rsconnect
       run: |
