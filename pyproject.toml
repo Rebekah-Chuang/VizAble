@@ -33,6 +33,8 @@ wheel = "^0.42.0"
 sphinx = "^7.2.6"
 sphinx-press-theme = "^0.8.0"
 rsconnect-python = "^1.22.0"
+shinywidgets = "^0.3.1"
+plotly = "^5.20.0"
 
 [tool.poetry.scripts]
 "VizAble.run_app" = "VizAble.app:main"
