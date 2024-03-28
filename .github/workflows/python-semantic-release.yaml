@@ -8,9 +8,9 @@
 name: python-semantic-release
 
 on:
-  # triggered every day at 00:00
+  # triggered every three days at 00:00 EST (05:00 UTC)
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 5 */3 * *'
 
   # triggered manually
   workflow_dispatch:
