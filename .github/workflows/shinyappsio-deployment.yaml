@@ -34,15 +34,15 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
     
-    # - name: Install rsconnect-python
-    #   run: pip install rsconnect-python
+    - name: Install rsconnect-python
+      run: pip install rsconnect-python
 
-    # - name: Configure rsconnect
-    #   run: |
-    #     rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
+    - name: Configure rsconnect
+      run: |
+        rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
 
-    # - name: Deploy to shinyapps.io 
-    #   run: |
-    #     cd VizAble
-    #     ls
-    #     rsconnect deploy shiny . --name rebekah-chuang --title VizAble
+    - name: Deploy to shinyapps.io 
+      run: |
+        cd VizAble
+        ls
+        rsconnect deploy shiny . --name rebekah-chuang --title VizAble
