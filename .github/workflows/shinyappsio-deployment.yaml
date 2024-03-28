@@ -16,8 +16,11 @@ jobs:
       with:
         python-version: '3.11' # Use the appropriate Python version
     
+    - name: Install Poetry
+      uses: abatilo/actions-poetry@v2
+    
     - name: Generate requirements.txt
-      run: pip-compile --output-file requirements.txt pyproject.toml       
+      run: poetry export --without-hashes --format=requirements.txt > requirements.txt     
 
     - name: Check if requirements.txt exists
       run: ls
