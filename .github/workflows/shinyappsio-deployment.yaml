@@ -25,17 +25,18 @@ jobs:
         path: ~/.cache/pypoetry/virtualenvs
         key: venv-${{ runner.os }}-3.11-${{ hashFiles('pyproject.toml') }}
     
-    - name: Activate Poetry virtual environment
-      run: poetry shell --no-interaction
-    
     - name: Install project dependencies with Poetry
-      run: poetry install
+      run: |
+        source "$(poetry env info --path)/bin/activate"
+        poetry install
     
     - name: Configure rsconnect
       run: |
+        source "$(poetry env info --path)/bin/activate"
         rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
 
     - name: Deploy to shinyapps.io 
       run: |
+        source "$(poetry env info --path)/bin/activate"
         cd VizAble/VizAble
         rsconnect deploy shiny . --name rebekah-chuang --title VizAble
