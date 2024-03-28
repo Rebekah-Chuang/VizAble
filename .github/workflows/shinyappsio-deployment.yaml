@@ -26,4 +26,4 @@ jobs:
 
     - name: Deploy to shinyapps.io
       run: |
-        rsconnect deploy shiny VizAble --name rebekah-chuang --title VizAble
+        rsconnect deploy shiny ../VizAble/VizAble --name rebekah-chuang --title VizAble
