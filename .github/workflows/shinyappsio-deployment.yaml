@@ -12,18 +12,24 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11' # Use the appropriate Python version
 
-    - name: Install dependencies
-      run: |
-          pip install rsconnect-python
+    - name: Install Poetry
+      uses: abatilo/actions-poetry@v2
+
+    - name: Load cached venv
+      uses: actions/cache@v4
+      with:
+        path: .tox
+        key: venv-${{ runner.os }}-3.11-${{ hashFiles('poetry.lock') }}
 
     - name: Configure rsconnect
       run: |
         rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
 
-    - name: Deploy to shinyapps.io
+    - name: Deploy to shinyapps.io 
       run: |
-        rsconnect deploy shiny ../VizAble/VizAble --name rebekah-chuang --title VizAble
+        cd VizAble/VizAble
+        rsconnect deploy shiny . --name rebekah-chuang --title VizAble
