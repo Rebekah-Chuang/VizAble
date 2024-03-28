@@ -15,6 +15,7 @@ def introductions_ui() -> ui.nav_panel:
             This is an web app for **Accessible Data Visualization**.
         
             Instructions to be added...
+            test shinyapps.io deployment
             """
             ),
         ),
