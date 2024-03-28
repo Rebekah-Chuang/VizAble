@@ -20,10 +20,12 @@ jobs:
       run: |
         pip freeze > requirements.txt        
 
-    - name: Check requirements.txt
-      run: |
-        ls
-        cat requirements.txt
+    - name: Check if requirements.txt exists
+      run: ls
+
+    - name: Check requirements.txt content
+      run: cat requirements.txt
+    
     # poetry is used as the package manager in this project, but rsconnect will create one
     # - name: Install dependencies
     #   run: pip install -r requirements.txt
