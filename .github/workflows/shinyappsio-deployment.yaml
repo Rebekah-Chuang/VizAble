@@ -17,8 +17,7 @@ jobs:
         python-version: '3.11' # Use the appropriate Python version
     
     - name: Generate requirements.txt
-      run: |
-        pip freeze > requirements.txt        
+      run: pip-compile --output-file requirements.txt pyproject.toml       
 
     - name: Check if requirements.txt exists
       run: ls
