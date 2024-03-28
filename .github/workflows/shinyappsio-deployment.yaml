@@ -21,7 +21,9 @@ jobs:
     
     # reference: https://testdriven.io/tips/eb1fb0f9-3547-4ca2-b2a8-1c037ba856d8/
     - name: Generate requirements.txt
-      run: poetry export --without-hashes --format=requirements.txt > requirements.txt     
+      run: |
+        poetry export --without-hashes --format=requirements.txt > requirements.txt
+        echo "-e git+https://github.com/Rebekah-Chuang/VizAble.git@main#egg=VizAble" >> requirements.txt
 
     - name: Check if requirements.txt exists
       run: ls
@@ -32,15 +34,15 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
     
-    - name: Install rsconnect-python
-      run: pip install rsconnect-python
+    # - name: Install rsconnect-python
+    #   run: pip install rsconnect-python
 
-    - name: Configure rsconnect
-      run: |
-        rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
+    # - name: Configure rsconnect
+    #   run: |
+    #     rsconnect add --account rebekah-chuang --name rebekah-chuang --token ${{ secrets.RSCONNECT_TOKEN }} --secret ${{ secrets.RSCONNECT_SECRET }}
 
-    - name: Deploy to shinyapps.io 
-      run: |
-        cd VizAble
-        ls
-        rsconnect deploy shiny . --name rebekah-chuang --title VizAble
+    # - name: Deploy to shinyapps.io 
+    #   run: |
+    #     cd VizAble
+    #     ls
+    #     rsconnect deploy shiny . --name rebekah-chuang --title VizAble
