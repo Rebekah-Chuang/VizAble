@@ -15,24 +15,39 @@ def generate_plots_ui() -> ui.nav_panel:
         ui.card(
             ui.layout_sidebar(
                 ui.sidebar(
-                    ui.input_text(
-                        id="plot_title",
-                        label="Plot Title",
-                        placeholder="Enter a plot title"
+                    # Show when user selects "Line Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Line Plot'",
+                        ui.input_text(
+                            id="line_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
+                        ui.input_checkbox(
+                            id="markers",
+                            label="Show markers or not",
+                        ),
+                        # ui.input_select(
+                        #     id="color_by",
+                        #     label="Color by",
+                        #     choices=["--------"]
+                        # ),
                     ),
-                    ui.input_checkbox(
-                        id="markers",
-                        label="Show markers or not",
+
+                    # Show when user selects "Scatter Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Scatter Plot'",
+                        ui.input_text(
+                            id="scatter_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
                     ),
-                    # ui.input_select(
-                    #     id="color_by",
-                    #     label="Color by",
-                    #     choices=["--------"]
-                    # ),
+                    # Show no matter what plot type is selected
                     ui.tooltip(
                         ui.input_action_button(
-                        id = "generate",
-                        label = "Generate Plot"
+                            id = "generate",
+                            label = "Generate Plot",
                         ),
                         "You can generate a plot by clicking this \"Generate Plot\" button, but if you have modify anything related to this plot, you need to click this button again to update the plot.",
                     ),

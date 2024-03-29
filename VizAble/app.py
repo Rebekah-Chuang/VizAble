@@ -543,9 +543,10 @@ def server(input: Inputs, output: Outputs, session: Session):
         #     choices=color_by_choices
         # ),
 
+        # Line Plot:
         if input.plot_types() == "Line Plot":
-            req(input.line_x_axis(), input.line_y_axis(), input.plot_title())
-            plot_title = input.plot_title()
+            req(input.line_x_axis(), input.line_y_axis(), input.line_plot_title())
+            plot_title = input.line_plot_title()
             markers = input.markers()
             # color_by = input.color_by()
             lineplot = px.line(
@@ -559,6 +560,28 @@ def server(input: Inputs, output: Outputs, session: Session):
                 title={"text": plot_title, "x": 0.5},
             )
             return lineplot
+
+        # Scatter Plot:
+        if input.plot_types() == "Scatter Plot":
+            req(input.scatter_x_axis(), input.scatter_y_axis(), input.scatter_plot_title())
+            plot_title = input.scatter_plot_title()
+
+            scatter_plot = px.scatter(
+                data_frame = reactive_df.get(),
+                x = input.scatter_x_axis(),
+                y = input.scatter_y_axis(),
+                color_by = input.scatter_color_by()
+            ).update_layout(
+                template="seaborn",
+                title={"text": plot_title, "x": 0.5},
+            )
+
+            ui.update_select(
+                id="scatter_color_by",
+                label="Group by(color)",
+                choices=color_by_choices
+            )
+            return scatter_plot
 
 app = App(app_ui, server)
 
