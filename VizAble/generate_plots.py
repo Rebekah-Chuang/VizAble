@@ -23,6 +23,16 @@ def generate_plots_ui() -> ui.nav_panel:
                             label="Plot Title",
                             placeholder="Enter a plot title"
                         ),
+                        ui.input_text(
+                            id="line_x_axis_title",
+                            label="X-axis Title",
+                            placeholder="Enter a title for the x-axis"
+                        ),
+                        ui.input_text(
+                            id="line_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
                         ui.input_checkbox(
                             id="markers",
                             label="Show markers or not",
@@ -33,6 +43,25 @@ def generate_plots_ui() -> ui.nav_panel:
                         #     choices=["--------"]
                         # ),
                     ),
+                    # Show when user selects "Bar Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Bar Plot'",
+                        ui.input_text(
+                            id="bar_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
+                        ui.input_text(
+                            id="bar_x_axis_title",
+                            label="X-axis Title",
+                            placeholder="Enter a title for the x-axis"
+                        ),
+                        ui.input_text(
+                            id="bar_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
+                    ),
 
                     # Show when user selects "Scatter Plot" on plot_types
                     ui.panel_conditional(
@@ -42,18 +71,29 @@ def generate_plots_ui() -> ui.nav_panel:
                             label="Plot Title",
                             placeholder="Enter a plot title"
                         ),
+                        ui.input_text(
+                            id="scatter_x_axis_title",
+                            label="X-axis Title",
+                            placeholder="Enter a title for the x-axis"
+                        ),
+                        ui.input_text(
+                            id="scatter_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
                     ),
-                    # Show no matter what plot type is selected
+                    
+                    # Show the "Generate Plot" button no matter what plot type is selected
                     ui.tooltip(
                         ui.input_action_button(
                             id = "generate",
                             label = "Generate Plot",
                         ),
                         "You can generate a plot by clicking this \"Generate Plot\" button, but if you have modify anything related to this plot, you need to click this button again to update the plot.",
-                    ),
+                    ), 
                 ),
                 output_widget("get_output_plot"),
+                height="80vh",
             ),
-            height="80vh",
         ),
     )
