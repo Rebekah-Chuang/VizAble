@@ -1,6 +1,9 @@
 name: shinyappsio-deployment
 
 on:
+  # triggered when a new release is created
+  release:
+    types: [created]
   # Triggered manually or when there are changes pushed to the master branch
   workflow_dispatch:
 
