@@ -535,6 +535,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     @reactive.event(input.generate)
     def get_output_plot():
         print("The generate plot button is clicked.")
+        data_frame = reactive_df.get()
         color_by_choices = reactive_df.get().columns.tolist()
 
         # ui.update_select(
@@ -547,10 +548,13 @@ def server(input: Inputs, output: Outputs, session: Session):
         if input.plot_types() == "Line Plot":
             req(input.line_x_axis(), input.line_y_axis(), input.line_plot_title())
             plot_title = input.line_plot_title()
+            x_axis_title=input.line_x_axis_title()
+            y_axis_title=input.line_y_axis_title()
             markers = input.markers()
             # color_by = input.color_by()
-            lineplot = px.line(
-                data_frame = reactive_df.get(),
+
+            line_plot = px.line(
+                data_frame = data_frame,
                 x = input.line_x_axis(),
                 y = input.line_y_axis(),
                 markers = markers,
@@ -558,29 +562,71 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_layout(
                 template="seaborn",
                 title={"text": plot_title, "x": 0.5},
+            ).update_xaxes(
+                title_text=x_axis_title,
+            ).update_yaxes(
+                title_text=y_axis_title,
             )
-            return lineplot
+
+            return line_plot
+        
+        # Bar Plot:
+        if input.plot_types() == "Bar Plot":
+            req(input.bar_x_axis())
+            plot_title = input.bar_plot_title()
+            x_axis = input.bar_x_axis()
+            x_axis_title=input.bar_x_axis_title()
+            y_axis_title=input.bar_y_axis_title()
+
+            # generate dataframe for value counts
+            counts_df = data_frame[x_axis].value_counts().reset_index()
+
+            # rename columns name
+            counts_df.columns = ['value', 'count']
+
+            bar_plot = px.bar(
+                data_frame = counts_df,
+                x = "value",
+                y = "count",
+                color="value",
+            ).update_layout(
+                template = "seaborn",
+                title = {"text": plot_title, "x": 0.5},
+            ).update_xaxes(
+                title_text = x_axis_title,
+            ).update_yaxes(
+                title_text = y_axis_title,
+            )
+
+            return bar_plot
 
         # Scatter Plot:
         if input.plot_types() == "Scatter Plot":
-            req(input.scatter_x_axis(), input.scatter_y_axis(), input.scatter_plot_title())
+            req(input.scatter_x_axis(), input.scatter_y_axis())
             plot_title = input.scatter_plot_title()
 
+            # x_axis + yaxis title
+            x_axis_title = input.scatter_x_axis_title()
+            y_axis_title = input.scatter_y_axis_title()
+
             scatter_plot = px.scatter(
-                data_frame = reactive_df.get(),
+                data_frame = data_frame,
                 x = input.scatter_x_axis(),
                 y = input.scatter_y_axis(),
-                color_by = input.scatter_color_by()
             ).update_layout(
                 template="seaborn",
                 title={"text": plot_title, "x": 0.5},
+            ).update_xaxes(
+                title_text = x_axis_title,
+            ).update_yaxes(
+                title_text = y_axis_title,
             )
 
-            ui.update_select(
-                id="scatter_color_by",
-                label="Group by(color)",
-                choices=color_by_choices
-            )
+            # ui.update_select(
+            #     id = "scatter_color_by",
+            #     label = "Group by(color)",
+            #     choices = color_by_choices
+            # )
             return scatter_plot
 
 app = App(app_ui, server)
