@@ -2,6 +2,47 @@
 
 
 
+## v0.7.0 (2024-03-31)
+
+### Chore
+
+* chore: trigger shinyappsio-deployment workflow on new github release ([`fa30fac`](https://github.com/Rebekah-Chuang/VizAble/commit/fa30fac2afdb4be450ced0ca30b843ff4ac8fe3c))
+
+* chore: generate `requirements.txt` to workflow or deployment might fail ([`bca613f`](https://github.com/Rebekah-Chuang/VizAble/commit/bca613f3b27eed8a77388b42b5382309037a4d98))
+
+* chore: remove pip install -r requirements.txt[skip ci] ([`768f5ea`](https://github.com/Rebekah-Chuang/VizAble/commit/768f5eab6abea9922357fdc6326d38e6a2627ed3))
+
+* chore: update app path in shinyappsio-deployment workflow ([`e179bd7`](https://github.com/Rebekah-Chuang/VizAble/commit/e179bd787df7cb76938b46287669e11d9e89baa0))
+
+* chore: run shinyappsio-deployment workflow without creating virtual env[skip ci] ([`f03bbd5`](https://github.com/Rebekah-Chuang/VizAble/commit/f03bbd576ce9a64f351a1b7c97b8ad0a810d97ce))
+
+* chore: remove poetry shell due to github action&#39;s non-interactive environment[skip ci] ([`cc8a596`](https://github.com/Rebekah-Chuang/VizAble/commit/cc8a5960de44f9812eb8608333982ddef40d672b))
+
+* chore: disable the interactive shell feature of Poetry[skip ci] ([`1299bce`](https://github.com/Rebekah-Chuang/VizAble/commit/1299bce8317a74b55d5ca1a6cd67a63763d8a4a9))
+
+* chore: create virtual environment and save cache using poetry[skip ci] ([`033426c`](https://github.com/Rebekah-Chuang/VizAble/commit/033426c2134601a089e13b0a89483cb3a2d1aa1f))
+
+* chore: add a step to install dependencies with poetry[skip ci] ([`ba16f0d`](https://github.com/Rebekah-Chuang/VizAble/commit/ba16f0d9bdf262f1dc443809d141b8075a23236f))
+
+* chore: fix app path and use poetry for deployment ([`4762927`](https://github.com/Rebekah-Chuang/VizAble/commit/476292790b43076b78a350415b416939c5317e82))
+
+* chore: fix app path for shinyappsio-deployment[skip ci] ([`5076ee5`](https://github.com/Rebekah-Chuang/VizAble/commit/5076ee58bc56309d69571a9699578aaa5aca8704))
+
+* chore: install rsconnect-python using pip in shinyappsio-deployment workflow[skip ci] ([`f4b013c`](https://github.com/Rebekah-Chuang/VizAble/commit/f4b013c126f39c92a86235f8aff811cab673285b))
+
+* chore: add GitHub Actions workflow for deploying app to shinyapps.io ([`39e383d`](https://github.com/Rebekah-Chuang/VizAble/commit/39e383d025f09ae510c864844307462f865798a0))
+
+### Feature
+
+* feat: add a feature to generate bar plot ([`a0fecab`](https://github.com/Rebekah-Chuang/VizAble/commit/a0fecabc74779bdf7ca6d60ca426c6ea2e09f42c))
+
+* feat: add a feature to generate scatter plot ([`39481c9`](https://github.com/Rebekah-Chuang/VizAble/commit/39481c92df808e8e7ef49adea448572d25bac875))
+
+### Test
+
+* test: add dataframe to test scatter plot ([`03ed506`](https://github.com/Rebekah-Chuang/VizAble/commit/03ed506dd3c4eb90bf9217ecb8f10828b79bbccb))
+
+
 ## v0.6.0 (2024-03-28)
 
 ### Chore
