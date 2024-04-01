@@ -63,6 +63,31 @@ def generate_plots_ui() -> ui.nav_panel:
                         ),
                     ),
 
+                    # Show when user selects "Histogram" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Histogram'",
+                        ui.input_text(
+                            id="histogram_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
+                        ui.input_text(
+                            id="histogram_x_axis_title",
+                            label="X-axis Title",
+                            placeholder="Enter a title for the x-axis"
+                        ),
+                        ui.input_text(
+                            id="histogram_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
+                        ui.input_numeric(
+                            id="histogram_bin_size",
+                            label="Bin Size",
+                            value=10,
+                        ),
+                    ),
+
                     # Show when user selects "Scatter Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Scatter Plot'",
