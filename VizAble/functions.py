@@ -195,7 +195,7 @@ def update_xaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_s
         selected=None
     )
 
-def update_yaxis_input_select(plot_type: str, choices: List[str]):
+def update_yaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
     """ Update the y-axis dropdown based on the selected plot type.
 
     :param plot_type: The plot type selected by the user.

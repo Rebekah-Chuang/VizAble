@@ -43,6 +43,22 @@ def generate_plots_ui() -> ui.nav_panel:
                         #     choices=["--------"]
                         # ),
                     ),
+
+                    # Show when user selects "Box Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Box Plot'",
+                        ui.input_text(
+                            id="box_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
+                        ui.input_text(
+                            id="box_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
+                    ),
+
                     # Show when user selects "Bar Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Bar Plot'",

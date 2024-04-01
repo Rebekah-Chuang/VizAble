@@ -32,7 +32,7 @@ def select_columns_ui() -> ui.nav_panel:
                     ui.panel_conditional(
                         "input.plot_types == 'Box Plot'",
                         # add dropdown for x-axis
-                        functions.xaxis_input_select("box"),
+                        functions.yaxis_input_select("box"),
                     ),
                     # Add condition: if user selects "Histogram" on plot_types
                     ui.panel_conditional(
