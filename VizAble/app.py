@@ -478,11 +478,15 @@ def server(input: Inputs, output: Outputs, session: Session):
         if input.plot_types() in ["Line Plot", "Scatter Plot"]:
             functions.update_xaxis_input_select(input.plot_types(), choices)
             functions.update_yaxis_input_select(input.plot_types(), choices)
-
+        
         # update only x-axis dropdowns
-        elif input.plot_types() in ["Bar Plot", "Box Plot", "Histogram"]:
+        elif input.plot_types() in ["Bar Plot", "Histogram"]:
             functions.update_xaxis_input_select(input.plot_types(), choices)
-
+        
+        # update only y-axis dropdowns
+        elif input.plot_types() == "Box Plot":
+            functions.update_yaxis_input_select(input.plot_types(), choices)
+            
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
         """ Display the selected columns after users' column selections.
@@ -510,10 +514,10 @@ def server(input: Inputs, output: Outputs, session: Session):
                 selected_cols = data_frame[[x_col]]
 
         elif input.plot_types() == "Box Plot":
-            req(input.box_x_axis())
-            x_col: str = input.box_x_axis()
-            if x_col in data_frame.columns:
-                selected_cols = data_frame[[x_col]]
+            req(input.box_y_axis())
+            y_col: str = input.box_y_axis()
+            if y_col in data_frame.columns:
+                selected_cols = data_frame[[y_col]]
 
         elif input.plot_types() == "Histogram":
             req(input.histogram_x_axis())
@@ -563,9 +567,9 @@ def server(input: Inputs, output: Outputs, session: Session):
                 template="seaborn",
                 title={"text": plot_title, "x": 0.5},
             ).update_xaxes(
-                title_text=x_axis_title,
+                title_text = x_axis_title,
             ).update_yaxes(
-                title_text=y_axis_title,
+                title_text = y_axis_title,
             )
 
             return line_plot
@@ -599,7 +603,26 @@ def server(input: Inputs, output: Outputs, session: Session):
             )
 
             return bar_plot
+        
+        # Box Plot:
+        if input.plot_types() == "Box Plot":
+            req(input.box_y_axis())
+            # y_axis = input.box_y_axis()
+            plot_title = input.box_plot_title()
+            y_axis_title = input.box_y_axis_title()
 
+            box_plot = px.box(
+                data_frame = data_frame,
+                y = input.box_y_axis(),
+            ).update_layout(
+                template="seaborn",
+                title={"text": plot_title, "x": 0.5},
+            ).update_yaxes(
+                title_text = y_axis_title,
+            )
+
+            return box_plot
+        
         # Histogram:
         if input.plot_types() == "Histogram":
             req(input.histogram_x_axis())
