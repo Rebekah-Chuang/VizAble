@@ -600,6 +600,30 @@ def server(input: Inputs, output: Outputs, session: Session):
 
             return bar_plot
 
+        # Histogram:
+        if input.plot_types() == "Histogram":
+            req(input.histogram_x_axis())
+            plot_title = input.histogram_plot_title()
+
+            # x_axis title
+            x_axis_title = input.histogram_x_axis_title()
+            y_axis_title = input.histogram_y_axis_title()
+
+            histogram = px.histogram(
+                data_frame = data_frame,
+                x = input.histogram_x_axis(),
+                nbins = input.histogram_bin_size(),
+            ).update_layout(
+                template="seaborn",
+                title={"text": plot_title, "x": 0.5},
+            ).update_xaxes(
+                title_text = x_axis_title,
+            ).update_yaxes(
+                title_text = y_axis_title,
+            )
+
+            return histogram
+
         # Scatter Plot:
         if input.plot_types() == "Scatter Plot":
             req(input.scatter_x_axis(), input.scatter_y_axis())
