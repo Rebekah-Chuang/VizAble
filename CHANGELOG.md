@@ -2,6 +2,15 @@
 
 
 
+## v0.8.0 (2024-04-04)
+
+### Feature
+
+* feat: generate simple box plot ([`fc0c3c0`](https://github.com/Rebekah-Chuang/VizAble/commit/fc0c3c047d975cb392f166d9cd064cf1335cc723))
+
+* feat: generate simple histogram ([`ce50554`](https://github.com/Rebekah-Chuang/VizAble/commit/ce505545a59247dbf5f8ca449bc6483e5e49d954))
+
+
 ## v0.7.0 (2024-03-31)
 
 ### Chore
