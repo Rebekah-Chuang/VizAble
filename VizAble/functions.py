@@ -130,6 +130,13 @@ def yaxis_input_select(plot_type_str: str) -> ui.input_select:
     )
 
 def grouping_input_select(plot_type_str: str) -> ui.input_select:
+    """ Create a dropdown for users to select the column for grouping.
+
+    :param plot_type_str: Plot type string, e.g., "grouped_box".
+    :type plot_type_str: str
+    :return: An empty dropdown for users to select `grouping`, where the input id is based on the provided `plot_type_str`.
+    :rtype: ui.input_select
+    """
     grouping_id = f"{plot_type_str}_grouping"
     return ui.input_select(
         id = grouping_id,
@@ -226,6 +233,15 @@ def update_yaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_s
     )
 
 def update_grouping_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
+    """ Update the grouping dropdown based on the selected plot type.
+
+    :param plot_type: The plot type selected by the user.
+    :type plot_type: str
+    :param choices: A list of column names for the dropdown based on the plot type.
+    :type choices: List[str]
+    :return: An updated grouping dropdown based on the selected plot type.
+    :rtype: ui.update_select
+    """
     grouping_id = plot_type.split(" ")[0].lower() + "_grouping"
 
     return ui.update_select(
