@@ -129,6 +129,16 @@ def yaxis_input_select(plot_type_str: str) -> ui.input_select:
         multiple = False
     )
 
+def grouping_input_select(plot_type_str: str) -> ui.input_select:
+    grouping_id = f"{plot_type_str}_grouping"
+    return ui.input_select(
+        id = grouping_id,
+        label = ui.strong("Group By"),
+        choices = [],
+        selected = None,
+        multiple = False
+    )
+
 def get_excel_sheet_names(file_path: Path) -> List[str]:
     """ Get a list of all sheet names for the uploaded Excel file.
 
@@ -160,9 +170,11 @@ def return_choices_for_columns(data_frame: pd.DataFrame, plot_type: str) -> List
     
     # Mapping of plot types to data types they accept(add more if needed)
     plot_type_to_dtypes = {
+        "Categorical": ["object", "category"],
         "Line Plot": None,
         "Bar Plot": ["object", "category"],
         "Box Plot": ["number"],
+        "Grouped_Box Plot": ["number"],
         "Histogram": ["number"],
         "Scatter Plot": ["number"],
     }
@@ -209,6 +221,15 @@ def update_yaxis_input_select(plot_type: str, choices: List[str]) -> ui.update_s
 
     return ui.update_select(
         id=axis_id,
+        choices=choices,
+        selected=None
+    )
+
+def update_grouping_input_select(plot_type: str, choices: List[str]) -> ui.update_select:
+    grouping_id = plot_type.split(" ")[0].lower() + "_grouping"
+
+    return ui.update_select(
+        id=grouping_id,
         choices=choices,
         selected=None
     )
