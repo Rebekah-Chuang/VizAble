@@ -346,7 +346,15 @@ def server(input: Inputs, output: Outputs, session: Session):
         """
         data_frame = reactive_df.get()
         if data_frame is not None and not data_frame.empty:
-            choices: list[str] = ["Select an option", "Line Plot", "Bar Plot", "Box Plot", "Histogram", "Scatter Plot"]
+            choices: list[str] = [
+                "Select an option",
+                "Line Plot",
+                "Bar Plot",
+                "Box Plot",
+                "Grouped_Box Plot",
+                "Histogram",
+                "Scatter Plot"
+            ]
         else:
             choices: list[str] = ["Select an option"]
 
@@ -422,7 +430,32 @@ def server(input: Inputs, output: Outputs, session: Session):
                 """
                 ),
             )
+        elif input.plot_types() == "Grouped_Box Plot":
+            return (
+                ui.markdown(
+                    """
+                ## **Grouped Box Plot:**
+                A grouped box plot is a graphical representation that enables the comparison of distributions between multiple groups or categories within a dataset. It provides insights into the variability, central tendency, and spread of a variable across different groupings.
 
+                Here are the components of a box plot:
+                1. `Boxes`: Each box represents the interquartile range (IQR), which is the middle 50% of the data. The top and bottom edges of the box correspond to the first quartile (Q1) and third quartile (Q3), respectively. The length of the box thus indicates the spread of the central 50% of the data.
+                2. `Line` (whisker): Lines (whiskers) extend from the top and bottom of the box to indicate the range of the data. These lines can extend to a certain distance (often 1.5 times the IQR) beyond the quartiles or may represent the minimum and maximum values within that range.
+                3. `Median` (line inside the box): A line inside the box represents the median (Q2) of the dataset, which is the middle value when the data is ordered.
+                4. `Grouping`: The boxes are grouped together, allowing for a visual comparison of the distribution of the variable across different groups. This facilitates the identification of differences or similarities in the data distribution between the groups.
+                5. `Outliers`: Individual data points beyond the whiskers may be considered outliers and are often plotted individually.
+                """
+                ),
+                ui.tags.hr(),
+                ui.markdown(
+                    """
+                ## **Instructions:**
+                If you would like to create a box plot, please select:
+                 - one numerical column (containing the  data for which you want to see the distribution)
+                 - one categorical column for `grouping` (to compare the distribution across different groups)
+                """
+                ), 
+            )
+        
         elif input.plot_types() == "Histogram":
             return (
                 ui.markdown(
@@ -484,8 +517,13 @@ def server(input: Inputs, output: Outputs, session: Session):
             functions.update_xaxis_input_select(input.plot_types(), choices)
         
         # update only y-axis dropdowns
-        elif input.plot_types() == "Box Plot":
+        elif input.plot_types() in ["Box Plot"]:
             functions.update_yaxis_input_select(input.plot_types(), choices)
+        
+        # update y-axis and grouping dropdowns
+        elif input.plot_types() in ["Grouped_Box Plot"]:
+            functions.update_yaxis_input_select(input.plot_types(), choices)
+            functions.update_grouping_input_select(input.plot_types(), functions.return_choices_for_columns(data_frame, "Categorical"))
             
     @render.data_frame
     def get_output_selected_cols() -> pd.DataFrame:
@@ -518,6 +556,13 @@ def server(input: Inputs, output: Outputs, session: Session):
             y_col: str = input.box_y_axis()
             if y_col in data_frame.columns:
                 selected_cols = data_frame[[y_col]]
+        
+        elif input.plot_types() == "Grouped_Box Plot":
+            req(input.grouped_box_y_axis(), input.grouped_box_grouping())
+            y_col: str = input.grouped_box_y_axis()
+            grouping_col: str = input.grouped_box_grouping()
+            if y_col in data_frame.columns and grouping_col in data_frame.columns:
+                selected_cols = data_frame[[y_col, grouping_col]]
 
         elif input.plot_types() == "Histogram":
             req(input.histogram_x_axis())
@@ -623,6 +668,27 @@ def server(input: Inputs, output: Outputs, session: Session):
 
             return box_plot
         
+        # Grouped_Box Plot:
+        if input.plot_types() == "Grouped_Box Plot":
+            req(input.grouped_box_y_axis(), input.grouped_box_grouping())
+            plot_title = input.grouped_box_plot_title()
+            y_axis_title = input.grouped_box_y_axis_title()
+            grouping = input.grouped_box_grouping()
+
+            box_plot_grouped = px.box(
+                data_frame = data_frame,
+                x = grouping,
+                y = input.grouped_box_y_axis(),
+                color = grouping,
+            ).update_layout(
+                template="seaborn",
+                title={"text": plot_title, "x": 0.5},
+            ).update_yaxes(
+                title_text = y_axis_title,
+            )
+
+            return box_plot_grouped
+
         # Histogram:
         if input.plot_types() == "Histogram":
             req(input.histogram_x_axis())

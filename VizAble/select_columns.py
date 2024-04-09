@@ -34,6 +34,12 @@ def select_columns_ui() -> ui.nav_panel:
                         # add dropdown for x-axis
                         functions.yaxis_input_select("box"),
                     ),
+                    # Add condition: if user selects "Grouped_Box Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Grouped_Box Plot'",
+                        functions.yaxis_input_select("grouped_box"),
+                        functions.grouping_input_select("grouped_box"),
+                    ),
                     # Add condition: if user selects "Histogram" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Histogram'",

@@ -59,6 +59,21 @@ def generate_plots_ui() -> ui.nav_panel:
                         ),
                     ),
 
+                    # Show when user selects "Grouped_Box Plot" on plot_types
+                    ui.panel_conditional(
+                        "input.plot_types == 'Grouped_Box Plot'",
+                        ui.input_text(
+                            id="grouped_box_plot_title",
+                            label="Plot Title",
+                            placeholder="Enter a plot title"
+                        ),
+                        ui.input_text(
+                            id="grouped_box_y_axis_title",
+                            label="Y-axis Title",
+                            placeholder="Enter a title for the y-axis"
+                        ),
+                    ),
+
                     # Show when user selects "Bar Plot" on plot_types
                     ui.panel_conditional(
                         "input.plot_types == 'Bar Plot'",
