@@ -2,6 +2,17 @@
 
 
 
+## v0.9.0 (2024-04-10)
+
+### Documentation
+
+* docs: add docstrings for `grouping_input_select` and `update_grouping_input_select` function ([`835edf8`](https://github.com/Rebekah-Chuang/VizAble/commit/835edf82b6acf2b6cbe70fa71d2e1dd1a559a7c2))
+
+### Feature
+
+* feat: generate grouped box plot ([`b6ce55c`](https://github.com/Rebekah-Chuang/VizAble/commit/b6ce55cea631eeee71ce356b653bd134dd8df60f))
+
+
 ## v0.8.0 (2024-04-04)
 
 ### Feature

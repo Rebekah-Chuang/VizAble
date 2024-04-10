@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "VizAble"
-version = "0.8.0"
+version = "0.9.0"
 description = "A web-based data visualization tool that generates accessible visualizations for all users, including people with visual impairments (low vision or blind)."
 license = "MIT"
 authors = ["Chi-Ying Chuang <rebekah890110@gmail.com>"]
