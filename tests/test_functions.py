@@ -183,6 +183,21 @@ def test_yaxis_input_select(plot_type_str: str, expected_id: str):
                                                   selected=None,
                                                   multiple=False)
 
+# Test grouping_input_select()
+@pytest.mark.parametrize("plot_type_str, expected_id",
+                         [
+                            ("grouped_box", "grouped_box_grouping")
+                         ])
+
+def test_grouping_input_select(plot_type_str: str, expected_id: str):
+    with patch("VizAble.functions.ui.input_select") as mock_input_select:
+        functions.grouping_input_select(plot_type_str)
+        mock_input_select.assert_called_once_with(id=expected_id,
+                                                  label=ui.strong("Group By"),
+                                                  choices=[],
+                                                  selected=None,
+                                                  multiple=False)
+        
 # Test update_xaxis_input_select()
 @pytest.mark.parametrize("plot_type, expected_id",
                          [
@@ -205,7 +220,9 @@ def test_update_xaxis_input_select(plot_type: str, expected_id: str):
 
     with patch("VizAble.functions.ui.update_select") as mock_update_select:
         functions.update_xaxis_input_select(plot_type, choices)
-        mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
+        mock_update_select.assert_called_once_with(id=expected_id,
+                                                   choices=choices,
+                                                   selected=None)
 
 # Test update_yaxis_input_select()
 @pytest.mark.parametrize("plot_type, expected_id",
@@ -229,4 +246,6 @@ def test_update_yaxis_input_select(plot_type: str, expected_id: str):
 
     with patch("VizAble.functions.ui.update_select") as mock_update_select:
         functions.update_yaxis_input_select(plot_type, choices)
-        mock_update_select.assert_called_once_with(id=expected_id, choices=choices, selected=None)
+        mock_update_select.assert_called_once_with(id=expected_id,
+                                                   choices=choices,
+                                                   selected=None)
