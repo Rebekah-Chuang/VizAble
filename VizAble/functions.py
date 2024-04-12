@@ -4,6 +4,9 @@ from shiny import ui, render, App, Inputs, Outputs, Session, reactive
 import openpyxl
 import pandas as pd
 from pandas.errors import ParserError
+import plotly.io as pio
+import base64
+import io
 
 def sep_input_radio_buttons() -> ui.input_radio_buttons:
     """ Create a radio button group for users to select a separator for input.
@@ -249,3 +252,13 @@ def update_grouping_input_select(plot_type: str, choices: List[str]) -> ui.updat
         choices=choices,
         selected=None
     )
+
+def encode_plot(return_plot) -> str:
+    # Convert the Plotly plot to a PNG image
+    png_output = io.BytesIO()
+    return_plot.write_image(png_output, format='png')
+    png_data = png_output.getvalue()
+    png_output.close()
+    base64_string = base64.b64encode(png_data).decode('utf-8')
+
+    return base64_string

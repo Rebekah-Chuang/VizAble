@@ -46,6 +46,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     file_check = reactive.value(False)
     reactive_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
     reactive_dtypes_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
+    encoded_image: str = reactive.value(None)
     
     # Step 1: Upload a File
     @render.ui
@@ -621,8 +622,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_yaxes(
                 title_text = y_axis_title,
             )
-
-            return line_plot
+            return_plot = line_plot
         
         # Bar Plot:
         if input.plot_types() == "Bar Plot":
@@ -651,8 +651,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_yaxes(
                 title_text = y_axis_title,
             )
-
-            return bar_plot
+            return_plot = bar_plot
         
         # Box Plot:
         if input.plot_types() == "Box Plot":
@@ -670,8 +669,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_yaxes(
                 title_text = y_axis_title,
             )
-
-            return box_plot
+            return_plot = box_plot
         
         # Grouped_Box Plot:
         if input.plot_types() == "Grouped_Box Plot":
@@ -691,8 +689,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_yaxes(
                 title_text = y_axis_title,
             )
-
-            return box_plot_grouped
+            return_plot = box_plot_grouped
 
         # Histogram:
         if input.plot_types() == "Histogram":
@@ -715,8 +712,7 @@ def server(input: Inputs, output: Outputs, session: Session):
             ).update_yaxes(
                 title_text = y_axis_title,
             )
-
-            return histogram
+            return_plot = histogram
 
         # Scatter Plot:
         if input.plot_types() == "Scatter Plot":
@@ -745,8 +741,12 @@ def server(input: Inputs, output: Outputs, session: Session):
             #     label = "Group by(color)",
             #     choices = color_by_choices
             # )
-            return scatter_plot
+            return_plot = scatter_plot
 
+        encoded_image.set(functions.encode_plot(return_plot))
+        print(encoded_image.get())
+        return return_plot
+    
     # Step 6: Chatbot
     @render.text
     @reactive.event(input.ask)
@@ -768,12 +768,18 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # initialize the model
-        model = genai.GenerativeModel("gemini-pro")
+        model = genai.GenerativeModel("gemini-pro-vision")
         chat = model.start_chat(history = [])
         question = input.chatbot_input()
 
         # generate content
-        response = chat.send_message(question)
+        # response = chat.send_message(question)
+        # return response.text
+
+        # Send the encoded image to Gemini for analysis
+        response = chat.send_message(f"{encoded_image.get()}, could you please provide summary of this plot?")
+
+        # Return the response from Gemini
         return response.text
 
 app = App(app_ui, server)
