@@ -1,4 +1,4 @@
-from VizAble import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots
+from VizAble import functions, introductions, upload_file, check_datatypes, select_plottypes, select_columns, generate_plots, chatbot
 import pandas as pd
 import shinyswatch
 from htmltools import css
@@ -7,7 +7,9 @@ from shiny.types import FileInfo
 from typing import Optional
 from pandas.errors import ParserError
 import plotly.express as px
-from shinywidgets import output_widget, render_widget 
+from shinywidgets import output_widget, render_widget
+import google.generativeai as genai
+import os, configparser
 
 app_ui = ui.page_navbar(
     # theme for the app,
@@ -30,6 +32,9 @@ app_ui = ui.page_navbar(
 
     # Step5: Generate Plots:
     generate_plots.generate_plots_ui(),
+
+    # Step6: Chatbot:
+    chatbot.chatbot_ui(),
 
     title="VizAble - Accessible Data Visualization Tool",
     window_title="VizAble",
@@ -741,6 +746,35 @@ def server(input: Inputs, output: Outputs, session: Session):
             #     choices = color_by_choices
             # )
             return scatter_plot
+
+    # Step 6: Chatbot
+    @render.text
+    @reactive.event(input.ask)
+
+    def get_chatbot_output():
+        # read the file where it saves api key
+        config = configparser.ConfigParser()
+        config.read('../VizAble/VizAble/credentials.ini')
+
+        try:
+            API_KEY = config['gemini_api']['SHINY_APP_API_KEY']
+        except KeyError as e:
+            print("Error:", e)
+            return "Error reading API key"
+        
+        # configure the API key
+        genai.configure(
+            api_key = API_KEY
+        )
+
+        # initialize the model
+        model = genai.GenerativeModel("gemini-pro")
+        chat = model.start_chat(history = [])
+        question = input.chatbot_input()
+
+        # generate content
+        response = chat.send_message(question)
+        return response.text
 
 app = App(app_ui, server)
 
