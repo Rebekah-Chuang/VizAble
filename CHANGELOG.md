@@ -2,6 +2,27 @@
 
 
 
+## v0.10.0 (2024-04-13)
+
+### Chore
+
+* chore: add `credentials.ini` to `.gitignore` ([`bce704b`](https://github.com/Rebekah-Chuang/VizAble/commit/bce704ba7f31c3d47761756702715b13ebfc0e08))
+
+* chore: add `google-generativeai` to project ([`89c8165`](https://github.com/Rebekah-Chuang/VizAble/commit/89c8165eb699c8fee5395407a0b69848dd7a0a9f))
+
+### Feature
+
+* feat: add user interface for user to interact with gemini ai ([`6a967e2`](https://github.com/Rebekah-Chuang/VizAble/commit/6a967e2214d80ad2c0e862afa502c7d9f4a797a9))
+
+* feat: add the server logic for new chatbot tab as step 6 ([`a644ef2`](https://github.com/Rebekah-Chuang/VizAble/commit/a644ef2bd42db579b584a84afccb67a883ec9c6d))
+
+### Test
+
+* test: add unit test for `update_grouping_input_select()` function ([`695a20e`](https://github.com/Rebekah-Chuang/VizAble/commit/695a20e94de1af538fb0d7bee717d474a0e43a53))
+
+* test: add unit test for `grouping_input_select()` function ([`6c1ba84`](https://github.com/Rebekah-Chuang/VizAble/commit/6c1ba841dc5bb9296c1011f4ca6aa65d379d1114))
+
+
 ## v0.9.0 (2024-04-10)
 
 ### Documentation
