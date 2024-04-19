@@ -10,6 +10,8 @@ import plotly.express as px
 from shinywidgets import output_widget, render_widget
 import google.generativeai as genai
 import os, configparser
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 app_ui = ui.page_navbar(
     # theme for the app,
@@ -46,6 +48,7 @@ def server(input: Inputs, output: Outputs, session: Session):
     file_check = reactive.value(False)
     reactive_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
     reactive_dtypes_df: reactive.Value[pd.DataFrame] = reactive.Value(pd.DataFrame())
+    decoded_image: str = reactive.value(None)
     
     # Step 1: Upload a File
     @render.ui
@@ -585,7 +588,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         return selected_cols
 
     # Step 5: Generate Plots
-    @render_widget
+    @render.plot
     @reactive.event(input.generate)
     def get_output_plot():
         print("The generate plot button is clicked.")
@@ -607,146 +610,152 @@ def server(input: Inputs, output: Outputs, session: Session):
             markers = input.markers()
             # color_by = input.color_by()
 
-            line_plot = px.line(
-                data_frame = data_frame,
+            # line_plot = px.line(
+            #     data_frame = data_frame,
+            #     x = input.line_x_axis(),
+            #     y = input.line_y_axis(),
+            #     markers = markers,
+            #     # color = color_by,
+            # ).update_layout(
+            #     template="seaborn",
+            #     title={"text": plot_title, "x": 0.5},
+            # ).update_xaxes(
+            #     title_text = x_axis_title,
+            # ).update_yaxes(
+            #     title_text = y_axis_title,
+            # )
+            sns.set_theme()
+            plt.figure(figsize=(10, 6))
+            line_plot = sns.lineplot(
+                data = data_frame,
                 x = input.line_x_axis(),
                 y = input.line_y_axis(),
-                markers = markers,
-                # color = color_by,
-            ).update_layout(
-                template="seaborn",
-                title={"text": plot_title, "x": 0.5},
-            ).update_xaxes(
-                title_text = x_axis_title,
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
-
-            return line_plot
+                markers = input.markers(),
+                )
+            plt.title(plot_title)
+            plt.xlabel(x_axis_title)
+            plt.ylabel(y_axis_title)
+            # plt.show()
+            return_plot = line_plot
         
-        # Bar Plot:
-        if input.plot_types() == "Bar Plot":
-            req(input.bar_x_axis())
-            plot_title = input.bar_plot_title()
-            x_axis = input.bar_x_axis()
-            x_axis_title=input.bar_x_axis_title()
-            y_axis_title=input.bar_y_axis_title()
+        # # Bar Plot:
+        # if input.plot_types() == "Bar Plot":
+        #     req(input.bar_x_axis())
+        #     plot_title = input.bar_plot_title()
+        #     x_axis = input.bar_x_axis()
+        #     x_axis_title=input.bar_x_axis_title()
+        #     y_axis_title=input.bar_y_axis_title()
 
-            # generate dataframe for value counts
-            counts_df = data_frame[x_axis].value_counts().reset_index()
+        #     # generate dataframe for value counts
+        #     counts_df = data_frame[x_axis].value_counts().reset_index()
 
-            # rename columns name
-            counts_df.columns = ['value', 'count']
+        #     # rename columns name
+        #     counts_df.columns = ['value', 'count']
 
-            bar_plot = px.bar(
-                data_frame = counts_df,
-                x = "value",
-                y = "count",
-                color="value",
-            ).update_layout(
-                template = "seaborn",
-                title = {"text": plot_title, "x": 0.5},
-            ).update_xaxes(
-                title_text = x_axis_title,
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
-
-            return bar_plot
+        #     bar_plot = px.bar(
+        #         data_frame = counts_df,
+        #         x = "value",
+        #         y = "count",
+        #         color="value",
+        #     ).update_layout(
+        #         template = "seaborn",
+        #         title = {"text": plot_title, "x": 0.5},
+        #     ).update_xaxes(
+        #         title_text = x_axis_title,
+        #     ).update_yaxes(
+        #         title_text = y_axis_title,
+        #     )
+        #     return_plot = bar_plot
         
-        # Box Plot:
-        if input.plot_types() == "Box Plot":
-            req(input.box_y_axis())
-            # y_axis = input.box_y_axis()
-            plot_title = input.box_plot_title()
-            y_axis_title = input.box_y_axis_title()
+        # # Box Plot:
+        # if input.plot_types() == "Box Plot":
+        #     req(input.box_y_axis())
+        #     # y_axis = input.box_y_axis()
+        #     plot_title = input.box_plot_title()
+        #     y_axis_title = input.box_y_axis_title()
 
-            box_plot = px.box(
-                data_frame = data_frame,
-                y = input.box_y_axis(),
-            ).update_layout(
-                template="seaborn",
-                title={"text": plot_title, "x": 0.5},
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
-
-            return box_plot
+        #     box_plot = px.box(
+        #         data_frame = data_frame,
+        #         y = input.box_y_axis(),
+        #     ).update_layout(
+        #         template="seaborn",
+        #         title={"text": plot_title, "x": 0.5},
+        #     ).update_yaxes(
+        #         title_text = y_axis_title,
+        #     )
+        #     return_plot = box_plot
         
-        # Grouped_Box Plot:
-        if input.plot_types() == "Grouped_Box Plot":
-            req(input.grouped_box_y_axis(), input.grouped_box_grouping())
-            plot_title = input.grouped_box_plot_title()
-            y_axis_title = input.grouped_box_y_axis_title()
-            grouping = input.grouped_box_grouping()
+        # # Grouped_Box Plot:
+        # if input.plot_types() == "Grouped_Box Plot":
+        #     req(input.grouped_box_y_axis(), input.grouped_box_grouping())
+        #     plot_title = input.grouped_box_plot_title()
+        #     y_axis_title = input.grouped_box_y_axis_title()
+        #     grouping = input.grouped_box_grouping()
 
-            box_plot_grouped = px.box(
-                data_frame = data_frame,
-                x = grouping,
-                y = input.grouped_box_y_axis(),
-                color = grouping,
-            ).update_layout(
-                template="seaborn",
-                title={"text": plot_title, "x": 0.5},
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
+        #     box_plot_grouped = px.box(
+        #         data_frame = data_frame,
+        #         x = grouping,
+        #         y = input.grouped_box_y_axis(),
+        #         color = grouping,
+        #     ).update_layout(
+        #         template="seaborn",
+        #         title={"text": plot_title, "x": 0.5},
+        #     ).update_yaxes(
+        #         title_text = y_axis_title,
+        #     )
+        #     return_plot = box_plot_grouped
 
-            return box_plot_grouped
+        # # Histogram:
+        # if input.plot_types() == "Histogram":
+        #     req(input.histogram_x_axis())
+        #     plot_title = input.histogram_plot_title()
 
-        # Histogram:
-        if input.plot_types() == "Histogram":
-            req(input.histogram_x_axis())
-            plot_title = input.histogram_plot_title()
+        #     # x_axis title
+        #     x_axis_title = input.histogram_x_axis_title()
+        #     y_axis_title = input.histogram_y_axis_title()
 
-            # x_axis title
-            x_axis_title = input.histogram_x_axis_title()
-            y_axis_title = input.histogram_y_axis_title()
+        #     histogram = px.histogram(
+        #         data_frame = data_frame,
+        #         x = input.histogram_x_axis(),
+        #         nbins = input.histogram_bin_size(),
+        #     ).update_layout(
+        #         template="seaborn",
+        #         title={"text": plot_title, "x": 0.5},
+        #     ).update_xaxes(
+        #         title_text = x_axis_title,
+        #     ).update_yaxes(
+        #         title_text = y_axis_title,
+        #     )
+        #     return_plot = histogram
 
-            histogram = px.histogram(
-                data_frame = data_frame,
-                x = input.histogram_x_axis(),
-                nbins = input.histogram_bin_size(),
-            ).update_layout(
-                template="seaborn",
-                title={"text": plot_title, "x": 0.5},
-            ).update_xaxes(
-                title_text = x_axis_title,
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
+        # # Scatter Plot:
+        # if input.plot_types() == "Scatter Plot":
+        #     req(input.scatter_x_axis(), input.scatter_y_axis())
+        #     plot_title = input.scatter_plot_title()
 
-            return histogram
+        #     # x_axis + yaxis title
+        #     x_axis_title = input.scatter_x_axis_title()
+        #     y_axis_title = input.scatter_y_axis_title()
 
-        # Scatter Plot:
-        if input.plot_types() == "Scatter Plot":
-            req(input.scatter_x_axis(), input.scatter_y_axis())
-            plot_title = input.scatter_plot_title()
+        #     scatter_plot = px.scatter(
+        #         data_frame = data_frame,
+        #         x = input.scatter_x_axis(),
+        #         y = input.scatter_y_axis(),
+        #     ).update_layout(
+        #         template="seaborn",
+        #         title={"text": plot_title, "x": 0.5},
+        #     ).update_xaxes(
+        #         title_text = x_axis_title,
+        #     ).update_yaxes(
+        #         title_text = y_axis_title,
+        #     )
 
-            # x_axis + yaxis title
-            x_axis_title = input.scatter_x_axis_title()
-            y_axis_title = input.scatter_y_axis_title()
+        #     return_plot = scatter_plot
 
-            scatter_plot = px.scatter(
-                data_frame = data_frame,
-                x = input.scatter_x_axis(),
-                y = input.scatter_y_axis(),
-            ).update_layout(
-                template="seaborn",
-                title={"text": plot_title, "x": 0.5},
-            ).update_xaxes(
-                title_text = x_axis_title,
-            ).update_yaxes(
-                title_text = y_axis_title,
-            )
-
-            # ui.update_select(
-            #     id = "scatter_color_by",
-            #     label = "Group by(color)",
-            #     choices = color_by_choices
-            # )
-            return scatter_plot
-
+        decoded_image.set(functions.decode_plot(return_plot))
+        print(decoded_image.get())
+        return return_plot
+    
     # Step 6: Chatbot
     @render.text
     @reactive.event(input.ask)
@@ -768,13 +777,26 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # initialize the model
-        model = genai.GenerativeModel("gemini-pro")
+        model = genai.GenerativeModel("gemini-pro-vision")
         chat = model.start_chat(history = [])
         question = input.chatbot_input()
 
+        # Send the encoded image to Gemini for analysis
+        prompt="Could you please provide a summary of this plot?"
+
         # generate content
-        response = chat.send_message(question)
-        return response.text
+        if question is None:
+            response = model.generate_content([decoded_image.get(), prompt])
+        else:
+            response = model.generate_content([decoded_image.get(), question])
+
+        # Construct the HTML string for the ARIA live region
+        # Use aria-live="assertive" to announce updates immediately
+        live_region_html = ui.tags.div(response.text, style="position: absolute; left: -9999px;", aria_live="assertive")
+
+        # Return the HTML string containing the ARIA live region
+        # return ui.HTML(live_region_html)
+        return live_region_html
 
 app = App(app_ui, server)
 

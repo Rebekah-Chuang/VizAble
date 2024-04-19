@@ -30,7 +30,7 @@ def chatbot_ui() -> ui.nav_panel:
                             width="100%",
                         ),
                     ),
-                ui.output_text_verbatim("get_chatbot_output"),
+                ui.output_text("get_chatbot_output"),
                 ),
                 height="80vh",
             ),
