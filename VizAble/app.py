@@ -608,29 +608,14 @@ def server(input: Inputs, output: Outputs, session: Session):
             x_axis_title=input.line_x_axis_title()
             y_axis_title=input.line_y_axis_title()
             markers = input.markers()
-            # color_by = input.color_by()
 
-            # line_plot = px.line(
-            #     data_frame = data_frame,
-            #     x = input.line_x_axis(),
-            #     y = input.line_y_axis(),
-            #     markers = markers,
-            #     # color = color_by,
-            # ).update_layout(
-            #     template="seaborn",
-            #     title={"text": plot_title, "x": 0.5},
-            # ).update_xaxes(
-            #     title_text = x_axis_title,
-            # ).update_yaxes(
-            #     title_text = y_axis_title,
-            # )
             sns.set_theme()
             plt.figure(figsize=(10, 6))
             line_plot = sns.lineplot(
                 data = data_frame,
                 x = input.line_x_axis(),
                 y = input.line_y_axis(),
-                markers = input.markers(),
+                markers = markers,
                 )
             plt.title(plot_title)
             plt.xlabel(x_axis_title)
@@ -667,23 +652,22 @@ def server(input: Inputs, output: Outputs, session: Session):
         #     )
         #     return_plot = bar_plot
         
-        # # Box Plot:
-        # if input.plot_types() == "Box Plot":
-        #     req(input.box_y_axis())
-        #     # y_axis = input.box_y_axis()
-        #     plot_title = input.box_plot_title()
-        #     y_axis_title = input.box_y_axis_title()
+        # Box Plot:
+        if input.plot_types() == "Box Plot":
+            req(input.box_y_axis())
+            y_axis = input.box_y_axis()
+            plot_title = input.box_plot_title()
+            y_axis_title = input.box_y_axis_title()
 
-        #     box_plot = px.box(
-        #         data_frame = data_frame,
-        #         y = input.box_y_axis(),
-        #     ).update_layout(
-        #         template="seaborn",
-        #         title={"text": plot_title, "x": 0.5},
-        #     ).update_yaxes(
-        #         title_text = y_axis_title,
-        #     )
-        #     return_plot = box_plot
+            sns.set_theme()
+            plt.figure(figsize=(10, 6))
+            box_plot = sns.boxplot(
+                y = data_frame[y_axis],
+                )
+            plt.title(plot_title)
+            plt.ylabel(y_axis_title)
+            # plt.show()
+            return_plot = box_plot
         
         # # Grouped_Box Plot:
         # if input.plot_types() == "Grouped_Box Plot":
