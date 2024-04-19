@@ -5,8 +5,9 @@ import openpyxl
 import pandas as pd
 from pandas.errors import ParserError
 import plotly.io as pio
-import base64
-import io
+import base64, io
+import matplotlib.pyplot as plt
+from PIL import Image
 
 def sep_input_radio_buttons() -> ui.input_radio_buttons:
     """ Create a radio button group for users to select a separator for input.
@@ -253,12 +254,16 @@ def update_grouping_input_select(plot_type: str, choices: List[str]) -> ui.updat
         selected=None
     )
 
-def encode_plot(return_plot) -> str:
-    # Convert the Plotly plot to a PNG image
-    png_output = io.BytesIO()
-    return_plot.write_image(png_output, format='png')
-    png_data = png_output.getvalue()
-    png_output.close()
-    base64_string = base64.b64encode(png_data).decode('utf-8')
+def decode_plot(return_plot):
+    # Get the current Matplotlib figure associated with the plot
+    fig = return_plot.get_figure()
 
-    return base64_string
+    # Save the plot as a PNG image in memory
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+
+    # Decode the image
+    decoded_image = Image.open(buffer)
+
+    return decoded_image
