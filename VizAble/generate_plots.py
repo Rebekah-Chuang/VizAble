@@ -148,7 +148,8 @@ def generate_plots_ui() -> ui.nav_panel:
                         "You can generate a plot by clicking this \"Generate Plot\" button, but if you have modify anything related to this plot, you need to click this button again to update the plot.",
                     ), 
                 ),
-                output_widget("get_output_plot"),
+
+                ui.output_plot("get_output_plot"),
                 height="80vh",
             ),
         ),
