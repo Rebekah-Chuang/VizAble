@@ -2,6 +2,21 @@
 
 
 
+## v0.11.0 (2024-04-22)
+
+### Chore
+
+* chore: add `matplotlib` and `seaborn` to project ([`c90c3a0`](https://github.com/Rebekah-Chuang/VizAble/commit/c90c3a0e7a652062ef3fe65d1956a31ab9bb0a70))
+
+### Feature
+
+* feat: generate single box plot using `seaborn` and `matplotlib` ([`91c7ee4`](https://github.com/Rebekah-Chuang/VizAble/commit/91c7ee446d56c41e786c83583c2ae44bf1c6a35d))
+
+* feat: generate line plot using `seaborn` and `matplotlib` ([`310f890`](https://github.com/Rebekah-Chuang/VizAble/commit/310f89073ef08b09316fa70f33eb035559a98aa8))
+
+* feat: enable gemini-pro-vision model to recognize image ([`98ac9f9`](https://github.com/Rebekah-Chuang/VizAble/commit/98ac9f997c9a6241c96f7f0a63078d1394a7b4e1))
+
+
 ## v0.10.0 (2024-04-13)
 
 ### Chore
@@ -11,6 +26,8 @@
 * chore: add `google-generativeai` to project ([`89c8165`](https://github.com/Rebekah-Chuang/VizAble/commit/89c8165eb699c8fee5395407a0b69848dd7a0a9f))
 
 ### Feature
+
+* feat: encode plot with base64 ([`afc2e84`](https://github.com/Rebekah-Chuang/VizAble/commit/afc2e84d5fbe1fded90b3cf651c6fcd711d35523))
 
 * feat: add user interface for user to interact with gemini ai ([`6a967e2`](https://github.com/Rebekah-Chuang/VizAble/commit/6a967e2214d80ad2c0e862afa502c7d9f4a797a9))
 
