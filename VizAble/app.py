@@ -712,29 +712,26 @@ def server(input: Inputs, output: Outputs, session: Session):
         #     )
         #     return_plot = histogram
 
-        # # Scatter Plot:
-        # if input.plot_types() == "Scatter Plot":
-        #     req(input.scatter_x_axis(), input.scatter_y_axis())
-        #     plot_title = input.scatter_plot_title()
+        if input.plot_types() == "Scatter Plot":
+            req(input.scatter_x_axis(), input.scatter_y_axis())
+            x_axis = input.scatter_x_axis()
+            y_axis = input.scatter_y_axis()
+            plot_title = input.scatter_plot_title()
+            x_axis_title = input.scatter_x_axis_title()
+            y_axis_title = input.scatter_y_axis_title()
 
-        #     # x_axis + yaxis title
-        #     x_axis_title = input.scatter_x_axis_title()
-        #     y_axis_title = input.scatter_y_axis_title()
-
-        #     scatter_plot = px.scatter(
-        #         data_frame = data_frame,
-        #         x = input.scatter_x_axis(),
-        #         y = input.scatter_y_axis(),
-        #     ).update_layout(
-        #         template="seaborn",
-        #         title={"text": plot_title, "x": 0.5},
-        #     ).update_xaxes(
-        #         title_text = x_axis_title,
-        #     ).update_yaxes(
-        #         title_text = y_axis_title,
-        #     )
-
-        #     return_plot = scatter_plot
+            sns.set_theme()
+            plt.figure(figsize=(10, 6))
+            scatter_plot = sns.scatterplot(
+                data = data_frame,
+                x = x_axis,
+                y = y_axis,
+                )
+            plt.title(plot_title)
+            plt.xlabel(x_axis_title)
+            plt.ylabel(y_axis_title)
+            # plt.show()
+            return_plot = scatter_plot
 
         decoded_image.set(functions.decode_plot(return_plot))
         print(decoded_image.get())
