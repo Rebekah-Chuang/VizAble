@@ -2,6 +2,19 @@
 
 
 
+## v0.12.0 (2024-04-25)
+
+### Feature
+
+* feat: generate bar plot using `seaborn` and `matplotlib` ([`39afc65`](https://github.com/Rebekah-Chuang/VizAble/commit/39afc654e7072ae312f491de2916d6652a2d5feb))
+
+* feat: generate scatter plot using `seaborn` and `matplotlib` ([`ba3715c`](https://github.com/Rebekah-Chuang/VizAble/commit/ba3715ca39db3df5cdd11326f1bd67ca52a7652a))
+
+### Fix
+
+* fix: update `idna` package to solve security issue ([`93daafe`](https://github.com/Rebekah-Chuang/VizAble/commit/93daafef6e70e822193aa777576bdf707cc8325b))
+
+
 ## v0.11.0 (2024-04-22)
 
 ### Chore
