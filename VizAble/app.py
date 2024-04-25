@@ -604,6 +604,8 @@ def server(input: Inputs, output: Outputs, session: Session):
         # Line Plot:
         if input.plot_types() == "Line Plot":
             req(input.line_x_axis(), input.line_y_axis(), input.line_plot_title())
+            x_axis = input.line_x_axis()
+            y_axis = input.line_y_axis()
             plot_title = input.line_plot_title()
             x_axis_title=input.line_x_axis_title()
             y_axis_title=input.line_y_axis_title()
@@ -613,8 +615,8 @@ def server(input: Inputs, output: Outputs, session: Session):
             plt.figure(figsize=(10, 6))
             line_plot = sns.lineplot(
                 data = data_frame,
-                x = input.line_x_axis(),
-                y = input.line_y_axis(),
+                x = x_axis,
+                y = y_axis,
                 markers = markers,
                 )
             plt.title(plot_title)
@@ -654,32 +656,35 @@ def server(input: Inputs, output: Outputs, session: Session):
             sns.set_theme()
             plt.figure(figsize=(10, 6))
             box_plot = sns.boxplot(
-                y = data_frame[y_axis],
+                data = data_frame,
+                y = y_axis,
                 )
             plt.title(plot_title)
             plt.ylabel(y_axis_title)
             # plt.show()
             return_plot = box_plot
         
-        # # Grouped_Box Plot:
-        # if input.plot_types() == "Grouped_Box Plot":
-        #     req(input.grouped_box_y_axis(), input.grouped_box_grouping())
-        #     plot_title = input.grouped_box_plot_title()
-        #     y_axis_title = input.grouped_box_y_axis_title()
-        #     grouping = input.grouped_box_grouping()
+        # Grouped_Box Plot:
+        if input.plot_types() == "Grouped_Box Plot":
+            req(input.grouped_box_y_axis(), input.grouped_box_grouping())
+            plot_title = input.grouped_box_plot_title()
+            x_axis_title = input.grouped_box_x_axis_title()
+            y_axis_title = input.grouped_box_y_axis_title()
+            grouping = input.grouped_box_grouping()
+            y_axis = input.grouped_box_y_axis()
 
-        #     box_plot_grouped = px.box(
-        #         data_frame = data_frame,
-        #         x = grouping,
-        #         y = input.grouped_box_y_axis(),
-        #         color = grouping,
-        #     ).update_layout(
-        #         template="seaborn",
-        #         title={"text": plot_title, "x": 0.5},
-        #     ).update_yaxes(
-        #         title_text = y_axis_title,
-        #     )
-        #     return_plot = box_plot_grouped
+            sns.set_theme()
+            plt.figure(figsize=(10, 6))
+            grouped_box_plot = sns.boxplot(
+                data = data_frame,
+                x = grouping,
+                y = y_axis,
+                )
+            plt.title(plot_title)
+            plt.xlabel(x_axis_title)
+            plt.ylabel(y_axis_title)
+            # plt.show()
+            return_plot = grouped_box_plot
 
         # # Histogram:
         # if input.plot_types() == "Histogram":

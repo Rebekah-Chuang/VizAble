@@ -68,6 +68,11 @@ def generate_plots_ui() -> ui.nav_panel:
                             placeholder="Enter a plot title"
                         ),
                         ui.input_text(
+                            id="grouped_box_x_axis_title",
+                            label="X-axis Title",
+                            placeholder="Enter a title for the x-axis"
+                        ),
+                        ui.input_text(
                             id="grouped_box_y_axis_title",
                             label="Y-axis Title",
                             placeholder="Enter a title for the y-axis"
