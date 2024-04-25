@@ -623,35 +623,27 @@ def server(input: Inputs, output: Outputs, session: Session):
             # plt.show()
             return_plot = line_plot
         
-        # # Bar Plot:
-        # if input.plot_types() == "Bar Plot":
-        #     req(input.bar_x_axis())
-        #     plot_title = input.bar_plot_title()
-        #     x_axis = input.bar_x_axis()
-        #     x_axis_title=input.bar_x_axis_title()
-        #     y_axis_title=input.bar_y_axis_title()
+        # Bar Plot:        
+        if input.plot_types() == "Bar Plot":
+            req(input.bar_x_axis())
+            plot_title = input.bar_plot_title()
+            x_axis = input.bar_x_axis()
+            x_axis_title = input.bar_x_axis_title()
+            y_axis_title = input.bar_y_axis_title()
 
-        #     # generate dataframe for value counts
-        #     counts_df = data_frame[x_axis].value_counts().reset_index()
+            sns.set_theme()
+            plt.figure(figsize=(10, 6))
 
-        #     # rename columns name
-        #     counts_df.columns = ['value', 'count']
+            bar_plot = sns.countplot(
+                data = data_frame,
+                x = x_axis,
+                )
+            plt.title(plot_title)
+            plt.xlabel(x_axis_title)
+            plt.ylabel(y_axis_title)
+            # plt.show()
+            return_plot = bar_plot
 
-        #     bar_plot = px.bar(
-        #         data_frame = counts_df,
-        #         x = "value",
-        #         y = "count",
-        #         color="value",
-        #     ).update_layout(
-        #         template = "seaborn",
-        #         title = {"text": plot_title, "x": 0.5},
-        #     ).update_xaxes(
-        #         title_text = x_axis_title,
-        #     ).update_yaxes(
-        #         title_text = y_axis_title,
-        #     )
-        #     return_plot = bar_plot
-        
         # Box Plot:
         if input.plot_types() == "Box Plot":
             req(input.box_y_axis())
@@ -712,6 +704,7 @@ def server(input: Inputs, output: Outputs, session: Session):
         #     )
         #     return_plot = histogram
 
+        # Scatter Plot:
         if input.plot_types() == "Scatter Plot":
             req(input.scatter_x_axis(), input.scatter_y_axis())
             x_axis = input.scatter_x_axis()
