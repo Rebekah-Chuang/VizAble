@@ -756,12 +756,14 @@ def server(input: Inputs, output: Outputs, session: Session):
         )
 
         # initialize the model
-        model = genai.GenerativeModel("gemini-pro-vision")
+        model = genai.GenerativeModel("gemini-1.5-pro-latest")
+
         chat = model.start_chat(history = [])
         question = input.chatbot_input()
 
         # Send the encoded image to Gemini for analysis
-        prompt="Could you please provide a summary of this plot?"
+        # prompt="Could you please provide a summary of this plot?"
+        prompt = "I'm seeking a detailed summary of the plot provided below. Your response should be thorough and cover the following aspects: 1.Plot Summary: Please provide a detailed summary of the plot, including the main characters, significant events, twists, and resolutions. 2. Plot Type: Identify the type of plot employed in this narrative (e.g., linear, nonlinear, episodic, quest, etc.). Discuss how the plot structure contributes to the overall storytelling. 3. Themes and Messages: Analyze the underlying themes and messages conveyed by the plot. What insights or commentary does the plot offer about the human condition, society, or other relevant topics? 4. Character Development: Describe any notable character arcs or developments throughout the plot. How do the characters evolve or change as the story progresses? 5. Symbolism and Motifs: Explore any symbolic elements or recurring motifs present in the plot. How do these symbols enrich the narrative and deepen its meaning? 6. Plot Components: Identify the key components of the plot, including the exposition, rising action, climax, falling action, and resolution. Discuss how these components contribute to the overall structure and pacing of the story. 7. Plot Analysis: Offer a critical analysis of the plot, highlighting its strengths, weaknesses, and unique storytelling techniques. What sets this plot apart from others in its genre? 8. Insights and Interpretations: Share your insights and interpretations of the plot. What do you believe the author is trying to convey through this narrative? How does the plot resonate with you personally? Please ensure that your summary is detailed, insightful, at least 100 words, and well-organized."
 
         # generate content
         if question is None:
