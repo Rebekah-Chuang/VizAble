@@ -2,6 +2,15 @@
 
 
 
+## v0.13.0 (2024-04-28)
+
+### Feature
+
+* feat: improve prompt content for generating plot summary ([`a31bb1c`](https://github.com/Rebekah-Chuang/VizAble/commit/a31bb1c14b0471d226f23bb7fa9085843d634f07))
+
+* feat: generate grouped box plot using `seaborn` and `matplotlib` ([`6d00bd4`](https://github.com/Rebekah-Chuang/VizAble/commit/6d00bd4c46aa6a618dad42e6ab20111c08f101dd))
+
+
 ## v0.12.0 (2024-04-25)
 
 ### Feature
