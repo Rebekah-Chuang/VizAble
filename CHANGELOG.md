@@ -2,6 +2,15 @@
 
 
 
+## v0.13.1 (2024-05-16)
+
+### Fix
+
+* fix: upgrade `Jinja2` to fix Dependabot alert in `poetry.lock` ([`2ac4b8f`](https://github.com/Rebekah-Chuang/VizAble/commit/2ac4b8fc7ef125db8e9f5b5063ddb17e6e20cc07))
+
+* fix: upgrade `tqdm` to fix Dependabot alert in `poetry.lock` ([`127d5fe`](https://github.com/Rebekah-Chuang/VizAble/commit/127d5fe00eac424956b0e2edde28ab14d745ef7b))
+
+
 ## v0.13.0 (2024-04-28)
 
 ### Feature
