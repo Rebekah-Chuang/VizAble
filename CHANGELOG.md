@@ -2,6 +2,13 @@
 
 
 
+## v0.13.2 (2024-05-31)
+
+### Fix
+
+* fix: upgrade `requests` to fix Dependabot alert in `poetry.lock` ([`f145f8c`](https://github.com/Rebekah-Chuang/VizAble/commit/f145f8c4792813dc2c6ceec12d999c65b6cd3303))
+
+
 ## v0.13.1 (2024-05-16)
 
 ### Fix
